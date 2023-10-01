@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -50,7 +50,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear OpMode")
+@TeleOp(name="usage 1, please use", group="Linear OpMode")
 @Disabled
 public class contrabassoon extends LinearOpMode {
 
@@ -102,15 +102,13 @@ public class contrabassoon extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            double strafe;
+            double strafe = 0;
             // double strafe = gamepad1.left_stick_x;
-            if(gamepad1.x == gamepad1.y){
-              fLp = Range.clip(drive + turn + strafe, -1.0, 1.0);
-              fRp = Range.clip(drive - turn - strafe, -1.0, 1.0);
-              bLp = Range.clip(drive + turn - strafe, -1.0, 1.0);
-              bRp = Range.clip(drive - turn + strafe, -1.0, 1.0);
-            }
-            else if(gamepad1.x && !gamepad1.y){
+            fLp = Range.clip(drive + turn + strafe, -1.0, 1.0);
+            fRp = Range.clip(drive - turn - strafe, -1.0, 1.0);
+            bLp = Range.clip(drive + turn - strafe, -1.0, 1.0);
+            bRp = Range.clip(drive - turn + strafe, -1.0, 1.0);
+            if(gamepad1.x && !gamepad1.y){
               // fLp = Range.clip(drive + turn + strafe + 1.0, -1.0, 1.0);
               // fLp = Range.clip(drive + turn - strafe - 1.0, -1.0, 1.0);
               fLp = -0.85;
@@ -165,7 +163,7 @@ public class contrabassoon extends LinearOpMode {
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f)", fLp, fRp, bLp, bRp);
             telemetry.update();
         }
     }
