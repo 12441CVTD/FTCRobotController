@@ -72,7 +72,7 @@ public class ContraBassoon extends LinearOpMode {
         fL  = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
         bL  = hardwareMap.get(DcMotor.class, "bL");
-        bR = hardwareMap.get(DcMotor.class, "fb");
+        bR = hardwareMap.get(DcMotor.class, "fR");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
