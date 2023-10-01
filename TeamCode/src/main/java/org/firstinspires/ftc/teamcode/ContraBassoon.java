@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="usage 1, please use", group="Linear OpMode")
 @Disabled
-public class contrabassoon extends LinearOpMode {
+public class ContraBassoon extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
