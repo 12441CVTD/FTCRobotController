@@ -59,74 +59,60 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class RobotAutoDriveByTime_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
-    private DcMotor         leftDrive   = null;
-    private DcMotor         rightDrive  = null;
-
+    private DcMotor fL = null;
+    private DcMotor fR = null;
+    private DcMotor bL = null;
+    private DcMotor bR = null;
     private ElapsedTime     runtime = new ElapsedTime();
-
-
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
 
     @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+        fL  = hardwareMap.get(DcMotor.class, "fL");
+        fR  = hardwareMap.get(DcMotor.class, "fR");
+        bL  = hardwareMap.get(DcMotor.class, "bL");
+        bR  = hardwareMap.get(DcMotor.class, "bR");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
-
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
-        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
-
-        // Step 1:  Drive forward for 3 seconds
-        leftDrive.setPower(FORWARD_SPEED);
-        rightDrive.setPower(FORWARD_SPEED);
+        driveWay(-0.6,0.6,0.6,-0.6, 2);
+        
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
+    }
+    public void driveWay(double lF, double rF, double lB, double rB, time s){
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
-            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
+        while(opModeIsActive() && (runtime.milliseconds() < s)){
+            fL.setPower(lF);
+            fR.setPower(rF);
+            bL.setPower(lB);
+            bR.setPower(rB);
         }
-
-        // Step 2:  Spin right for 1.3 seconds
-        leftDrive.setPower(TURN_SPEED);
-        rightDrive.setPower(-TURN_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 3:  Drive Backward for 1 Second
-        leftDrive.setPower(-FORWARD_SPEED);
-        rightDrive.setPower(-FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
-            telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 4:  Stop
-        leftDrive.setPower(0);
-        rightDrive.setPower(0);
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-        sleep(1000);
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
     }
 }
-package org.firstinspires.ftc.robotcontroller.external.samples;
+/*package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -134,4 +120,27 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-private DcMotor 
+private DcMotor fl = null;
+private DcMotor fr = null;
+private DcMotor bl= null;
+private DcMotor br = null;
+
+ private ElapsedTime     runtime = new ElapsedTime();
+
+  @Override
+    public void runOpMode() {
+fl = hardwareMap.get(DcMotor.class "fl");
+fr = hardwareMap.get(DcMotor.class "fr");
+bl = hardwareMap.get(DcMotor.class "bl");
+br = hardwareMap.get(DcMotor.class "br");
+
+leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+
+ telemetry.addData("Status", "Ready to run");    
+        telemetry.update();
+
+waitForStart();
+
+
+}*/
