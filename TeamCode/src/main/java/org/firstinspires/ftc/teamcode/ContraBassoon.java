@@ -51,7 +51,6 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="usage 1, please use", group="Linear OpMode")
-@Disabled
 public class ContraBassoon extends LinearOpMode {
 
     // Declare OpMode members.
