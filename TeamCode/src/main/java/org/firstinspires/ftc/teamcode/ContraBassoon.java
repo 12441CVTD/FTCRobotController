@@ -73,7 +73,8 @@ public class ContraBassoon extends LinearOpMode {
         fR = hardwareMap.get(DcMotor.class, "fR");
         bL  = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "fR");
-
+        zoom = hardwareMap.get(DcMotor.class, "zoom");
+        flipper = hardwareMap.get(DcServo.class, "flipper");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -94,7 +95,8 @@ public class ContraBassoon extends LinearOpMode {
             double fRp;
             double bLp;
             double bRp;
-
+            double zoom;
+            double flipper;
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
