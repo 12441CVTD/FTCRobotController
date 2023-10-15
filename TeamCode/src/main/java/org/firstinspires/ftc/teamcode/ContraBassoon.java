@@ -71,7 +71,7 @@ public class ContraBassoon extends LinearOpMode {
         fL  = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
         bL  = hardwareMap.get(DcMotor.class, "bL");
-        bR = hardwareMap.get(DcMotor.class, "fR");
+        bR = hardwareMap.get(DcMotor.class, "bR");
         zoom = hardwareMap.get(DcMotor.class, "zoom");
         flipper = hardwareMap.get(DcServo.class, "flipper");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -81,6 +81,13 @@ public class ContraBassoon extends LinearOpMode {
         fR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.FORWARD);
+
+        double fLp;
+        double fRp;
+        double bLp;
+        double bRp;
+        double zoom;
+        double flipper;
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
