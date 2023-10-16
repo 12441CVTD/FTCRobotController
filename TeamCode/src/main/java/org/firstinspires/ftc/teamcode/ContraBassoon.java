@@ -166,10 +166,10 @@ public class ContraBassoon extends LinearOpMode {
                 //zoomP= -0.3;
             }
             if (gamepad2.x){
-                //flipper.setPostion(100);
+                //flipper.setPostion(1);
             }
             else if (gamepad2.y){
-                //flipper.setposition(-100);
+                //flipper.setposition(0);
             }
             // Tank Mode is cringe.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
