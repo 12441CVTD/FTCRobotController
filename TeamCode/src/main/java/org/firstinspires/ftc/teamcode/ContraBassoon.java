@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 /*
@@ -59,6 +60,10 @@ public class ContraBassoon extends LinearOpMode {
     private DcMotor fR = null;
     private DcMotor bL = null;
     private DcMotor bR = null;
+    private DcMotor zoom = null;
+    private Servo flipper = null;
+    private Servo turny = null;
+    private Servo grabby = null;
 
     @Override
     public void runOpMode() {
@@ -72,8 +77,10 @@ public class ContraBassoon extends LinearOpMode {
         fR = hardwareMap.get(DcMotor.class, "fR");
         bL  = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "bR");
-        zoom = hardwareMap.get(DcMotor.class, "zoom");
-        flipper = hardwareMap.get(DcServo.class, "flipper");
+        //zoom = hardwareMap.get(DcMotor.class, "zoom");
+        //flipper = hardwareMap.get(Servo.class, "flipper");
+        //turny = hardwareMap.get(Servo.class, "turny");
+        //grabby = hardwareMap.get(Servo.class, "grabby");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -81,13 +88,14 @@ public class ContraBassoon extends LinearOpMode {
         fR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.FORWARD);
+        //zoom.setDirection(DcMotor.Direction.FORWARD);
 
         double fLp;
         double fRp;
         double bLp;
         double bRp;
-        double zoom;
-        double flipper;
+        double zoomP;
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -97,12 +105,7 @@ public class ContraBassoon extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double fLp;
-            double fRp;
-            double bLp;
-            double bRp;
-            double zoom;
-            double flipper;
+            
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
@@ -116,6 +119,8 @@ public class ContraBassoon extends LinearOpMode {
             fRp = Range.clip(drive - turn - strafe, -1.0, 1.0);
             bLp = Range.clip(drive + turn - strafe, -1.0, 1.0);
             bRp = Range.clip(drive - turn + strafe, -1.0, 1.0);
+            zoomP = -gamepad2.left_stick_y;
+            
             if(gamepad1.x && !gamepad1.y){
               // fLp = Range.clip(drive + turn + strafe + 1.0, -1.0, 1.0);
               // fLp = Range.clip(drive + turn - strafe - 1.0, -1.0, 1.0);
@@ -136,6 +141,12 @@ public class ContraBassoon extends LinearOpMode {
                 bLp = 0.3;
                 bRp = 0.3;
             }
+            else if(gamepad1.dpad_down){
+                fLp = -0.3;
+                fRp = -0.3;
+                bLp = -0.3;
+                bRp = -0.3;
+            }
             else if(gamepad1.dpad_right){
                 fLp = 0.3;
                 fRp = -0.3;
@@ -148,14 +159,18 @@ public class ContraBassoon extends LinearOpMode {
                 bLp = -0.3;
                 bRp = 0.3;
             }
-            else if(gamepad1.dpad_down){
-                fLp = -0.3;
-                fRp = -0.3;
-                bLp = -0.3;
-                bRp = -0.3;
+            if (gamepad2.dpad_up){
+                //zoomP= 0.3;
             }
-            
-
+            else if(gamepad2.dpad_down){
+                //zoomP= -0.3;
+            }
+            if (gamepad2.x){
+                //flipper.setPostion(100);
+            }
+            else if (gamepad2.y){
+                //flipper.setposition(-100);
+            }
             // Tank Mode is cringe.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // fLp  = -gamepad1.left_stick_y ;
@@ -168,10 +183,11 @@ public class ContraBassoon extends LinearOpMode {
             fR.setPower(fRp);
             bL.setPower(bLp);
             bR.setPower(bRp);
+            //zoom.setPower(zoomP);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", fLp, fRp, bLp, bRp);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f)", fLp, fRp, bLp, bRp, zoomP);
             telemetry.update();
         }
     }
