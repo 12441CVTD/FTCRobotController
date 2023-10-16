@@ -173,11 +173,20 @@ public class ContraBassoon extends LinearOpMode {
             }
             if(gamepad2.right_bumper){
                 runtime.reset();
-                if(runtime.getTime() == 1){
+                if(opModeIsActive() && (runtime.milliseconds() == 1)){
                 //grabby.setPosition(0);
                 }
-                if(runtime.getTime() == 1000){
+                if(opModeIsActive() && (runtime.milliseconds() == 50)){
                 //flippy.setPosition(0);
+                }
+            }
+            if(gamepad2.left_bumper){
+                runtime.reset();
+                if(opModeIsActive() && (runtime.milliseconds() == 1)){
+                //grabby.setPosition(1);
+                }
+                if(opModeIsActive() && (runtime.milliseconds() == 50)){
+                //flippy.setPosition(1);
                 }
             }
             // Tank Mode is cringe.
