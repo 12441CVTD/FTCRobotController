@@ -142,7 +142,4 @@ leftDrive.setDirection(DcMotor.Direction.REVERSE);
  telemetry.addData("Status", "Ready to run");    
         telemetry.update();
 
-waitForStart();
-strafe(  
-
 }*/
