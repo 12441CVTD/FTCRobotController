@@ -1,3 +1,4 @@
+//R
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -27,43 +28,118 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.robotcontroller.external.samples;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When a selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
+/*
+ * This OpMode illustrates the concept of driving a path based on time.
+ * The code is structured as a LinearOpMode
  *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
+ * The code assumes that you do NOT have encoders on the wheels,
+ *   otherwise you would use: RobotAutoDriveByEncoder;
+ *
+ *   The desired path in this example is:
+ *   - Drive forward for 3 seconds
+ *   - Spin right for 1.3 seconds
+ *   - Drive Backward for 1 Second
+ *
+ *  The code is written in a simple form with no optimizations.
+ *  However, there are several ways that this type of sequence could be streamlined,
  *
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="SEASON 2023 THIS IS THE ONE YOU SHOULD BE USING", group="Linear Opmode")
+@Autonomous(name="This is for idiot babies", group="Robot")
 
-public class Season2023TeleOp2 extends LinearOpMode {
+public class RobotAutoDriveByTime_Linear extends LinearOpMode {
 
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor fR = null;
+    /* Declare OpMode members. */
     private DcMotor fL = null;
+    private DcMotor fR = null;
     private DcMotor bL = null;
     private DcMotor bR = null;
-    private DcMotor arm = null;
-    private Servo sR = null;
-    private Servo sL = null;
-    private Servo Turny = null;
+    private ElapsedTime     runtime = new ElapsedTime();
 
     @Override
+    public void runOpMode() {
+
+        // Initialize the drive system variables.
+        fL  = hardwareMap.get(DcMotor.class, "fL");
+        fR  = hardwareMap.get(DcMotor.class, "fR");
+        bL  = hardwareMap.get(DcMotor.class, "bL");
+        bR  = hardwareMap.get(DcMotor.class, "bR");
+
+        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
+        // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
+        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Ready to run");    //
+        telemetry.update();
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
+        driveWay(-0.3,-0.3,-0.3,-0.3, 1000);
+
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
+    }
+    public void driveWay(double lF, double rF, double lB, double rB, time s){
+        runtime.reset();
+        while(opModeIsActive() && (runtime.milliseconds() < s)){
+            fL.setPower(lF);
+            fR.setPower(rF);
+            bL.setPower(lB);
+            bR.setPower(rB);
+        }
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
+    }
+}
+/*package org.firstinspires.ftc.robotcontroller.external.samples;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+private DcMotor fl = null;
+private DcMotor fr = null;
+private DcMotor bl= null;
+private DcMotor br = null;
+
+ private ElapsedTime     runtime = new ElapsedTime();
+
+  @Override
+    public void runOpMode() {
+fl = hardwareMap.get(DcMotor.class "fl");
+fr = hardwareMap.get(DcMotor.class "fr")
+bl = hardwareMap.get(DcMotor.class "bl");
+br = hardwareMap.get(DcMotor.class "br");
+
+leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+
+ telemetry.addData("Status", "Ready to run");    
+        telemetry.update();
+
+}*/
