@@ -93,7 +93,8 @@ public class RobotAutoDriveByTime_Linear extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        strafe(0.3,-0.3,-0.3,0.3, 1000);
+        strafe(0.6,-0.6,-0.6,0.6, 1000);
+        strafe(-0.4,0.4,0.4,-0.4, 200);
 //front left, back right, positive right
         fL.setPower(0);
         fR.setPower(0);
