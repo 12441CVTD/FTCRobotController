@@ -55,9 +55,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="This is for idiot babies", group="Robot")
+@Autonomous(name="BLUE LEFThis is for idiot babies", group="Robot")
 
-public class RobotAutoDriveByTime_Linear extends LinearOpMode {
+public class BlueLeftAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor fL = null;
@@ -78,10 +78,10 @@ public class RobotAutoDriveByTime_Linear extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        fL.setDirection(DcMotor.Direction.REVERSE);
-        fR.setDirection(DcMotor.Direction.FORWARD);
-        bL.setDirection(DcMotor.Direction.REVERSE);
-        bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.FORWARD);
+        fR.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.FORWARD);
+        bR.setDirection(DcMotor.Direction.REVERSE);
         fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -94,7 +94,7 @@ public class RobotAutoDriveByTime_Linear extends LinearOpMode {
         waitForStart();
 
         driveWay(-0.3,0.3,0.3,-0.3, 1000);
-
+        driveWay(0.4,-0.4,-0.4,0.4, 200);
         fL.setPower(0);
         fR.setPower(0);
         bL.setPower(0);
