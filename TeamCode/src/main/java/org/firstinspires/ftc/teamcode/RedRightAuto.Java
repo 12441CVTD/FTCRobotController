@@ -55,9 +55,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="This is for idiot babies", group="Robot")
+@Autonomous(name="RIGHT REThis is for idiot babies", group="Robot")
 
-public class RobotAutoDriveByTime_Linear extends LinearOpMode {
+public class RedRightAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor fL = null;
