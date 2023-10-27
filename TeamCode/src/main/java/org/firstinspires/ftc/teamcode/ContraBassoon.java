@@ -61,9 +61,9 @@ public class ContraBassoon extends LinearOpMode {
     private DcMotor bL = null;
     private DcMotor bR = null;
     private DcMotor zoom = null;
-    private Servo flipper = null;
+    /*private Servo flipper = null;
     private Servo turny = null;
-    private Servo grabby = null;
+    private Servo grabby = null;*/
 
     @Override
     public void runOpMode() {
@@ -171,7 +171,7 @@ public class ContraBassoon extends LinearOpMode {
             else if (gamepad2.y){
                 //flipper.setPosition(0);
             }
-            if(gamepad2.right_bumper){
+            /*if(gamepad2.right_bumper){
                 runtime.reset();
                 if(opModeIsActive() && (runtime.milliseconds() == 1)){
                 //grabby.setPosition(0);
@@ -188,7 +188,7 @@ public class ContraBassoon extends LinearOpMode {
                 if(opModeIsActive() && (runtime.milliseconds() == 50)){
                 //flippy.setPosition(1);
                 }
-            }
+            }*/
             // Tank Mode is cringe.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // fLp  = -gamepad1.left_stick_y ;
