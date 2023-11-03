@@ -84,10 +84,10 @@ public class ContraBassoon extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.REVERSE);
-        bL.setDirection(DcMotor.Direction.FORWARD);
-        bR.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.FORWARD);
         //zoom.setDirection(DcMotor.Direction.FORWARD);
 
         double fLp;
@@ -121,7 +121,7 @@ public class ContraBassoon extends LinearOpMode {
             bRp = Range.clip(drive - turn + strafe, -1.0, 1.0);
             zoomP = -gamepad2.left_stick_y;
             
-            if(gamepad1.x && !gamepad1.y){
+            if(0.5 > gamepad1.right_trigger && 0.5 < gamepad1.left_trigger){
               // fLp = Range.clip(drive + turn + strafe + 1.0, -1.0, 1.0);
               // fLp = Range.clip(drive + turn - strafe - 1.0, -1.0, 1.0);
               fLp = -0.85;
@@ -129,7 +129,7 @@ public class ContraBassoon extends LinearOpMode {
               bLp = 0.85;
               bRp = -0.85;
             }
-            else if(!gamepad1.x && gamepad1.y){
+            else if(0.5 < gamepad1.right_trigger && 0.5 > gamepad1.left_trigger){
               fLp = 0.85;
               fRp = -0.85;
               bLp = -0.85;
