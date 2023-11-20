@@ -137,6 +137,7 @@ private DcMotor br = null;
 //           (WHEEL_DIAMETER_INCHES * 3.1415);
 //    static final double     DRIVE_SPEED             = 0.6;
 //    static final double     TURN_SPEED              = 0.5;
+//    133-139 lines need to be adjusted
 
 
   @Override
