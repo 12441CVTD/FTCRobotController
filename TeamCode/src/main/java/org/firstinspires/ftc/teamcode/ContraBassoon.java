@@ -81,6 +81,7 @@ public class ContraBassoon extends LinearOpMode {
         flipper = hardwareMap.get(Servo.class, "flipper");
         turny = hardwareMap.get(Servo.class, "turny");
         grabby = hardwareMap.get(Servo.class, "grabby");
+        woosh = hardwareMap.get(Servo.class, "woosh");
          To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
          Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
          Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -189,6 +190,9 @@ public class ContraBassoon extends LinearOpMode {
                 flippy.setPosition(1);
                 }
             }*/
+            if(gamepad2.a){
+                woosh.setPosition(0.5);
+            } 
             // Tank Mode is cringe.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
              fLp  = -gamepad1.left_stick_y ;
