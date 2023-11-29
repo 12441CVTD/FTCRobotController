@@ -64,7 +64,7 @@ public class ContraBassoon extends LinearOpMode {
     private Servo flipper = null;
     private Servo turny = null;
     private Servo grabby = null;*/
-
+    private Servo woosh = null;
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
