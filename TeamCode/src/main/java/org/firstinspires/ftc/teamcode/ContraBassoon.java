@@ -61,10 +61,10 @@ public class ContraBassoon extends LinearOpMode {
     private DcMotor bL = null;
     private DcMotor bR = null;
     private DcMotor zoom = null;
-    /*private Servo flipper = null;
+    private Servo flipper = null;
     private Servo turny = null;
     private Servo grabby = null;*/
-
+    private Servo woosh = null;
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -77,18 +77,19 @@ public class ContraBassoon extends LinearOpMode {
         fR = hardwareMap.get(DcMotor.class, "fR");
         bL  = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "bR");
-        //zoom = hardwareMap.get(DcMotor.class, "zoom");
-        //flipper = hardwareMap.get(Servo.class, "flipper");
-        //turny = hardwareMap.get(Servo.class, "turny");
-        //grabby = hardwareMap.get(Servo.class, "grabby");
-        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-        // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
-        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+        zoom = hardwareMap.get(DcMotor.class, "zoom");
+        flipper = hardwareMap.get(Servo.class, "flipper");
+        turny = hardwareMap.get(Servo.class, "turny");
+        grabby = hardwareMap.get(Servo.class, "grabby");
+        woosh = hardwareMap.get(Servo.class, "woosh");
+         To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
+         Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
+         Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         fL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.FORWARD);
-        //zoom.setDirection(DcMotor.Direction.FORWARD);
+        zoom.setDirection(DcMotor.Direction.FORWARD);
 
         double fLp;
         double fRp;
@@ -114,7 +115,7 @@ public class ContraBassoon extends LinearOpMode {
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
             double strafe = 0;
-            // double strafe = gamepad1.left_stick_x;
+            double strafe = gamepad1.left_stick_x;
             fLp = Range.clip(drive + turn + strafe, -1.0, 1.0);
             fRp = Range.clip(drive - turn - strafe, -1.0, 1.0);
             bLp = Range.clip(drive + turn - strafe, -1.0, 1.0);
@@ -122,8 +123,8 @@ public class ContraBassoon extends LinearOpMode {
             zoomP = -gamepad2.left_stick_y;
             
             if(0.5 > gamepad1.right_trigger && 0.5 < gamepad1.left_trigger){
-              // fLp = Range.clip(drive + turn + strafe + 1.0, -1.0, 1.0);
-              // fLp = Range.clip(drive + turn - strafe - 1.0, -1.0, 1.0);
+              fLp = Range.clip(drive + turn + strafe + 1.0, -1.0, 1.0);
+              fLp = Range.clip(drive + turn - strafe - 1.0, -1.0, 1.0);
               fLp = -0.85;
               fRp = 0.85;
               bLp = 0.85;
@@ -160,48 +161,51 @@ public class ContraBassoon extends LinearOpMode {
                 bRp = 0.3;
             }
             if (gamepad2.dpad_up){
-                //zoomP= 0.3;
+                zoomP= 0.3;
             }
             else if(gamepad2.dpad_down){
-                //zoomP= -0.3;
+                zoomP= -0.3;
             }
             if (gamepad2.x){
-                //flipper.setPostion(1);
+                flipper.setPostion(1);
             }
             else if (gamepad2.y){
-                //flipper.setPosition(0);
+                flipper.setPosition(0);
             }
-            /*if(gamepad2.right_bumper){
+            if(gamepad2.right_bumper){
                 runtime.reset();
                 if(opModeIsActive() && (runtime.milliseconds() == 1)){
-                //grabby.setPosition(0);
+                grabby.setPosition(0);
                 }
                 if(opModeIsActive() && (runtime.milliseconds() == 50)){
-                //flippy.setPosition(0);
+                flippy.setPosition(0);
                 }
             }
             if(gamepad2.left_bumper){
                 runtime.reset();
                 if(opModeIsActive() && (runtime.milliseconds() == 1)){
-                //grabby.setPosition(1);
+                grabby.setPosition(1);
                 }
                 if(opModeIsActive() && (runtime.milliseconds() == 50)){
-                //flippy.setPosition(1);
+                flippy.setPosition(1);
                 }
             }*/
+            if(gamepad2.a){
+                woosh.setPosition(0.5);
+            } 
             // Tank Mode is cringe.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // fLp  = -gamepad1.left_stick_y ;
-            // fRp = -gamepad1.right_stick_y ;
-            // bLp = -gamepad1.left_stick_y;
-            // bRp = -gamepad1.right_stick_y;
+             fLp  = -gamepad1.left_stick_y ;
+             fRp = -gamepad1.right_stick_y ;
+             bLp = -gamepad1.left_stick_y;
+             bRp = -gamepad1.right_stick_y;
 
             // Send calculated power to wheels
             fL.setPower(fLp);
             fR.setPower(fRp);
             bL.setPower(bLp);
             bR.setPower(bRp);
-            //zoom.setPower(zoomP);
+            zoom.setPower(zoomP);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -211,8 +215,8 @@ public class ContraBassoon extends LinearOpMode {
     }
 }
 
-/* Odometry code: 
-(change stuff ben)
+//Odometry code: 
+//(change stuff ben)
 
 package org.firstinspires.ftc.teamcode.odometry
 
@@ -221,7 +225,7 @@ interface Odometry {
     fun addAngleBias(angle_rad: Double)
 }
 
-THREE WHEEL ODOMETRY TYPE BEAT (taken from some random place dont even worry about it) SHOWN BELOW: 
+//THREE WHEEL ODOMETRY TYPE BEAT (taken from some random place dont even worry about it) SHOWN BELOW: 
 
 package org.firstinspires.ftc.teamcode.odometry
 
