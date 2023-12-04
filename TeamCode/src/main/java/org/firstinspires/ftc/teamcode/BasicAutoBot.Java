@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -53,17 +53,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
-
+@Disabled
 @Autonomous(name="This is for idiot babies", group="Robot")
-
-public class RobotAutoDriveByTime_Linear extends LinearOpMode {
+public class BasicAutoBot extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor fL = null;
     private DcMotor fR = null;
     private DcMotor bL = null;
     private DcMotor bR = null;
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void runOpMode() {
@@ -99,7 +98,7 @@ public class RobotAutoDriveByTime_Linear extends LinearOpMode {
         bL.setPower(0);
         bR.setPower(0);
     }
-    public void driveWay(double lF, double rF, double lB, double rB, time s){
+    public void driveWay(double lF, double rF, double lB, double rB, int s){
         runtime.reset();
         while(opModeIsActive() && (runtime.milliseconds() < s)){
             fL.setPower(lF);

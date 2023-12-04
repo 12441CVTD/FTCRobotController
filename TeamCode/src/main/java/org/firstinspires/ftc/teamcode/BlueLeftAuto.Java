@@ -65,7 +65,7 @@ public class BlueLeftAuto extends LinearOpMode {
     private DcMotor fR = null;
     private DcMotor bL = null;
     private DcMotor bR = null;
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void runOpMode() {
@@ -95,7 +95,7 @@ public class BlueLeftAuto extends LinearOpMode {
         waitForStart();
 
         driveWay(-0.6,0.6,0.6,-0.6, 1000);
-        driveWay(0.4.-0.4,-0.4,0.4, 200);
+        driveWay(0.4,-0.4,-0.4,0.4, 200);
         fL.setPower(0);
         fR.setPower(0);
         bL.setPower(0);
