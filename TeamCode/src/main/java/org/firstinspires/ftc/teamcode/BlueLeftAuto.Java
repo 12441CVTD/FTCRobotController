@@ -28,7 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+//package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -100,7 +101,7 @@ public class BlueLeftAuto extends LinearOpMode {
         bL.setPower(0);
         bR.setPower(0);
     }
-    public void driveWay(double lF, double rF, double lB, double rB, time s){
+    public void driveWay(double lF, double rF, double lB, double rB, int s){
         runtime.reset();
         while(opModeIsActive() && (runtime.milliseconds() < s)){
             fL.setPower(lF);

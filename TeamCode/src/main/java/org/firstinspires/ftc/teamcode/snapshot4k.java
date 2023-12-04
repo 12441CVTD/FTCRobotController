@@ -258,7 +258,6 @@ To use this feature, simply make sure that you've started a streaming session du
        /*
        * This will be called if the camera could not be opened
        */
-    }
 //});
    //  camera.startsteaming(640, 480, OpenCvCameraRotation.UPRIGHT);
      
@@ -310,15 +309,12 @@ leftDrive.setDirection(DcMotor.Direction.REVERSE);
         telemetry.update();
 
 }*/
-package org.firstinspires.ftc.teamcode.OpModes.Angle_PID_Tutorial;
-
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -334,15 +330,14 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "Cone Tracker")
+@Autonomous(name="This is for idiot babies", group="Robot")
+public class snapshot4k extends LinearOpMode {
 
-public class CameraFusedPID extends LinearOpMode {
-    double integralSum = 0;
-    double Kp = PIDConstants.Kp;
-    double Ki = PIDConstants.Ki;
-    double Kd = PIDConstants.Kd;
+//    double integralSum = 0;
+//    double Kp = PIDConstants.Kp;
+//    double Ki = PIDConstants.Ki;
+//    double Kd = PIDConstants.Kd;
 
-    Drivetrain drivetrain = new Drivetrain();
 
     ElapsedTime timer = new ElapsedTime();
     private double lastError = 0;
@@ -353,7 +348,9 @@ public class CameraFusedPID extends LinearOpMode {
     double width = 0;
 
     private OpenCvCamera controlHubCam;  // Use OpenCvCamera class from FTC SDK
-    /** MAKE SURE TO CHANGE THE FOV AND THE RESOLUTIONS ACCORDINGLY **/
+    /**
+     * MAKE SURE TO CHANGE THE FOV AND THE RESOLUTIONS ACCORDINGLY
+     **/
     private static final int CAMERA_WIDTH = 640; // width  of wanted camera resolution
     private static final int CAMERA_HEIGHT = 480; // height of wanted camera resolution
     private static final double FOV = 40;
@@ -363,9 +360,7 @@ public class CameraFusedPID extends LinearOpMode {
     public static final double focalLength = 728;  // Replace with the focal length of the camera in pixels
 
 
-    @Override
     public void runOpMode() {
-        drivetrain.init(hardwareMap);
 
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -374,21 +369,20 @@ public class CameraFusedPID extends LinearOpMode {
         imu.initialize(parameters);
 
         initOpenCV();
-        FtcDashboard dashboard = FtcDashboard.getInstance();
-        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-        FtcDashboard.getInstance().startCameraStream(controlHubCam, 30);
+        //FtcDashboard dashboard = FtcDashboard.getInstance();
+        //telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+        //FtcDashboard.getInstance().startCameraStream(controlHubCam, 30);
 
 
         waitForStart();
 
         while (opModeIsActive()) {
-            telemetry.addData("Target IMU Angle", getAngleTarget(cX));
-            telemetry.addData("Current IMU Angle", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
-            double power = PIDControl(Math.toRadians(0 + getAngleTarget(cX)), imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle);
-            drivetrain.power(power);
-            telemetry.addData("Coordinate", "(" + (int) cX + ", " + (int) cY + ")");
-            telemetry.addData("Distance in Inch", (getDistance(width)));
-            telemetry.update();
+//            telemetry.addData("Target IMU Angle", getAngleTarget(cX));
+//            telemetry.addData("Current IMU Angle", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
+//            double power = PIDControl(Math.toRadians(0 + getAngleTarget(cX)), imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle);
+//            telemetry.addData("Coordinate", "(" + (int) cX + ", " + (int) cY + ")");
+//            telemetry.addData("Distance in Inch", (getDistance(width)));
+//            telemetry.update();
 
             // The OpenCV pipeline automatically processes frames and handles detection
         }
@@ -400,12 +394,10 @@ public class CameraFusedPID extends LinearOpMode {
     private void initOpenCV() {
 
         // Create an instance of the camera
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-                "cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
 
         // Use OpenCvCameraFactory class from FTC SDK to create camera instance
-        controlHubCam = OpenCvCameraFactory.getInstance().createWebcam(
-                hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        controlHubCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
 
         controlHubCam.setPipeline(new YellowBlobDetectionPipeline());
 
@@ -416,12 +408,12 @@ public class CameraFusedPID extends LinearOpMode {
         @Override
         public Mat processFrame(Mat input) {
             // Preprocess the frame to detect yellow regions
-            Mat yellowMask = preprocessFrame(input);
+            Mat redMask = preprocessFrame(input);
 
             // Find contours of the detected yellow regions
             List<MatOfPoint> contours = new ArrayList<>();
             Mat hierarchy = new Mat();
-            Imgproc.findContours(yellowMask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+            Imgproc.findContours(redMask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
             // Find the largest yellow contour (blob)
             MatOfPoint largestContour = findLargestContour(contours);
@@ -457,18 +449,18 @@ public class CameraFusedPID extends LinearOpMode {
             Mat hsvFrame = new Mat();
             Imgproc.cvtColor(frame, hsvFrame, Imgproc.COLOR_BGR2HSV);
 
-            Scalar lowerYellow = new Scalar(100, 100, 100);
-            Scalar upperYellow = new Scalar(180, 255, 255);
+            Scalar lowerRed = new Scalar(80, 80, 200);
+            Scalar upperRed = new Scalar(0, 0, 255);
 
 
-            Mat yellowMask = new Mat();
-            Core.inRange(hsvFrame, lowerYellow, upperYellow, yellowMask);
+            Mat redMask = new Mat();
+            Core.inRange(hsvFrame, lowerRed, upperRed, redMask);
 
             Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5, 5));
-            Imgproc.morphologyEx(yellowMask, yellowMask, Imgproc.MORPH_OPEN, kernel);
-            Imgproc.morphologyEx(yellowMask, yellowMask, Imgproc.MORPH_CLOSE, kernel);
+            Imgproc.morphologyEx(redMask, redMask, Imgproc.MORPH_OPEN, kernel);
+            Imgproc.morphologyEx(redMask, redMask, Imgproc.MORPH_CLOSE, kernel);
 
-            return yellowMask;
+            return redMask;
         }
 
         private MatOfPoint findLargestContour(List<MatOfPoint> contours) {
@@ -499,16 +491,16 @@ public class CameraFusedPID extends LinearOpMode {
         double distance = (objectWidthInRealWorldUnits * focalLength) / width;
         return distance;
     }
-    public double PIDControl(double refrence, double state) {
-        double error = angleWrap(refrence - state);
-        telemetry.addData("Error: ", error);
-        integralSum += error * timer.seconds();
-        double derivative = (error - lastError) / (timer.seconds());
-        lastError = error;
-        timer.reset();
-        double output = (error * Kp) + (derivative * Kd) + (integralSum * Ki);
-        return output;
-    }
+//    public double PIDControl(double refrence, double state) {
+//        double error = angleWrap(refrence - state);
+//        telemetry.addData("Error: ", error);
+//        integralSum += error * timer.seconds();
+//        double derivative = (error - lastError) / (timer.seconds());
+//        lastError = error;
+//        timer.reset();
+//        double output = (error * Kp) + (derivative * Kd) + (integralSum * Ki);
+//        return output;
+//    }
     public double angleWrap(double radians){
         while(radians > Math.PI){
             radians -= 2 * Math.PI;

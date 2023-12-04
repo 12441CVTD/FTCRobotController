@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -66,6 +66,7 @@ public class RedRightAuto extends LinearOpMode {
     private DcMotor bR = null;
     private ElapsedTime     runtime = new ElapsedTime();
 
+    
     @Override
     public void runOpMode() {
 
@@ -78,10 +79,10 @@ public class RedRightAuto extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        fL.setDirection(DcMotor.Direction.REVERSE);
-        fR.setDirection(DcMotor.Direction.FORWARD);
-        bL.setDirection(DcMotor.Direction.REVERSE);
-        bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.FORWARD);
+        fR.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.FORWARD);
+        bR.setDirection(DcMotor.Direction.REVERSE);
         fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -93,15 +94,15 @@ public class RedRightAuto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        strafe(0.6,-0.6,-0.6,0.6, 1000);
-        strafe(-0.4,0.4,0.4,-0.4, 200);
+        driveWay(0.6,-0.6,-0.6,0.6, 1000);
+        driveWay(-0.4,0.4,0.4,-0.4, 200);
 //front left, back right, positive right
         fL.setPower(0);
         fR.setPower(0);
         bL.setPower(0);
         bR.setPower(0);
     }
-    public void driveWay(double lF, double rF, double lB, double rB, time s){
+    public void driveWay(double lF, double rF, double lB, double rB, double s){
         runtime.reset();
         while(opModeIsActive() && (runtime.milliseconds() < s)){
             fL.setPower(lF);
