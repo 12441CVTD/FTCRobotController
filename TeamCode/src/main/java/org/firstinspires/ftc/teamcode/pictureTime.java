@@ -112,7 +112,7 @@ public class pictureTime extends LinearOpMode
          * Some color constants
          */
         static final Scalar BLUE = new Scalar(0, 0, 255);
-        static final Scalar GREEN = new Scalar(0, 255, 0);
+        static final Scalar RED = new Scalar(255, 0, 0);
 
         /*
          * The core values which define the location and size of the sample regions
@@ -314,7 +314,7 @@ public class pictureTime extends LinearOpMode
                         input, // Buffer to draw on
                         region1_pointA, // First point which defines the rectangle
                         region1_pointB, // Second point which defines the rectangle
-                        GREEN, // The color the rectangle is drawn in
+                        RED, // The color the rectangle is drawn in
                         -1); // Negative thickness means solid fill
             }
             else if(max == avg2) // Was it from region 2?
@@ -329,7 +329,7 @@ public class pictureTime extends LinearOpMode
                         input, // Buffer to draw on
                         region2_pointA, // First point which defines the rectangle
                         region2_pointB, // Second point which defines the rectangle
-                        GREEN, // The color the rectangle is drawn in
+                        RED, // The color the rectangle is drawn in
                         -1); // Negative thickness means solid fill
             }
             else if(max == avg3) // Was it from region 3?
@@ -344,7 +344,7 @@ public class pictureTime extends LinearOpMode
                         input, // Buffer to draw on
                         region3_pointA, // First point which defines the rectangle
                         region3_pointB, // Second point which defines the rectangle
-                        GREEN, // The color the rectangle is drawn in
+                        RED, // The color the rectangle is drawn in
                         -1); // Negative thickness means solid fill
             }
 
