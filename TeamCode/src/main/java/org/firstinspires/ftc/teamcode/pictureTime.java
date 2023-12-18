@@ -88,8 +88,8 @@ public class pictureTime extends LinearOpMode
 
         while (opModeIsActive())
         {
-            telemetry.addData("Analysis", pipeline.getAnalysis());
-            telemetry.update();
+            //telemetry.addData("Analysis", pipeline.getAnalysis());
+            //telemetry.update();
 
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
@@ -254,9 +254,9 @@ public class pictureTime extends LinearOpMode
              * pixel value of the 3-channel image, and referenced the value
              * at index 2 here.
              */
-            avg1 = (int) Core.mean(region1_Cb).val[0];
-            avg2 = (int) Core.mean(region2_Cb).val[0];
-            avg3 = (int) Core.mean(region3_Cb).val[0];
+            avg1 = (int) Core.mean(region1_Cb).val[200];
+            avg2 = (int) Core.mean(region2_Cb).val[200];
+            avg3 = (int) Core.mean(region3_Cb).val[200];
 
             /*
              * Draw a rectangle showing sample region 1 on the screen.
