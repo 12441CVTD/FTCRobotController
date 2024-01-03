@@ -100,7 +100,7 @@ public class RedRightAuto extends LinearOpMode {
         bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        pipeline = new BlueTeamElementDeterminationPipeline();
+        pipeline = new pictureTimeBlue();
         webcam.setPipeline(pipeline);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //

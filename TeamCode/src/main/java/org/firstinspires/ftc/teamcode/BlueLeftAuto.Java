@@ -36,12 +36,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvWebcam;
-
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 /*
  * This OpMode illustrates the concept of driving a path based on time.
  * The code is structured as a LinearOpMode
@@ -71,6 +77,8 @@ public class BlueLeftAuto extends LinearOpMode {
     private DcMotor bL = null;
     private DcMotor bR = null;
     private ElapsedTime runtime = new ElapsedTime();
+    OpenCvWebcam webcam;
+    pictureTimeBlue pipeline;
 
     @Override
     public void runOpMode() {
@@ -94,7 +102,7 @@ public class BlueLeftAuto extends LinearOpMode {
         bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        pipeline = new BlueTeamElementDeterminationPipeline();
+        pipeline = new pictureTimeBlue();
         webcam.setPipeline(pipeline);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
@@ -120,7 +128,7 @@ public class BlueLeftAuto extends LinearOpMode {
     });
         waitForStart();
         OpenCvWebcam webcam;
-        BlueTeamElementDeterminationPipeline pipeline;
+        pictureTimeBlue pipeline;
         driveWay(-0.6,0.6,0.6,-0.6, 1000);
         driveWay(0.4,-0.4,-0.4,0.4, 200);
         fL.setPower(0);

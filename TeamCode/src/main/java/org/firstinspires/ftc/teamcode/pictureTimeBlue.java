@@ -338,9 +338,18 @@ telemetry.addData("works :D: right", 3);
         /*
          * Call this from the OpMode thread to obtain the latest analysis
          */
-        public CoffinPosition getAnalysis()
+        public SpikeMarkPosition getAnalysis()
         {
-            return CoffinPos;
+            switch (position) {
+                case LEFT:
+                    return SpikeMarkPosition.UNO;
+                case CENTER:
+                    return SpikeMarkPosition.DOS;
+                case RIGHT:
+                    return SpikeMarkPosition.TRES;
+                default:
+                    return SpikeMarkPosition.UNO;
+            }
         }
     }
-}
+
