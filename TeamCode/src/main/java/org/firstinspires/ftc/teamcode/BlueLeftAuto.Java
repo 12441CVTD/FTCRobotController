@@ -36,6 +36,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 /*
  * This OpMode illustrates the concept of driving a path based on time.
@@ -87,13 +92,35 @@ public class BlueLeftAuto extends LinearOpMode {
         fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        pipeline = new BlueTeamElementDeterminationPipeline();
+        webcam.setPipeline(pipeline);
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+        webcam.setMillisecondsPermissionTimeout(2500);
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
+        @Override
+        public void onOpened()
+        {
+            webcam.startStreaming(640,480, OpenCvCameraRotation.UPRIGHT);
+        }
 
+        @Override
+        public void onError(int errorCode)
+        {
+            /*
+             * This will be called if the camera could not be opened
+             */
+            telemetry.addData("erroCode", errorCode);
+        }
+    });
+        waitForStart();
+        OpenCvWebcam webcam;
+        BlueTeamElementDeterminationPipeline pipeline;
         driveWay(-0.6,0.6,0.6,-0.6, 1000);
         driveWay(0.4,-0.4,-0.4,0.4, 200);
         fL.setPower(0);
