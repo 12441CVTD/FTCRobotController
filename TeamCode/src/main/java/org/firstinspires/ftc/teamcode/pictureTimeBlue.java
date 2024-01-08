@@ -326,7 +326,7 @@ telemetry.addData("works :D: right", 3);
                         RED, // The color the rectangle is drawn in
                         -1); // Negative thickness means solid fill
             }
-
+            telemetry.update();
             /*
              * Render the 'input' buffer to the viewport. But note this is not
              * simply rendering the raw camera feed, because we called functions
@@ -338,17 +338,17 @@ telemetry.addData("works :D: right", 3);
         /*
          * Call this from the OpMode thread to obtain the latest analysis
          */
-        public SpikeMarkPosition getAnalysis()
+        public int getAnalysis()
         {
             switch (position) {
                 case LEFT:
-                    return SpikeMarkPosition.UNO;
+                    return 1;
                 case CENTER:
-                    return SpikeMarkPosition.DOS;
+                    return 2;
                 case RIGHT:
-                    return SpikeMarkPosition.TRES;
+                    return 3;
                 default:
-                    return SpikeMarkPosition.UNO;
+                    return 1;
             }
         }
     }

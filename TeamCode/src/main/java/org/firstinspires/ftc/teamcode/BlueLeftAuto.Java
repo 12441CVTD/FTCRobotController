@@ -128,7 +128,16 @@ public class BlueLeftAuto extends LinearOpMode {
     });
         waitForStart();
         OpenCvWebcam webcam;
-        pictureTimeBlue pipeline;
+        int barkAndBark = pipeline.getAnalysis();
+        if(barkAndBark == 1) {
+            telemetry.addData("works", 1);
+        }
+        if(barkAndBark == 2) {
+            telemetry.addData("works", 2);
+        }
+        if(barkAndBark == 3) {
+            telemetry.addData("works", 3);
+        }
         driveWay(-0.6,0.6,0.6,-0.6, 1000);
         driveWay(0.4,-0.4,-0.4,0.4, 200);
         fL.setPower(0);
