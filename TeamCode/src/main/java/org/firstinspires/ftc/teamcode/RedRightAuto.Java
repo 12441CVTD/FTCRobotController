@@ -76,7 +76,8 @@ public class RedRightAuto extends LinearOpMode {
     private DcMotor bL = null;
     private DcMotor bR = null;
     private ElapsedTime     runtime = new ElapsedTime();
-
+    OpenCvWebcam webcam;
+    pictureTimeBlue pipeline;
     
     @Override
     public void runOpMode() {
