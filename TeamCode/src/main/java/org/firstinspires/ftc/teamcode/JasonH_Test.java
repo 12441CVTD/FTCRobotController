@@ -78,7 +78,7 @@ public class JasonH_Test extends LinearOpMode {
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         fL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.FORWARD);
-        bL.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.FORWARD);
         bR.setDirection(DcMotor.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
         waitForStart();
