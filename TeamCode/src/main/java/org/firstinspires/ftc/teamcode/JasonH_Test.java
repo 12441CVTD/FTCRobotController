@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -76,8 +77,8 @@ public class JasonH_Test extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        fL.setDirection(DcMotor.Direction.REVERSE);
-        fR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.FORWARD);
+        fR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.FORWARD);
         bR.setDirection(DcMotor.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
@@ -98,8 +99,8 @@ public class JasonH_Test extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            leftPower    = Range.clip(drive + turn, -0.5, 0.5) ;
+            rightPower   = Range.clip(drive - turn, -0.5, 0.5) ;
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -107,10 +108,10 @@ public class JasonH_Test extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
-            fL.setPower(leftPower);
+            fL.setPower(rightPower);
             fR.setPower(rightPower);
             bL.setPower(leftPower);
-            bR.setPower(rightPower);
+            bR.setPower(leftPower);
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
