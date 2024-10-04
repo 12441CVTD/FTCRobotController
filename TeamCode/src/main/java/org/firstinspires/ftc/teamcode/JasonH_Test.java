@@ -29,13 +29,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /*
@@ -61,6 +61,7 @@ public class JasonH_Test extends LinearOpMode {
     private DcMotor bL = null;
     private DcMotor fR = null;
     private DcMotor bR = null;
+    private Timer timer = new Timer();
 
     @Override
     public void runOpMode() {
@@ -81,6 +82,10 @@ public class JasonH_Test extends LinearOpMode {
         fR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.FORWARD);
         bR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -89,33 +94,79 @@ public class JasonH_Test extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
+            double fLPower;
+            double bLPower;
+            double fRPower;
+            double bRPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
+            boolean x = gamepad1.x;
+
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            rightPower   = Range.clip(drive - turn, -0.5, 0.5) ;
+            fLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
+            fRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
+            bLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
+            bRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
-
+            if(x){
+                timer.schedule(new shmove(.5, -1), 0);
+            }
             // Send calculated power to wheels
-            fL.setPower(rightPower);
-            fR.setPower(rightPower);
-            bL.setPower(leftPower);
-            bR.setPower(leftPower);
+            fL.setPower(fLPower);
+            fR.setPower(fRPower);
+            bL.setPower(bLPower);
+            bR.setPower(bRPower);
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f)", fLPower, fRPower);
             telemetry.update();
         }
     }
+    class shmove extends TimerTask{
+        private double power;
+        private int direction;
+
+        public shmove(double power, int d){
+            this.power = power;
+            direction = d;
+        }
+        public void run(){
+            if(direction > 0){
+                fR.setPower(power);
+                fL.setPower(power);
+                bR.setPower(-power);
+                bL.setPower(-power);
+            }
+            else{
+                fR.setPower(-power);
+                fL.setPower(-power);
+                bR.setPower(power);
+                bL.setPower(power);
+            }
+        }
+    }
+    class stopMove extends TimerTask{
+
+        public void run(){
+            fR.setPower(0);
+            fL.setPower(0);
+            bR.setPower(0);
+            bL.setPower(0);
+        }
+
+    }
 }
+
+
+
+
+
