@@ -118,7 +118,7 @@ public class JasonH_Test extends LinearOpMode {
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
             if(x){
-                timer.schedule(new shmove(.5, -1), 0);
+                timer.schedule(new shmove(.5, -1, 1000), 0);
             }
             // Send calculated power to wheels
             fL.setPower(fLPower);
@@ -134,36 +134,37 @@ public class JasonH_Test extends LinearOpMode {
     class shmove extends TimerTask{
         private double power;
         private int direction;
+        private double time;
 
-        public shmove(double power, int d){
+
+        public shmove(double power, int d, double t){
             this.power = power;
             direction = d;
+            time = t;
+            runtime.reset();
         }
+
         public void run(){
             if(direction > 0){
-                fR.setPower(power);
-                fL.setPower(power);
-                bR.setPower(-power);
-                bL.setPower(-power);
+                while(opModeIsActive() && runtime.milliseconds() < time) {
+                    fR.setPower(power);
+                    fL.setPower(power);
+                    bR.setPower(-power);
+                    bL.setPower(-power);
+                }
             }
             else{
-                fR.setPower(-power);
-                fL.setPower(-power);
-                bR.setPower(power);
-                bL.setPower(power);
+                while(opModeIsActive() && runtime.milliseconds() < time) {
+                    fR.setPower(-power);
+                    fL.setPower(-power);
+                    bR.setPower(power);
+                    bL.setPower(power);
+                }
             }
         }
     }
-    class stopMove extends TimerTask{
 
-        public void run(){
-            fR.setPower(0);
-            fL.setPower(0);
-            bR.setPower(0);
-            bL.setPower(0);
-        }
 
-    }
 }
 
 
