@@ -109,7 +109,18 @@ public class JasonH_Test extends LinearOpMode {
             fRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
             bLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
             bRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
-
+            if(gamepad1.left_bumper) {
+                fLPower = -0.5;
+                fRPower = 0.5;
+                bLPower = 0.5;
+                bRPower = -0.5;
+            }
+            if(gamepad1.right_bumper) {
+                fLPower = 0.5;
+                fRPower = -+0.5;
+                bLPower = -0.5;
+                bRPower = 0.5;
+            }
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
@@ -128,6 +139,7 @@ public class JasonH_Test extends LinearOpMode {
             telemetry.update();
         }
     }
+    //AutoLeft/Right
     class shmove extends TimerTask{
         private double power;
         private double time;
@@ -149,6 +161,22 @@ public class JasonH_Test extends LinearOpMode {
         }
     }
 
+    //AutoBack/Forth
+    class thisWayThat extends TimerTask{
+
+        private int power;
+        private int time;
+
+        public thisWayThat(){
+
+        }
+
+
+        public void run(){
+
+        }
+    }
+    //AutoRotation
 
 }
 
