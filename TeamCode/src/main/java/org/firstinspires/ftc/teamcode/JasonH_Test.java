@@ -79,13 +79,10 @@ public class JasonH_Test extends LinearOpMode {
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.REVERSE);
-        bL.setDirection(DcMotor.Direction.FORWARD);
-        bR.setDirection(DcMotor.Direction.FORWARD);
-        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        bL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.REVERSE);
+
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -118,7 +115,7 @@ public class JasonH_Test extends LinearOpMode {
             // leftPower  = -gamepad1.left_stick_y ;
             // rightPower = -gamepad1.right_stick_y ;
             if(x){
-                timer.schedule(new shmove(.5, -1, 1000), 0);
+                timer.schedule(new shmove(.5, 1000), 0);
             }
             // Send calculated power to wheels
             fL.setPower(fLPower);
@@ -133,33 +130,21 @@ public class JasonH_Test extends LinearOpMode {
     }
     class shmove extends TimerTask{
         private double power;
-        private int direction;
         private double time;
 
 
-        public shmove(double power, int d, double t){
+        public shmove(double power, double time){
             this.power = power;
-            direction = d;
-            time = t;
+            this.time = time;
             runtime.reset();
         }
 
         public void run(){
-            if(direction > 0){
-                while(opModeIsActive() && runtime.milliseconds() < time) {
-                    fR.setPower(power);
-                    fL.setPower(power);
-                    bR.setPower(-power);
-                    bL.setPower(-power);
-                }
-            }
-            else{
-                while(opModeIsActive() && runtime.milliseconds() < time) {
-                    fR.setPower(-power);
-                    fL.setPower(-power);
-                    bR.setPower(power);
-                    bL.setPower(power);
-                }
+            while(opModeIsActive() && runtime.milliseconds() < time) {
+                fR.setPower(power);
+                fL.setPower(-power);
+                bR.setPower(-power);
+                bL.setPower(power);
             }
         }
     }
