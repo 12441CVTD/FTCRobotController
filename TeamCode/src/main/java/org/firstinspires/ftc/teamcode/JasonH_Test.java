@@ -102,6 +102,8 @@ public class JasonH_Test extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             boolean x = gamepad1.x;
+            boolean y = gamepad1.y;
+            boolean a = gamepad1.a;
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
@@ -127,6 +129,12 @@ public class JasonH_Test extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
             if(x){
                 timer.schedule(new shmove(.5, 1000), 0);
+            }
+            if(y){
+                timer.schedule(new frontToBack(.5, 1000), 0);
+            }
+            if(a){
+                timer.schedule(new turn(.5 , 1000), 0);
             }
             // Send calculated power to wheels
             fL.setPower(fLPower);
@@ -162,21 +170,46 @@ public class JasonH_Test extends LinearOpMode {
     }
 
     //AutoBack/Forth
-    class thisWayThat extends TimerTask{
+    class frontToBack extends TimerTask{
+        private double power;
+        private double time;
 
-        private int power;
-        private int time;
-
-        public thisWayThat(){
-
+        public frontToBack(double power, double time){
+            this.power = power;
+            this.time = time;
+            runtime.reset();
         }
 
-
         public void run(){
-
+            while(opModeIsActive() && runtime.milliseconds() < time){
+                fR.setPower(power);
+                fL.setPower(power);
+                bR.setPower(power);
+                bL.setPower(power);
+            }
         }
     }
     //AutoRotation
+    class turn extends TimerTask{
+        private double power;
+        private double time;
+
+        public turn(double power, double time){
+            this.power = power;
+            this.time = time;
+            runtime.reset();
+        }
+
+        public void run(){
+            while(opModeIsActive() && runtime.milliseconds() < time){
+                fR.setPower(power);
+                fL.setPower(-power);
+                bR.setPower(power);
+                bL.setPower(-power);
+            }
+        }
+
+    }
 
 }
 
