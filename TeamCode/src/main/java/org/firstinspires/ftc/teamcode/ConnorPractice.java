@@ -8,20 +8,20 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class ConnorPractice extends OpMode {
 
- private DcMotor fl;
- private DcMotor fr;
- private DcMotor bl;
- private DcMotor br;
+ private DcMotor fL;
+ private DcMotor fR;
+ private DcMotor bL;
+ private DcMotor bR;
 
     @Override
     public void init() {
-        fr = hardwareMap.get(DcMotor.class, "fr");
-        fl = hardwareMap.get(DcMotor.class, "fl");
-        bl = hardwareMap.get(DcMotor.class, "bl");
-        br = hardwareMap.get(DcMotor.class, "br");
+        fR = hardwareMap.get(DcMotor.class, "fR");
+        fL = hardwareMap.get(DcMotor.class, "fL");
+        bL = hardwareMap.get(DcMotor.class, "bL");
+        bR = hardwareMap.get(DcMotor.class, "bR");
 
-        bl.setDirection(DcMotorSimple.Direction.REVERSE);
-        br.setDirection(DcMotorSimple.Direction.REVERSE);
+        bL.setDirection(DcMotorSimple.Direction.REVERSE);
+        bR.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
@@ -29,9 +29,9 @@ public class ConnorPractice extends OpMode {
         double leftPower = -gamepad1.left_stick_y;
         double rightPower = -gamepad1.right_stick_y;
 
-        fl.setPower(leftPower);
-        bl.setPower(leftPower);
-        fr.setPower(rightPower);
-        br.setPower(rightPower);
+        fL.setPower(leftPower);
+        bL.setPower(leftPower);
+        fR.setPower(rightPower);
+        bR.setPower(rightPower);
     }
 }
