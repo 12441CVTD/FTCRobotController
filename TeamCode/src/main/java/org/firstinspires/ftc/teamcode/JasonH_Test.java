@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import java.util.Timer;
@@ -61,6 +62,7 @@ public class JasonH_Test extends LinearOpMode {
     private DcMotor bL = null;
     private DcMotor fR = null;
     private DcMotor bR = null;
+    private Servo claw = null;
     private Timer timer = new Timer();
 
     @Override
@@ -75,6 +77,8 @@ public class JasonH_Test extends LinearOpMode {
         fR = hardwareMap.get(DcMotor.class, "fR");
         bL  = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "bR");
+
+        claw = hardwareMap.get(Servo.class, "claw");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -83,6 +87,7 @@ public class JasonH_Test extends LinearOpMode {
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
 
+        claw.setDirection(Servo.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -122,6 +127,12 @@ public class JasonH_Test extends LinearOpMode {
                 fRPower = -+0.5;
                 bLPower = -0.5;
                 bRPower = 0.5;
+            }
+            if(gamepad1.left_trigger > 0){
+                claw.setPosition(0.6);
+            }
+            if(gamepad1.right_trigger > 0){
+                claw.setPosition(0.2);
             }
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
