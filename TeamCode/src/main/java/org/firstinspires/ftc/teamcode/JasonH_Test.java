@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -58,12 +59,18 @@ public class JasonH_Test extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
+
     private DcMotor fL = null;
     private DcMotor bL = null;
     private DcMotor fR = null;
     private DcMotor bR = null;
+    private DcMotor lArm = null;
+    private DcMotor rArm = null;
+
     private Servo claw = null;
     private Timer timer = new Timer();
+
+
 
     @Override
     public void runOpMode() {
@@ -78,6 +85,9 @@ public class JasonH_Test extends LinearOpMode {
         bL  = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "bR");
 
+        lArm = hardwareMap.get(DcMotor.class, "lArm");
+        rArm = hardwareMap.get(DcMotor.class, "rArm");
+
         claw = hardwareMap.get(Servo.class, "claw");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -86,6 +96,9 @@ public class JasonH_Test extends LinearOpMode {
         fR.setDirection(DcMotor.Direction.FORWARD);
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
+
+        lArm.setDirection(DcMotor.Direction.REVERSE);
+        rArm.setDirection(DcMotor.Direction.FORWARD);
 
         claw.setDirection(Servo.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
@@ -101,21 +114,36 @@ public class JasonH_Test extends LinearOpMode {
             double fRPower;
             double bRPower;
 
+            double armPow = 0.05;
+
+            double deceleration = 0;
+
+
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            boolean x = gamepad1.x;
-            boolean y = gamepad1.y;
-            boolean a = gamepad1.a;
+         //   boolean x = gamepad1.x;
+         //   boolean y = gamepad1.y;
+         //   boolean a = gamepad1.a;
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            fLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            fRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
-            bLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            bRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
+            double lift = -gamepad2.left_stick_y;
+
+            fLPower    = Range.clip(drive + turn + deceleration, -0.5, 0.5) ;
+            fRPower   = Range.clip(drive - turn - deceleration, -0.5, 0.5) ;
+            bLPower    = Range.clip(drive + turn + deceleration, -0.5, 0.5) ;
+            bRPower   = Range.clip(drive - turn - deceleration, -0.5, 0.5) ;
+
+            if(gamepad2.dpad_up){
+                armPow = 0.5;
+            }
+            if(gamepad2.dpad_down){
+                armPow = -0.5;
+            }
+
             if(gamepad1.left_bumper) {
                 fLPower = -0.5;
                 fRPower = 0.5;
@@ -134,27 +162,32 @@ public class JasonH_Test extends LinearOpMode {
             if(gamepad1.right_trigger > 0){
                 claw.setPosition(0.2);
             }
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
-            if(x){
-                timer.schedule(new shmove(.5, 1000), 0);
+
+            if(fLPower != 0 && gamepad1.right_trigger > 0){
+                deceleration = -0.2;
             }
-            if(y){
-                timer.schedule(new frontToBack(.5, 1000), 0);
-            }
-            if(a){
-                timer.schedule(new turn(.5 , 1000), 0);
-            }
+;
+         //   if(x){
+         //       timer.schedule(new shmove(.5, 1000), 0);
+         //   }
+         //   if(y){
+         //       timer.schedule(new frontToBack(.5, 1000), 0);
+         //   }
+            //  if(a){
+         //       timer.schedule(new turn(.5 , 1000), 0);
+         //   }
             // Send calculated power to wheels
             fL.setPower(fLPower);
             fR.setPower(fRPower);
             bL.setPower(bLPower);
             bR.setPower(bRPower);
+
+            lArm.setPower(armPow);
+            rArm.setPower(armPow);
+
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", fLPower, fRPower);
+            telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
             telemetry.update();
         }
     }
