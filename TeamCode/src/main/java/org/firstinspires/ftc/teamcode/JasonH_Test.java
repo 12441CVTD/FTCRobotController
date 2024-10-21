@@ -114,7 +114,7 @@ public class JasonH_Test extends LinearOpMode {
             double fRPower;
             double bRPower;
 
-            double armPow = 0.05;
+            double armPow = 0;
 
             double deceleration = 0;
 
@@ -156,10 +156,10 @@ public class JasonH_Test extends LinearOpMode {
                 bLPower = -0.5;
                 bRPower = 0.5;
             }
-            if(gamepad1.left_trigger > 0){
+            if(gamepad2.left_trigger > 0){
                 claw.setPosition(0.6);
             }
-            if(gamepad1.right_trigger > 0){
+            if(gamepad2.right_trigger > 0){
                 claw.setPosition(0.2);
             }
 
