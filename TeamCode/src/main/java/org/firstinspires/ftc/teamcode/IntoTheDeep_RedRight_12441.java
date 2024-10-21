@@ -30,8 +30,8 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.REVERSE);
-        bL.setDirection(DcMotor.Direction.FORWARD);
+        fR.setDirection(DcMotor.Direction.FORWARD);
+        bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
         fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -40,79 +40,59 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         waitForStart();
 
-        timer.schedule(new shmove(0.3, 1600), 0);
-        timer.schedule(new frontToBack(0.5, 2500), 1600);
+        shmove(0.3, 5000);
 
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.update();
+
+    }
+    //Strafe neg = Right pos = Left
+    public void shmove(double power, int time){
+        runtime.reset();
+        while(opModeIsActive() && runtime.milliseconds() < time) {
+            fR.setPower(power);
+            fL.setPower(-power);
+            bR.setPower(-power);
+            bL.setPower(power);
+        }
         fL.setPower(0);
         fR.setPower(0);
         bL.setPower(0);
         bR.setPower(0);
     }
 
-    //AutoLeft/Right
-    class shmove extends TimerTask{
-        private double power;
-        private double time;
-
-
-        public shmove(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
+    //neg = backward pos = forward
+    public void backAndForth(double power, int time){
+        runtime.reset();
+        while(opModeIsActive() && runtime.milliseconds() < time){
+            fR.setPower(power);
+            fL.setPower(power);
+            bR.setPower(power);
+            bL.setPower(power);
         }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time) {
-                fR.setPower(power);
-                fL.setPower(-power);
-                bR.setPower(-power);
-                bL.setPower(power);
-            }
-        }
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
     }
 
-    //AutoBack/Forth
-    class frontToBack extends TimerTask{
-        private double power;
-        private double time;
-
-        public frontToBack(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
+    //neg = counterClockwise pos = clockwise;
+    public void turn(double power, int time){
+        runtime.reset();
+        while(opModeIsActive() && runtime.milliseconds() < time){
+            fR.setPower(power);
+            fL.setPower(-power);
+            bR.setPower(power);
+            bL.setPower(-power);
         }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time){
-                fR.setPower(power);
-                fL.setPower(power);
-                bR.setPower(power);
-                bL.setPower(power);
-            }
-        }
+        fL.setPower(0);
+        fR.setPower(0);
+        bL.setPower(0);
+        bR.setPower(0);
     }
-    //AutoRotation
-    class turn extends TimerTask{
-        private double power;
-        private double time;
-
-        public turn(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time){
-                fR.setPower(power);
-                fL.setPower(-power);
-                bR.setPower(power);
-                bL.setPower(-power);
-            }
-        }
-
-    }
-
-
 
 }
