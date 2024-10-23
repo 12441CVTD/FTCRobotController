@@ -38,10 +38,10 @@ public class ITD_LeftBabyMode extends LinearOpMode {
 
     public void driveWay (double fLp, double bLp, double fRp, double bRp, long time){
 
-       fL.setPower(fLp);
-       bL.setPower(bLp);
-       bR.setPower(bRp);
-       fR.setPower(fRp);
+        fL.setPower(fLp);
+        bL.setPower(bLp);
+        bR.setPower(bRp);
+        fR.setPower(fRp);
 
         sleep(time);
 
