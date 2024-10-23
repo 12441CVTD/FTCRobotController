@@ -37,7 +37,7 @@ public class ITD_RightBabyMode extends LinearOpMode {
         sleep(1000);
         driveWay(0.5,-0.5,-0.5,0.5,1300);
         telemetry.addData("hi", ")");
-
+        telemetry.update();
     }
 
     public void driveWay (double fLp, double bLp, double fRp, double bRp, long time){
