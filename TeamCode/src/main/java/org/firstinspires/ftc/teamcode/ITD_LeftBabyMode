@@ -28,10 +28,6 @@ public class ITD_LeftBabyMode extends LinearOpMode {
         bR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
 
-//        motorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        motorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//we don't need this rn lol
-
         waitForStart();
         driveWay(0.3,0.3,0.3,0.3,500);
         sleep(1000);
