@@ -50,6 +50,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         telemetry.update();
 
     }
+    
     //Strafe neg = Right pos = Left
     public void shmove(double power, int time){
         runtime.reset();

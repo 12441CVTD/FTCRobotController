@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="Demo Auto")
+@Autonomous(name="RedRightBabyMode")
 
 public class ITD_Red_RightBabyMode extends LinearOpMode {
 
@@ -25,18 +25,17 @@ public class ITD_Red_RightBabyMode extends LinearOpMode {
         bR = hardwareMap.dcMotor.get("bR");
 
 
-        fL.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
 
 //        motorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        motorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//we dont need this rn lol
+//we don't need this rn lol
 
         waitForStart();
-
-        driveWay(1.0,1.0,1.0,1.0,1000);
+        driveWay(0.3,0.3,0.3,0.3,500);
         sleep(1000);
-        driveWay(-1.0,-1.0,-1.0,-1.0,1000);
+        driveWay(0.5,-0.5,-0.5,0.5,1300);
 
     }
 
