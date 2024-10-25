@@ -173,8 +173,16 @@ public class JasonH_Test extends LinearOpMode {
                 rElbow.setPosition(0.5);
             }
             if(gamepad2.right_trigger > 0){
-                lElbow.setPosition(0.2);
-                rElbow.setPosition(0.2);
+                lElbow.setPosition(0.1);
+                rElbow.setPosition(0.1);
+            }
+            if(gamepad2.left_bumper){
+                lElbow.setPosition(0.6);
+                rElbow.setPosition(0.6);
+            }
+            if(gamepad2.right_bumper){
+                lElbow.setPosition(0.4);
+                rElbow.setPosition(0.4);
             }
 ;
          //   if(x){
