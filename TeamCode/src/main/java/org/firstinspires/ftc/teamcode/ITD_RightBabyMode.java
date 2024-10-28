@@ -4,16 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="Red_RightBabyMode")
+@Autonomous(name="RightBabyMode")
 
-public class ITD_Red_RightBabyMode extends LinearOpMode {
+public class ITD_RightBabyMode extends LinearOpMode {
 
     private DcMotor fR;
     private DcMotor fL;
     private DcMotor bL;
     private DcMotor bR;
-    private DcMotor lArm;
-    private DcMotor rArm;
 
     @Override
 
@@ -25,22 +23,21 @@ public class ITD_Red_RightBabyMode extends LinearOpMode {
         fR = hardwareMap.dcMotor.get("fR");
         bL = hardwareMap.dcMotor.get("bL");
         bR = hardwareMap.dcMotor.get("bR");
-        lArm = hardwareMap.dcMotor.get("lArm");
-        rArm = hardwareMap.dcMotor.get("rArm");
 
-        fL.setDirection(DcMotor.Direction.REVERSE);
+
+        bR.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
 
 //        motorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        motorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//we dont need this rn lol
+//we don't need this rn lol
 
         waitForStart();
-
-        driveWay(1.0,1.0,1.0,1.0,1000);
+        driveWay(0.3,0.3,0.3,0.3,500);
         sleep(1000);
-        driveWay(-1.0,-1.0,-1.0,-1.0,1000);
-
+        driveWay(0.5,-0.5,-0.5,0.5,1300);
+        telemetry.addData("hi", ")");
+        telemetry.update();
     }
 
     public void driveWay (double fLp, double bLp, double fRp, double bRp, long time){

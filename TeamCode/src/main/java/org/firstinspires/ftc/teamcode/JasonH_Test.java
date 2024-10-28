@@ -67,7 +67,10 @@ public class JasonH_Test extends LinearOpMode {
     private DcMotor lArm = null;
     private DcMotor rArm = null;
 
-    private Servo claw = null;
+    private Servo lElbow = null;
+    private Servo rElbow = null;
+
+
     private Timer timer = new Timer();
 
 
@@ -88,7 +91,8 @@ public class JasonH_Test extends LinearOpMode {
         lArm = hardwareMap.get(DcMotor.class, "lArm");
         rArm = hardwareMap.get(DcMotor.class, "rArm");
 
-        claw = hardwareMap.get(Servo.class, "claw");
+        lElbow = hardwareMap.get(Servo.class, "lElbow");
+        rElbow = hardwareMap.get(Servo.class, "rElbow");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -100,7 +104,8 @@ public class JasonH_Test extends LinearOpMode {
         lArm.setDirection(DcMotor.Direction.REVERSE);
         rArm.setDirection(DcMotor.Direction.FORWARD);
 
-        claw.setDirection(Servo.Direction.FORWARD);
+        lElbow.setDirection(Servo.Direction.FORWARD);
+        rElbow.setDirection(Servo.Direction.REVERSE);
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -159,11 +164,25 @@ public class JasonH_Test extends LinearOpMode {
                 bLPower = -0.5;
                 bRPower = 0.5;
             }
+            //we did sum stuff and now it works right
+            //the higher the value(so closer to 1) makes it go down
+            //the lower the value(closer to 0) makes it go up
+            // it should be able to just go 180 up and 180 down which is plenty for what we need
             if(gamepad2.left_trigger > 0){
-                claw.setPosition(0.6);
+                lElbow.setPosition(0.5);
+                rElbow.setPosition(0.5);
             }
             if(gamepad2.right_trigger > 0){
-                claw.setPosition(0.2);
+                lElbow.setPosition(0.1);
+                rElbow.setPosition(0.1);
+            }
+            if(gamepad2.left_bumper){
+                lElbow.setPosition(0.6);
+                rElbow.setPosition(0.6);
+            }
+            if(gamepad2.right_bumper){
+                lElbow.setPosition(0.4);
+                rElbow.setPosition(0.4);
             }
 ;
          //   if(x){
