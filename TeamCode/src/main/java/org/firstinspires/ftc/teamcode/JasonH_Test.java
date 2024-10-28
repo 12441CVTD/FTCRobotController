@@ -69,6 +69,7 @@ public class JasonH_Test extends LinearOpMode {
 
     private Servo lElbow = null;
     private Servo rElbow = null;
+    private Servo claw = null;
 
 
     private Timer timer = new Timer();
@@ -93,6 +94,7 @@ public class JasonH_Test extends LinearOpMode {
 
         lElbow = hardwareMap.get(Servo.class, "lElbow");
         rElbow = hardwareMap.get(Servo.class, "rElbow");
+        claw = hardwareMap.get(Servo.class, "claw");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -106,6 +108,7 @@ public class JasonH_Test extends LinearOpMode {
 
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
+        claw.setDirection(Servo.Direction.FORWARD);
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -119,7 +122,8 @@ public class JasonH_Test extends LinearOpMode {
             double fRPower;
             double bRPower;
 
-            double armPow = 0;
+
+            double armPow = 0.01;
 
 
             // Choose to drive using either Tank Mode, or POV Mode
@@ -133,7 +137,7 @@ public class JasonH_Test extends LinearOpMode {
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            double lift = -gamepad2.left_stick_y;
+
             double deceleration = 1.1-gamepad1.right_trigger;
             double margins = 0.6*deceleration;
             if(margins < 0.1){
@@ -184,16 +188,17 @@ public class JasonH_Test extends LinearOpMode {
                 lElbow.setPosition(0.4);
                 rElbow.setPosition(0.4);
             }
-;
-         //   if(x){
-         //       timer.schedule(new shmove(.5, 1000), 0);
-         //   }
-         //   if(y){
-         //       timer.schedule(new frontToBack(.5, 1000), 0);
-         //   }
-            //  if(a){
-         //       timer.schedule(new turn(.5 , 1000), 0);
-         //   }
+            if(gamepad2.a){
+                claw.setPosition(0.5);
+                telemetry.addData("claw position","open");
+                telemetry.update();
+            }
+            if(gamepad2.x){
+                claw.setPosition(0.15);
+                telemetry.addData("claw position", "closed");
+                telemetry.update();
+            }
+
             // Send calculated power to wheels
             fL.setPower(fLPower);
             fR.setPower(fRPower);
