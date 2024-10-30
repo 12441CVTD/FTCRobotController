@@ -118,11 +118,15 @@ public class JasonH_Test extends LinearOpMode {
         lArm.setDirection(DcMotor.Direction.REVERSE);
         rArm.setDirection(DcMotor.Direction.FORWARD);
 
-        lElbow.setDirection(Servo.Direction.FORWARD);
+        lElbow.setDirection(Servo.Direction.REVERSE);
         rElbow.setDirection(Servo.Direction.FORWARD);
 
         claw.setDirection(Servo.Direction.FORWARD);
         wrist.setDirection(Servo.Direction.FORWARD);
+
+        //start position
+        lElbow.setPosition(0);
+        rElbow.setPosition(0);
 
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -190,34 +194,33 @@ public class JasonH_Test extends LinearOpMode {
                 bLPower = -0.5;
                 bRPower = 0.5;
             }
-            //we did sum stuff and now it works right
-            //the higher the value(so closer to 1) makes it go down
-            //the lower the value(closer to 0) makes it go up
-            // it should be able to just go 180 up and 180 down which is plenty for what we need
+            //Stuff has changed
+            //0 == ground
+            //1 == danger
+
             //mid
             if(gamepad2.left_stick_button){
                 lElbow.setPosition(0);
                 rElbow.setPosition(0);
             }
             if(gamepad2.left_trigger > 0){
-                lElbow.setPosition(0.5);
-                rElbow.setPosition(0.5);
+                lElbow.setPosition(0.25);
+                rElbow.setPosition(0.25);
             }
-            //DO NOT USE THIS POSITION
-            //flip
+
             if(gamepad2.right_trigger > 0){
-                lElbow.setPosition(0.21);
-                rElbow.setPosition(0.21);
+                lElbow.setPosition(0.12);
+                rElbow.setPosition(0.12);
             }
 
             if(gamepad2.left_bumper){
-                lElbow.setPosition(0.56);
-                rElbow.setPosition(0.56);
+                lElbow.setPosition(0.4);
+                rElbow.setPosition(0.4);
             }
 
             if(gamepad2.right_bumper){
-                lElbow.setPosition(0.4);
-                rElbow.setPosition(0.4);
+                lElbow.setPosition(0.03);
+                rElbow.setPosition(0.03);
             }
 
             if(currentGP2.a && !previousGP2.a){
@@ -252,17 +255,17 @@ public class JasonH_Test extends LinearOpMode {
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
+            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f)", lElbow.getPosition(), rElbow.getPosition());
             telemetry.update();
         }
 
        // public void
     }
 
-    /*
-    class armShmove extends TimerTask{
+    class elbowShmove extends TimerTask{
         private double position;
 
-        public armShmove(double position){
+        public elbowShmove(double position){
             this.position = position;
         }
 
@@ -283,7 +286,7 @@ public class JasonH_Test extends LinearOpMode {
             wrist.setPosition(position);
         }
     }
-    */
+
 
 
     //AutoLeft/Right
