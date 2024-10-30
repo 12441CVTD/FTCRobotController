@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -70,9 +71,18 @@ public class JasonH_Test extends LinearOpMode {
     private Servo lElbow = null;
     private Servo rElbow = null;
     private Servo claw = null;
+    private Servo wrist = null;
+
 
 
     private Timer timer = new Timer();
+
+    // booleans and stuff for control improvements
+    private Gamepad previousGP2 = new Gamepad();
+    private Gamepad currentGP2 = new Gamepad();
+
+    boolean isOpened = false;
+    boolean turney;
 
 
 
@@ -95,6 +105,8 @@ public class JasonH_Test extends LinearOpMode {
         lElbow = hardwareMap.get(Servo.class, "lElbow");
         rElbow = hardwareMap.get(Servo.class, "rElbow");
         claw = hardwareMap.get(Servo.class, "claw");
+        wrist = hardwareMap.get(Servo.class, "wrist");
+
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -109,12 +121,19 @@ public class JasonH_Test extends LinearOpMode {
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
         claw.setDirection(Servo.Direction.FORWARD);
+        wrist.setDirection(Servo.Direction.FORWARD);
+
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+            // Can be used to make toggleable inputs
+            previousGP2.copy(currentGP2);
+            currentGP2.copy(gamepad2);
+            // Format: if(currentGP2.*insertInput* && !previousGP2.*insertInput*){`
 
             // Setup a variable for each drive wheel to save power level for telemetry
             double fLPower;
@@ -124,6 +143,8 @@ public class JasonH_Test extends LinearOpMode {
 
 
             double armPow = 0.01;
+
+
 
 
             // Choose to drive using either Tank Mode, or POV Mode
@@ -172,31 +193,35 @@ public class JasonH_Test extends LinearOpMode {
             //the higher the value(so closer to 1) makes it go down
             //the lower the value(closer to 0) makes it go up
             // it should be able to just go 180 up and 180 down which is plenty for what we need
+            //mid
+
             if(gamepad2.left_trigger > 0){
                 lElbow.setPosition(0.5);
                 rElbow.setPosition(0.5);
             }
+            //DO NOT USE THIS POSITION
+            //flip
             if(gamepad2.right_trigger > 0){
-                lElbow.setPosition(0.1);
-                rElbow.setPosition(0.1);
+                lElbow.setPosition(0.2);
+                rElbow.setPosition(0.2);
             }
+
             if(gamepad2.left_bumper){
-                lElbow.setPosition(0.6);
-                rElbow.setPosition(0.6);
+                lElbow.setPosition(0.56);
+                rElbow.setPosition(0.56);
             }
             if(gamepad2.right_bumper){
                 lElbow.setPosition(0.4);
                 rElbow.setPosition(0.4);
             }
-            if(gamepad2.a){
-                claw.setPosition(0.5);
-                telemetry.addData("claw position","open");
-                telemetry.update();
+            if(currentGP2.a && !previousGP2.a){
+                isOpened = !isOpened;
             }
-            if(gamepad2.x){
-                claw.setPosition(0.15);
-                telemetry.addData("claw position", "closed");
-                telemetry.update();
+            if(gamepad2.b){
+                wrist.setPosition(0.035);
+            }
+            if(gamepad2.y){
+                wrist.setPosition(0.1);
             }
 
             // Send calculated power to wheels
@@ -204,9 +229,16 @@ public class JasonH_Test extends LinearOpMode {
             fR.setPower(fRPower);
             bL.setPower(bLPower);
             bR.setPower(bRPower);
-
+            // Send power to the arms
             lArm.setPower(armPow);
             rArm.setPower(armPow);
+            // Check claw position
+            if(isOpened){
+                claw.setPosition(0.3);
+            }
+            else if(!isOpened){
+                claw.setPosition(0.7);
+            }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
