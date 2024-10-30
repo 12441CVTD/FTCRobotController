@@ -241,7 +241,7 @@ public class JasonH_Test extends LinearOpMode {
             fR.setPower(fRPower);
             bL.setPower(bLPower);
             bR.setPower(bRPower);
-            // Send power to the arms
+            // Sends power to the arms
             lArm.setPower(armPow);
             rArm.setPower(armPow);
             // Check claw position
