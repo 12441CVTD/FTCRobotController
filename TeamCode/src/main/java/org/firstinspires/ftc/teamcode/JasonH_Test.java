@@ -119,7 +119,8 @@ public class JasonH_Test extends LinearOpMode {
         rArm.setDirection(DcMotor.Direction.FORWARD);
 
         lElbow.setDirection(Servo.Direction.FORWARD);
-        rElbow.setDirection(Servo.Direction.REVERSE);
+        rElbow.setDirection(Servo.Direction.FORWARD);
+
         claw.setDirection(Servo.Direction.FORWARD);
         wrist.setDirection(Servo.Direction.FORWARD);
 
@@ -141,6 +142,8 @@ public class JasonH_Test extends LinearOpMode {
             double fRPower;
             double bRPower;
 
+            double deceleration = 0.0;
+
 
             double armPow = 0.01;
 
@@ -159,16 +162,14 @@ public class JasonH_Test extends LinearOpMode {
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
 
-            double deceleration = 1.1-gamepad1.right_trigger;
-            double margins = 0.6*deceleration;
-            if(margins < 0.1){
-                margins = 0.1;
+            if(gamepad1.right_bumper){
+                deceleration = 0.3;
             }
 
-            fLPower    = Range.clip(drive + turn, 0-margins, 0+margins) ;
-            fRPower   = Range.clip(drive - turn, 0-margins, 0+margins) ;
-            bLPower    = Range.clip(drive + turn, 0-margins, 0+margins) ;
-            bRPower   = Range.clip(drive - turn, 0-margins, 0+margins) ;
+            fLPower    = Range.clip(drive + turn, -0.5 + deceleration, 0.5 - deceleration) ;
+            fRPower   = Range.clip(drive - turn, -0.5 + deceleration, 0.5 - deceleration) ;
+            bLPower    = Range.clip(drive + turn, -0.5 + deceleration, 0.5 - deceleration) ;
+            bRPower   = Range.clip(drive - turn, -0.5 + deceleration, 0.5 - deceleration) ;
 
             if(gamepad2.dpad_up){
                 armPow = 0.5;
@@ -177,13 +178,13 @@ public class JasonH_Test extends LinearOpMode {
                 armPow = -0.5;
             }
 
-            if(gamepad1.left_bumper) {
+            if(gamepad1.left_trigger > 0) {
                 fLPower = -0.5;
                 fRPower = 0.5;
                 bLPower = 0.5;
                 bRPower = -0.5;
             }
-            if(gamepad1.right_bumper) {
+            if(gamepad1.right_trigger > 0) {
                 fLPower = 0.5;
                 fRPower = -+0.5;
                 bLPower = -0.5;
@@ -194,7 +195,10 @@ public class JasonH_Test extends LinearOpMode {
             //the lower the value(closer to 0) makes it go up
             // it should be able to just go 180 up and 180 down which is plenty for what we need
             //mid
-
+            if(gamepad2.left_stick_button){
+                lElbow.setPosition(0);
+                rElbow.setPosition(0);
+            }
             if(gamepad2.left_trigger > 0){
                 lElbow.setPosition(0.5);
                 rElbow.setPosition(0.5);
@@ -202,18 +206,20 @@ public class JasonH_Test extends LinearOpMode {
             //DO NOT USE THIS POSITION
             //flip
             if(gamepad2.right_trigger > 0){
-                lElbow.setPosition(0.2);
-                rElbow.setPosition(0.2);
+                lElbow.setPosition(0.21);
+                rElbow.setPosition(0.21);
             }
 
             if(gamepad2.left_bumper){
                 lElbow.setPosition(0.56);
                 rElbow.setPosition(0.56);
             }
+
             if(gamepad2.right_bumper){
                 lElbow.setPosition(0.4);
                 rElbow.setPosition(0.4);
             }
+
             if(currentGP2.a && !previousGP2.a){
                 isOpened = !isOpened;
             }
@@ -222,6 +228,9 @@ public class JasonH_Test extends LinearOpMode {
             }
             if(gamepad2.y){
                 wrist.setPosition(0.1);
+            }
+            if(gamepad2.right_stick_button){
+                wrist.setPosition(0.05);
             }
 
             // Send calculated power to wheels
@@ -245,7 +254,38 @@ public class JasonH_Test extends LinearOpMode {
             telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
             telemetry.update();
         }
+
+       // public void
     }
+
+    /*
+    class armShmove extends TimerTask{
+        private double position;
+
+        public armShmove(double position){
+            this.position = position;
+        }
+
+        public void run(){
+            lElbow.setPosition(position);
+            rElbow.setPosition(position);
+        }
+    }
+
+    class wristShmove extends TimerTask{
+        private double position;
+
+        public wristShmove(double position){
+            this.position = position;
+        }
+
+        public void run(){
+            wrist.setPosition(position);
+        }
+    }
+    */
+
+
     //AutoLeft/Right
     class shmove extends TimerTask{
         private double power;
