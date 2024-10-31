@@ -82,6 +82,7 @@ public class JasonH_Test extends LinearOpMode {
     private Gamepad currentGP2 = new Gamepad();
 
     boolean isOpened = false;
+    boolean isDown = false;
     boolean turney;
 
 
@@ -148,11 +149,7 @@ public class JasonH_Test extends LinearOpMode {
 
             double deceleration = 0.0;
 
-
             double armPow = 0.01;
-
-
-
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -194,6 +191,32 @@ public class JasonH_Test extends LinearOpMode {
                 bLPower = -0.5;
                 bRPower = 0.5;
             }
+
+            //Slow Mode
+            if(gamepad1.dpad_up){
+                fLPower = 0.25;
+                fRPower = 0.25;
+                bLPower = 0.25;
+                bRPower = 0.25;
+            }
+            if(gamepad1.dpad_down){
+                fLPower = -0.25;
+                fRPower = -0.25;
+                bLPower = -0.25;
+                bRPower = -0.25;
+            }
+            if(gamepad1.dpad_left){
+                fLPower = -0.25;
+                fRPower = 0.25;
+                bLPower = 0.25;
+                bRPower = -0.25;
+            }
+            if(gamepad1.dpad_right){
+                fLPower = 0.25;
+                fRPower = -+0.25;
+                bLPower = -0.25;
+                bRPower = 0.25;
+            }
             //Stuff has changed
             //0 == ground
             //1 == danger
@@ -226,11 +249,8 @@ public class JasonH_Test extends LinearOpMode {
             if(currentGP2.a && !previousGP2.a){
                 isOpened = !isOpened;
             }
-            if(gamepad2.b){
-                wrist.setPosition(0.035);
-            }
-            if(gamepad2.y){
-                wrist.setPosition(0.1);
+            if(currentGP2.y && !previousGP2.y){
+                isDown = !isDown;
             }
             if(gamepad2.right_stick_button){
                 wrist.setPosition(0.05);
@@ -241,15 +261,25 @@ public class JasonH_Test extends LinearOpMode {
             fR.setPower(fRPower);
             bL.setPower(bLPower);
             bR.setPower(bRPower);
+
+            // Send power to the arms
             // Sends power to the arms
             lArm.setPower(armPow);
             rArm.setPower(armPow);
-            // Check claw position
+
+            // Check claw positions
             if(isOpened){
                 claw.setPosition(0.3);
             }
             else if(!isOpened){
                 claw.setPosition(0.7);
+            }
+
+            if(isDown){
+                wrist.setPosition(0.035);
+            }
+            else if(!isDown){
+                wrist.setPosition(0.1);
             }
 
             // Show the elapsed game time and wheel power.
