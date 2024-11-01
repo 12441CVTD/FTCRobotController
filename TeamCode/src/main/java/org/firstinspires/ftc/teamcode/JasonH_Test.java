@@ -149,7 +149,7 @@ public class JasonH_Test extends LinearOpMode {
 
             double deceleration = 0.0;
 
-            double armPow = 0.01;
+            double armPow = 0.04;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -173,10 +173,10 @@ public class JasonH_Test extends LinearOpMode {
             bRPower   = Range.clip(drive - turn, -0.5 + deceleration, 0.5 - deceleration) ;
 
             if(gamepad2.dpad_up){
-                armPow = 0.5;
+                armPow = 0.8;
             }
             if(gamepad2.dpad_down){
-                armPow = -0.5;
+                armPow = -0.7;
             }
 
             if(gamepad1.left_trigger > 0) {
@@ -187,7 +187,7 @@ public class JasonH_Test extends LinearOpMode {
             }
             if(gamepad1.right_trigger > 0) {
                 fLPower = 0.5;
-                fRPower = -+0.5;
+                fRPower = -0.5;
                 bLPower = -0.5;
                 bRPower = 0.5;
             }
@@ -213,7 +213,7 @@ public class JasonH_Test extends LinearOpMode {
             }
             if(gamepad1.dpad_right){
                 fLPower = 0.25;
-                fRPower = -+0.25;
+                fRPower = -0.25;
                 bLPower = -0.25;
                 bRPower = 0.25;
             }
@@ -269,7 +269,7 @@ public class JasonH_Test extends LinearOpMode {
 
             // Check claw positions
             if(isOpened){
-                claw.setPosition(0.3);
+                claw.setPosition(0.37);
             }
             else if(!isOpened){
                 claw.setPosition(0.7);
