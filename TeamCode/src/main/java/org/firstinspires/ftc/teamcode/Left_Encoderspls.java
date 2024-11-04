@@ -19,10 +19,9 @@ public class Left_Encoderspls extends LinearOpMode {
 
     private ElapsedTime     runtime = new ElapsedTime();
 
-    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;
-    //this is wrong but idk what the right number is
+    static final double     COUNTS_PER_MOTOR_REV    = 2000 ;
     static final double     WHEEL_DIAMETER_INCHES   = 1.7 ;
-    //this one is right
+    //these are both right
     static final double     COUNTS_PER_INCH         = COUNTS_PER_MOTOR_REV /
             (WHEEL_DIAMETER_INCHES * 3.1415);
     //it took me a while to realize this is pi
