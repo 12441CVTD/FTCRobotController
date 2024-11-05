@@ -147,8 +147,6 @@ public class JasonH_Test extends LinearOpMode {
             double fRPower;
             double bRPower;
 
-            double deceleration = 0.0;
-
             double armPow = 0.04;
 
             // Choose to drive using either Tank Mode, or POV Mode
@@ -163,14 +161,10 @@ public class JasonH_Test extends LinearOpMode {
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
 
-            if(gamepad1.right_bumper){
-                deceleration = 0.3;
-            }
-
-            fLPower    = Range.clip(drive + turn, -0.5 + deceleration, 0.5 - deceleration) ;
-            fRPower   = Range.clip(drive - turn, -0.5 + deceleration, 0.5 - deceleration) ;
-            bLPower    = Range.clip(drive + turn, -0.5 + deceleration, 0.5 - deceleration) ;
-            bRPower   = Range.clip(drive - turn, -0.5 + deceleration, 0.5 - deceleration) ;
+            fLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
+            fRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
+            bLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
+            bRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
 
             if(gamepad2.dpad_up){
                 armPow = 0.8;
