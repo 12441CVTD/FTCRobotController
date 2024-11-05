@@ -14,6 +14,11 @@ public class Left_Encoderspls extends LinearOpMode {
 
     public DcMotor motorLeft;
     public DcMotor motorRight;
+    public DcMotor fL;
+    public DcMotor fR;
+    public DcMotor bL;
+    public DcMotor bR;
+
 
 
 
@@ -31,13 +36,18 @@ public class Left_Encoderspls extends LinearOpMode {
 
     public void runOpMode() {
 
-        motorLeft = hardwareMap.dcMotor.get ("motorLeft");
-        motorRight = hardwareMap.dcMotor.get("motorRight");
+        fL = hardwareMap.dcMotor.get("fL");
+        fR = hardwareMap.dcMotor.get("fR");
+        bL = hardwareMap.dcMotor.get("bL");
+        bR = hardwareMap.dcMotor.get("bR");
 
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.REVERSE);
 
-        motorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
 //reset encoders during initialization
