@@ -18,7 +18,11 @@ public class Left_Encoderspls extends LinearOpMode {
     public DcMotor fR;
     public DcMotor bL;
     public DcMotor bR;
-
+    //public DcMotor OPL;
+    //public DcMotor OPM;
+    //public DcMotor OPR;
+    //idk what the dead wheels are considered in the driver hub so i just made them this for now
+    // OP stands for odometry pod
 
 
 
@@ -40,6 +44,9 @@ public class Left_Encoderspls extends LinearOpMode {
         fR = hardwareMap.dcMotor.get("fR");
         bL = hardwareMap.dcMotor.get("bL");
         bR = hardwareMap.dcMotor.get("bR");
+        //OPL = hardwareMap.dcMotor.get("OPL");
+        //OPM = hardwareMap.dcMotor.get("OPM");
+        //OPR = hardwareMap.dcMotor.get("OPR");
 
         fL.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
@@ -56,9 +63,18 @@ public class Left_Encoderspls extends LinearOpMode {
 
         motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //OPL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //OPM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //OPR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
 
         motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //OPL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //OPM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //OPR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         telemetry.addData("Path0",  "Starting at %7d :%7d",
                 motorLeft.getCurrentPosition(),
@@ -66,7 +82,7 @@ public class Left_Encoderspls extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
+// i aint gonna mess with anything down here yet lol
 //code motion here
 
         encoderDrive(0.5,  12,  12, 5.0);
