@@ -77,8 +77,7 @@ public class Left_Encoderspls extends LinearOpMode {
 
 
         telemetry.addData("Path0",  "Starting at %7d :%7d",
-                motorLeft.getCurrentPosition(),
-                motorRight.getCurrentPosition());
+                motorLeft.getCurrentPosition(), motorRight.getCurrentPosition());
         telemetry.update();
 
         waitForStart();
