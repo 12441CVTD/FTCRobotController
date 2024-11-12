@@ -61,10 +61,8 @@ public class Left_Encoderspls extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
 
-        motorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //OPL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -73,10 +71,8 @@ public class Left_Encoderspls extends LinearOpMode {
 
 
 
-        motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         fL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         fR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //OPL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -101,8 +97,6 @@ public class Left_Encoderspls extends LinearOpMode {
 
 
     public void encoderDrive(double speed, double leftInches, double rightInches, double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
         int newfLTarget;
         int newbLTarget;
         int newfRTarget;
@@ -113,34 +107,26 @@ public class Left_Encoderspls extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = motorLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = motorRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
             newfLTarget = fL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newbLTarget = bL.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newfRTarget = fR.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
             newbRTarget = bR.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
 
-            motorLeft.setTargetPosition(newLeftTarget);
             fL.setTargetPosition(newfLTarget);
             bL.setTargetPosition(newbLTarget);
-            motorRight.setTargetPosition(newRightTarget);
             fR.setTargetPosition(newfRTarget);
             bR.setTargetPosition(newbRTarget);
 
             // Turn On RUN_TO_POSITION
-            motorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             fR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            motorLeft.setPower(Math.abs(speed));
             fL.setPower(Math.abs(speed));
             bL.setPower(Math.abs(speed));
-            motorRight.setPower(Math.abs(speed));
             fR.setPower(Math.abs(speed));
             bR.setPower(Math.abs(speed));
 
@@ -148,15 +134,13 @@ public class Left_Encoderspls extends LinearOpMode {
 
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (motorLeft.isBusy() && motorRight.isBusy() && fL.isBusy() && bL.isBusy() && fR.isBusy() && bR.isBusy())) {
+                    (fL.isBusy() && bL.isBusy() && fR.isBusy() && bR.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d");
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                        motorLeft.getCurrentPosition(),
                         fL.getCurrentPosition(),
                         bL.getCurrentPosition(),
-                        motorRight.getCurrentPosition(),
                         fR.getCurrentPosition(),
                         bR.getCurrentPosition());
                 telemetry.update();
@@ -165,10 +149,8 @@ public class Left_Encoderspls extends LinearOpMode {
 
 
             // Stop all motion;
-            motorLeft.setPower(0);
             fL.setPower(0);
             bL.setPower(0);
-            motorRight.setPower(0);
             fR.setPower(0);
             bR.setPower(0);
 
@@ -178,10 +160,8 @@ public class Left_Encoderspls extends LinearOpMode {
 
 
             // Turn off RUN_TO_POSITION
-            motorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             fL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             bL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             fR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             bR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
