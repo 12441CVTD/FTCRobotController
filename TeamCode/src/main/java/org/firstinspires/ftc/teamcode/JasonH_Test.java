@@ -129,6 +129,7 @@ public class JasonH_Test extends LinearOpMode {
         lElbow.setPosition(0);
         rElbow.setPosition(0);
 
+
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
@@ -220,24 +221,26 @@ public class JasonH_Test extends LinearOpMode {
                 lElbow.setPosition(0);
                 rElbow.setPosition(0);
             }
-            if(gamepad2.left_trigger > 0){
-                lElbow.setPosition(0.25);
-                rElbow.setPosition(0.25);
-            }
 
-            if(gamepad2.right_trigger > 0){
+            // Mid low
+            if(gamepad2.left_trigger > 0){
                 lElbow.setPosition(0.12);
                 rElbow.setPosition(0.12);
             }
-
+            // Mid high
+            if(gamepad2.right_trigger > 0){
+                lElbow.setPosition(0.25);
+                rElbow.setPosition(0.25);
+            }
+            // Lowest
             if(gamepad2.left_bumper){
+                lElbow.setPosition(0.04);
+                rElbow.setPosition(0.04);
+            }
+            // Highest
+            if(gamepad2.right_bumper){
                 lElbow.setPosition(0.4);
                 rElbow.setPosition(0.4);
-            }
-
-            if(gamepad2.right_bumper){
-                lElbow.setPosition(0.03);
-                rElbow.setPosition(0.03);
             }
 
             if(currentGP2.a && !previousGP2.a){
@@ -262,24 +265,25 @@ public class JasonH_Test extends LinearOpMode {
             rArm.setPower(armPow);
 
             // Check claw positions
-            if(isOpened){
-                claw.setPosition(0.37);
+            if(isOpened && wrist.getPosition() < 0.2){
+                claw.setPosition(0.0);
             }
             else if(!isOpened){
-                claw.setPosition(0.7);
+                claw.setPosition(0.2);
             }
 
             if(isDown){
-                wrist.setPosition(0.035);
+                wrist.setPosition(0.3);
             }
             else if(!isDown){
-                wrist.setPosition(0.1);
+                wrist.setPosition(0);
             }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
-            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f)", lElbow.getPosition(), rElbow.getPosition());
+            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition());
+            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
             telemetry.update();
         }
 
