@@ -32,7 +32,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -81,8 +80,9 @@ public class JasonH_Test extends LinearOpMode {
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
-    boolean isOpened = false;
+    boolean isOpened = true;
     boolean isDown = false;
+    boolean holdUp = false;
     boolean turney;
 
 
@@ -128,6 +128,8 @@ public class JasonH_Test extends LinearOpMode {
         //start position
         lElbow.setPosition(0);
         rElbow.setPosition(0);
+        wrist.setPosition(0.05);
+        claw.setPosition(0.2);
 
 
         // Wait for the game to start (driver presses START)
@@ -242,12 +244,20 @@ public class JasonH_Test extends LinearOpMode {
                 lElbow.setPosition(0.4);
                 rElbow.setPosition(0.4);
             }
-
-            if(currentGP2.a && !previousGP2.a){
+                                                    // Checks for if the wrist is in one of the position
+            if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
                 isOpened = !isOpened;
             }
             if(currentGP2.y && !previousGP2.y){
                 isDown = !isDown;
+                holdUp = false;
+                if(isOpened){
+                    isOpened = false;
+                }
+            }
+            if(currentGP2.x && !previousGP2.x && !isDown){
+                holdUp = !holdUp;
+                wrist.setPosition(0.2);
             }
             if(gamepad2.right_stick_button){
                 wrist.setPosition(0.05);
@@ -265,24 +275,24 @@ public class JasonH_Test extends LinearOpMode {
             rArm.setPower(armPow);
 
             // Check claw positions
-            if(isOpened && wrist.getPosition() < 0.2){
-                claw.setPosition(0.0);
+            if(isOpened){
+                claw.setPosition(0);
             }
             else if(!isOpened){
                 claw.setPosition(0.2);
             }
 
             if(isDown){
-                wrist.setPosition(0.3);
+                wrist.setPosition(1);
             }
-            else if(!isDown){
-                wrist.setPosition(0);
+            else if(!isDown && !holdUp){
+                wrist.setPosition(0.05);
             }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
-            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition());
+            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
             telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
             telemetry.update();
         }
