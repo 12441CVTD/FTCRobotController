@@ -74,7 +74,6 @@ public class JasonH_Test extends LinearOpMode {
     private Servo wrist = null;
 
 
-
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
@@ -84,7 +83,7 @@ public class JasonH_Test extends LinearOpMode {
     boolean isOpened = false;
     boolean isDown = false;
     boolean turney;
-
+    boolean isReallyDown = false;
 
 
     @Override
@@ -95,9 +94,9 @@ public class JasonH_Test extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        fL  = hardwareMap.get(DcMotor.class, "fL");
+        fL = hardwareMap.get(DcMotor.class, "fL");
         fR = hardwareMap.get(DcMotor.class, "fR");
-        bL  = hardwareMap.get(DcMotor.class, "bL");
+        bL = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "bR");
 
         lArm = hardwareMap.get(DcMotor.class, "lArm");
@@ -154,32 +153,32 @@ public class JasonH_Test extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-         //   boolean x = gamepad1.x;
-         //   boolean y = gamepad1.y;
-         //   boolean a = gamepad1.a;
+            //   boolean x = gamepad1.x;
+            //   boolean y = gamepad1.y;
+            //   boolean a = gamepad1.a;
 
             double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
+            double turn = gamepad1.right_stick_x;
 
-            fLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            fRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
-            bLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            bRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
+            fLPower = Range.clip(drive + turn, -0.5, 0.5);
+            fRPower = Range.clip(drive - turn, -0.5, 0.5);
+            bLPower = Range.clip(drive + turn, -0.5, 0.5);
+            bRPower = Range.clip(drive - turn, -0.5, 0.5);
 
-            if(gamepad2.dpad_up){
+            if (gamepad2.dpad_up) {
                 armPow = 0.8;
             }
-            if(gamepad2.dpad_down){
+            if (gamepad2.dpad_down) {
                 armPow = -0.7;
             }
 
-            if(gamepad1.left_trigger > 0) {
+            if (gamepad1.left_trigger > 0) {
                 fLPower = -0.5;
                 fRPower = 0.5;
                 bLPower = 0.5;
                 bRPower = -0.5;
             }
-            if(gamepad1.right_trigger > 0) {
+            if (gamepad1.right_trigger > 0) {
                 fLPower = 0.5;
                 fRPower = -0.5;
                 bLPower = -0.5;
@@ -187,25 +186,25 @@ public class JasonH_Test extends LinearOpMode {
             }
 
             //Slow Mode
-            if(gamepad1.dpad_up){
+            if (gamepad1.dpad_up) {
                 fLPower = 0.25;
                 fRPower = 0.25;
                 bLPower = 0.25;
                 bRPower = 0.25;
             }
-            if(gamepad1.dpad_down){
+            if (gamepad1.dpad_down) {
                 fLPower = -0.25;
                 fRPower = -0.25;
                 bLPower = -0.25;
                 bRPower = -0.25;
             }
-            if(gamepad1.dpad_left){
+            if (gamepad1.dpad_left) {
                 fLPower = -0.25;
                 fRPower = 0.25;
                 bLPower = 0.25;
                 bRPower = -0.25;
             }
-            if(gamepad1.dpad_right){
+            if (gamepad1.dpad_right) {
                 fLPower = 0.25;
                 fRPower = -0.25;
                 bLPower = -0.25;
@@ -216,168 +215,174 @@ public class JasonH_Test extends LinearOpMode {
             //1 == danger
 
             //mid
-            if(gamepad2.left_stick_button){
+            if (gamepad2.left_stick_button) {
                 lElbow.setPosition(0);
                 rElbow.setPosition(0);
             }
-            if(gamepad2.left_trigger > 0){
+            if (gamepad2.left_trigger > 0) {
                 lElbow.setPosition(0.25);
                 rElbow.setPosition(0.25);
             }
 
-            if(gamepad2.right_trigger > 0){
+            if (gamepad2.right_trigger > 0) {
                 lElbow.setPosition(0.12);
                 rElbow.setPosition(0.12);
             }
 
-            if(gamepad2.left_bumper){
+            if (gamepad2.left_bumper) {
                 lElbow.setPosition(0.4);
                 rElbow.setPosition(0.4);
             }
 
-            if(gamepad2.right_bumper){
+            if (gamepad2.right_bumper) {
                 lElbow.setPosition(0.03);
                 rElbow.setPosition(0.03);
             }
 
-            if(currentGP2.a && !previousGP2.a){
+            if (currentGP2.a && !previousGP2.a) {
                 isOpened = !isOpened;
             }
-            if(currentGP2.y && !previousGP2.y){
+            if (currentGP2.y && !previousGP2.y) {
                 isDown = !isDown;
             }
-            if(gamepad2.right_stick_button){
-                wrist.setPosition(0.05);
+            if(currentGP2.x && !previousGP2.x){
+                isReallyDown = !isReallyDown;
+            }
+                if (gamepad2.right_stick_button) {
+                    wrist.setPosition(0.05);
+                }
+
+                // Send calculated power to wheels
+                fL.setPower(fLPower);
+                fR.setPower(fRPower);
+                bL.setPower(bLPower);
+                bR.setPower(bRPower);
+
+                // Send power to the arms
+                // Sends power to the arms
+                lArm.setPower(armPow);
+                rArm.setPower(armPow);
+
+                // Check claw positions
+                if (isOpened) {
+                    claw.setPosition(0.37);
+                } else if (!isOpened) {
+                    claw.setPosition(0.7);
+                }
+
+                if (isDown) {
+                    wrist.setPosition(0.035);
+                } else if (!isDown) {
+                    wrist.setPosition(0.1);
+                }
+                if (isReallyDown) {
+                    wrist.setPosition(0.2);
+                }
+                if (!isReallyDown) {
+                    wrist.setPosition(0.035);
+                }
+
+                // Show the elapsed game time and wheel power.
+                telemetry.addData("Status", "Run Time: " + runtime.toString());
+                telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
+                telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f)", lElbow.getPosition(), rElbow.getPosition());
+                telemetry.update();
             }
 
-            // Send calculated power to wheels
-            fL.setPower(fLPower);
-            fR.setPower(fRPower);
-            bL.setPower(bLPower);
-            bR.setPower(bRPower);
-
-            // Send power to the arms
-            // Sends power to the arms
-            lArm.setPower(armPow);
-            rArm.setPower(armPow);
-
-            // Check claw positions
-            if(isOpened){
-                claw.setPosition(0.37);
-            }
-            else if(!isOpened){
-                claw.setPosition(0.7);
-            }
-
-            if(isDown){
-                wrist.setPosition(0.035);
-            }
-            else if(!isDown){
-                wrist.setPosition(0.1);
-            }
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
-            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f)", lElbow.getPosition(), rElbow.getPosition());
-            telemetry.update();
+            // public void
         }
 
-       // public void
+        class elbowShmove extends TimerTask {
+            private double position;
+
+            public elbowShmove(double position) {
+                this.position = position;
+            }
+
+            public void run() {
+                lElbow.setPosition(position);
+                rElbow.setPosition(position);
+            }
+        }
+
+        class wristShmove extends TimerTask {
+            private double position;
+
+            public wristShmove(double position) {
+                this.position = position;
+            }
+
+            public void run() {
+                wrist.setPosition(position);
+            }
+        }
+
+
+        //AutoLeft/Right
+        class shmove extends TimerTask {
+            private double power;
+            private double time;
+
+
+            public shmove(double power, double time) {
+                this.power = power;
+                this.time = time;
+                runtime.reset();
+            }
+
+            public void run() {
+                while (opModeIsActive() && runtime.milliseconds() < time) {
+                    fR.setPower(power);
+                    fL.setPower(-power);
+                    bR.setPower(-power);
+                    bL.setPower(power);
+                }
+            }
+        }
+
+        //AutoBack/Forth
+        class frontToBack extends TimerTask {
+            private double power;
+            private double time;
+
+            public frontToBack(double power, double time) {
+                this.power = power;
+                this.time = time;
+                runtime.reset();
+            }
+
+            public void run() {
+                while (opModeIsActive() && runtime.milliseconds() < time) {
+                    fR.setPower(power);
+                    fL.setPower(power);
+                    bR.setPower(power);
+                    bL.setPower(power);
+                }
+            }
+        }
+        //AutoRotation
+        class turn extends TimerTask {
+            private double power;
+            private double time;
+
+            public turn(double power, double time) {
+                this.power = power;
+                this.time = time;
+                runtime.reset();
+            }
+
+            public void run() {
+                while (opModeIsActive() && runtime.milliseconds() < time) {
+                    fR.setPower(power);
+                    fL.setPower(-power);
+                    bR.setPower(power);
+                    bL.setPower(-power);
+                }
+            }
+
+        }
+
     }
-
-    class elbowShmove extends TimerTask{
-        private double position;
-
-        public elbowShmove(double position){
-            this.position = position;
-        }
-
-        public void run(){
-            lElbow.setPosition(position);
-            rElbow.setPosition(position);
-        }
-    }
-
-    class wristShmove extends TimerTask{
-        private double position;
-
-        public wristShmove(double position){
-            this.position = position;
-        }
-
-        public void run(){
-            wrist.setPosition(position);
-        }
-    }
-
-
-
-    //AutoLeft/Right
-    class shmove extends TimerTask{
-        private double power;
-        private double time;
-
-
-        public shmove(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time) {
-                fR.setPower(power);
-                fL.setPower(-power);
-                bR.setPower(-power);
-                bL.setPower(power);
-            }
-        }
-    }
-
-    //AutoBack/Forth
-    class frontToBack extends TimerTask{
-        private double power;
-        private double time;
-
-        public frontToBack(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time){
-                fR.setPower(power);
-                fL.setPower(power);
-                bR.setPower(power);
-                bL.setPower(power);
-            }
-        }
-    }
-    //AutoRotation
-    class turn extends TimerTask{
-        private double power;
-        private double time;
-
-        public turn(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time){
-                fR.setPower(power);
-                fL.setPower(-power);
-                bR.setPower(power);
-                bL.setPower(-power);
-            }
-        }
-
-    }
-
-}
 
 
 
