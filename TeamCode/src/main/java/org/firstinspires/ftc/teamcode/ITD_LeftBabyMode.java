@@ -29,9 +29,9 @@ public class ITD_LeftBabyMode extends LinearOpMode {
         bL.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
-        driveWay(0.3,0.3,0.3,0.3,500);
+        driveWay(0.3,0.3,0.3,0.3,750);
         sleep(1000);
-        driveWay(-0.5,0.5,0.5,-0.5,1300);
+        driveWay(-0.5,0.5,0.5,-0.5,1800);
         telemetry.addData("hi", "D");
         telemetry.update();
     }
