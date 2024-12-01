@@ -40,7 +40,9 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         waitForStart();
 
+        backAndForth(0.5, 300);
         shmove(-0.5, 2000);
+
 
 
         fL.setPower(0);

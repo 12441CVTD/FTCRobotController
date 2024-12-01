@@ -53,7 +53,7 @@ import java.util.TimerTask;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test01", group="Linear OpMode")
+@TeleOp(name="ITD TeleOp THIS ONE", group="Linear OpMode")
 
 public class JasonH_Test extends LinearOpMode {
 
@@ -128,7 +128,7 @@ public class JasonH_Test extends LinearOpMode {
         //start position
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0.05);
+        wrist.setPosition(0);
         claw.setPosition(0.2);
 
 
@@ -279,14 +279,14 @@ public class JasonH_Test extends LinearOpMode {
                 claw.setPosition(0);
             }
             else if(!isOpened){
-                claw.setPosition(0.2);
+                claw.setPosition(0.4);
             }
-
+            // 0.05 == THROWING
             if(isDown){
-                wrist.setPosition(1);
+                wrist.setPosition(0.2);
             }
             else if(!isDown && !holdUp){
-                wrist.setPosition(0.05);
+                wrist.setPosition(0);
             }
 
             // Show the elapsed game time and wheel power.
