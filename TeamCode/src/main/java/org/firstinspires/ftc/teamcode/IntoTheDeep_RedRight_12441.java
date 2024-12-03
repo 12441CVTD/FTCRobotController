@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
+import org.firstinspires.ftc.teamcode.rr.TankDrive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -29,6 +35,8 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
     private Timer timer = new Timer();
 
     public void runOpMode() {
+
+        Pose2d beginPose = new Pose2d(0, 0, 0);
 
         // Initialize the drive system variables.
         fL = hardwareMap.get(DcMotor.class, "fL");
@@ -67,16 +75,20 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         waitForStart();
 
-        lElbow.setPosition(0);
-        rElbow.setPosition(0);
+        lElbow.setPosition(0.1);
+        rElbow.setPosition(0.1);
         wrist.setPosition(0);
         claw.setPosition(0.4);
 
         sleep(100);
 
-        lift(0.5, 150);
-        backAndForth(0.5, 300);
-        shmove(-0.5, 2000);
+        MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
+
+        Actions.runBlocking(
+                drive.actionBuilder(beginPose)
+                        .splineTo(new Vector2d(30, 30), Math.PI / 2)
+                        .splineTo(new Vector2d(0, 20), Math.PI)
+                        .build());
 
 
 
