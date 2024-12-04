@@ -36,7 +36,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
     public void runOpMode() {
 
-        Pose2d beginPose = new Pose2d(0, 0, 0);
+        Pose2d beginPose = new Pose2d(20, -60, Math.toRadians(90));
 
         // Initialize the drive system variables.
         fL = hardwareMap.get(DcMotor.class, "fL");
@@ -80,14 +80,19 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         wrist.setPosition(0);
         claw.setPosition(0.4);
 
-        sleep(100);
+        sleep(50);
+
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
+
+        timer.schedule(new lift(1000, 0.55), 500);
+        timer.schedule(new lift(750, -0.5), 1700);
+
+
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .splineTo(new Vector2d(30, 30), Math.PI / 2)
-                        .splineTo(new Vector2d(0, 20), Math.PI)
+                        .strafeTo(new Vector2d(0, -35))
                         .build());
 
 
@@ -100,60 +105,91 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
     }
-    
-    //Strafe neg = Right pos = Left
-    public void shmove(double power, int time){
-        runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < time) {
-            fR.setPower(power);
-            fL.setPower(-power);
-            bR.setPower(-power);
-            bL.setPower(power);
+
+    class elbow extends TimerTask{
+        private double position;
+
+        public elbow(double position){
+            this.position = position;
         }
-        fL.setPower(0);
-        fR.setPower(0);
-        bL.setPower(0);
-        bR.setPower(0);
+
+        public void run(){
+            lElbow.setPosition(position);
+            rElbow.setPosition(position);
+        }
     }
 
-    //neg = backward pos = forward
-    public void backAndForth(double power, int time){
-        runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < time){
-            fR.setPower(power);
-            fL.setPower(power);
-            bR.setPower(power);
-            bL.setPower(power);
+    class wrist extends TimerTask{
+        private double position;
+
+        public wrist(double position){
+            this.position = position;
         }
-        fL.setPower(0);
-        fR.setPower(0);
-        bL.setPower(0);
-        bR.setPower(0);
+
+        public void run(){
+            wrist.setPosition(position);
+        }
     }
 
-    //neg = counterClockwise pos = clockwise;
-    public void turn(double power, int time){
-        runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < time){
-            fR.setPower(power);
-            fL.setPower(-power);
-            bR.setPower(power);
-            bL.setPower(-power);
+    class claw extends TimerTask{
+        private double position;
+
+        public claw(double position){
+            this.position = position;
         }
-        fL.setPower(0);
-        fR.setPower(0);
-        bL.setPower(0);
-        bR.setPower(0);
+
+        public void run(){
+            claw.setPosition(position);
+        }
+
     }
 
-    public void lift(double power, int time){
-        runtime.reset();
-        while(opModeIsActive() && (runtime.milliseconds() < time)){
-            lArm.setPower(power);
-            rArm.setPower(power);
+
+    class lift extends TimerTask{
+        private double time;
+        private double power;
+
+        public lift(double time, double power){
+            this.time = time;
+            this.power = power;
         }
-        lArm.setPower(0.04);
-        rArm.setPower(0.04);
+
+        public void run(){
+            runtime.reset();
+            while(opModeIsActive() && (runtime.milliseconds() < time)){
+                lArm.setPower(power);
+                rArm.setPower(power);
+            }
+            lArm.setPower(0.04);
+            rArm.setPower(0.04);
+        }
+    }
+
+
+
+
+    //AutoLeft/Right
+    class Spline extends TimerTask{
+
+        public void run(){
+
+        }
+    }
+
+    //AutoBack/Forth
+    class strafe extends TimerTask{
+
+        public void run(){
+
+        }
+    }
+    //AutoRotation
+    class turn extends TimerTask{
+
+
+        public void run(){
+
+        }
     }
 
 }
