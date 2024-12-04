@@ -53,7 +53,7 @@ import java.util.TimerTask;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Test01", group="Linear OpMode")
+@TeleOp(name="ITD TeleOp THIS ONE", group="Linear OpMode")
 
 public class JasonH_Test extends LinearOpMode {
 
@@ -128,8 +128,8 @@ public class JasonH_Test extends LinearOpMode {
         //start position
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0.05);
-        claw.setPosition(0.2);
+        wrist.setPosition(0);
+        claw.setPosition(0.4);
 
 
         // Wait for the game to start (driver presses START)
@@ -164,10 +164,10 @@ public class JasonH_Test extends LinearOpMode {
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
 
-            fLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            fRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
-            bLPower    = Range.clip(drive + turn, -0.5, 0.5) ;
-            bRPower   = Range.clip(drive - turn, -0.5, 0.5) ;
+            fLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
+            fRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
+            bLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
+            bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
 
             if(gamepad2.dpad_up){
                 armPow = 0.8;
@@ -177,16 +177,16 @@ public class JasonH_Test extends LinearOpMode {
             }
 
             if(gamepad1.left_trigger > 0) {
-                fLPower = -0.5;
-                fRPower = 0.5;
-                bLPower = 0.5;
-                bRPower = -0.5;
+                fLPower = -0.8;
+                fRPower = 0.8;
+                bLPower = 0.8;
+                bRPower = -0.8;
             }
             if(gamepad1.right_trigger > 0) {
-                fLPower = 0.5;
-                fRPower = -0.5;
-                bLPower = -0.5;
-                bRPower = 0.5;
+                fLPower = 0.8;
+                fRPower = -0.8;
+                bLPower = -0.8;
+                bRPower = 0.8;
             }
 
             //Slow Mode
@@ -257,7 +257,7 @@ public class JasonH_Test extends LinearOpMode {
             }
             if(currentGP2.x && !previousGP2.x && !isDown){
                 holdUp = !holdUp;
-                wrist.setPosition(0.2);
+                wrist.setPosition(0.04);
             }
             if(gamepad2.right_stick_button){
                 wrist.setPosition(0.05);
@@ -279,14 +279,14 @@ public class JasonH_Test extends LinearOpMode {
                 claw.setPosition(0);
             }
             else if(!isOpened){
-                claw.setPosition(0.2);
+                claw.setPosition(0.4);
             }
-
+            // 0.05 == THROWING
             if(isDown){
-                wrist.setPosition(1);
+                wrist.setPosition(0.17);
             }
             else if(!isDown && !holdUp){
-                wrist.setPosition(0.05);
+                wrist.setPosition(0);
             }
 
             // Show the elapsed game time and wheel power.

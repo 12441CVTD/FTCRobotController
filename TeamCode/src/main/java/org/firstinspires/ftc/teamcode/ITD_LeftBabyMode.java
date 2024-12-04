@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name="LeftBabyMode")
+@Autonomous(name="LeftBabyMode", group="IntoTheDeep")
 
 public class ITD_LeftBabyMode extends LinearOpMode {
 
@@ -29,9 +29,9 @@ public class ITD_LeftBabyMode extends LinearOpMode {
         bL.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
-        driveWay(0.3,0.3,0.3,0.3,1000);
+        driveWay(0.3,0.3,0.3,0.3,750);
         sleep(1000);
-        driveWay(-0.5,-0.5,0.5,0.5,2200);
+        driveWay(0.5,-0.5,-0.5,0.5,1800);
         telemetry.addData("hi", ")");
         telemetry.update();
     }
