@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.*;
 
-@Autonomous(name="RedRight", group="IntoTheDeep")
+@Autonomous(name="Right_Path1", group="IntoTheDeep")
 
 public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
@@ -77,25 +77,44 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         lElbow.setPosition(0.1);
         rElbow.setPosition(0.1);
-        wrist.setPosition(0);
+        wrist.setPosition(0.05);
         claw.setPosition(0.4);
-
-        sleep(50);
 
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
-
-        timer.schedule(new lift(1000, 0.55), 300);
-        timer.schedule(new lift(550, -0.71), 1500);
-
+        //1st Place;
+        //timer.schedule(new lift(1000, 1), 0);
+        //timer.schedule(new lift(600, -1), 1400);
+        //timer.schedule(new claw(0), 1700);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .strafeTo(new Vector2d(0, -35))
-                        .lineToY(-18.0)
+                        //pause?
+                        .strafeTo(new Vector2d(48, -38))
+                        .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
+                        .strafeTo(new Vector2d(48, -14))
+                        .strafeTo(new Vector2d(58, -15))
+                        .strafeTo(new Vector2d(58, -55))
+                        .strafeTo(new Vector2d(50, -55))
+                        .strafeTo(new Vector2d(50, -58))
+                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        //pause?
+                        .strafeTo(new Vector2d(0, -50))
+                        .strafeToLinearHeading(new Vector2d(58, -26), Math.toRadians(-0))
+                        .strafeToLinearHeading(new Vector2d(58, -55), Math.toRadians(270))
+                        .strafeTo(new Vector2d(50, -55))
+                        .strafeTo(new Vector2d(50, -58))
+                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        //pause?
+                        .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
+                        .strafeTo(new Vector2d(50, -58))
+                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        //pause?
                         .build());
 
+        sleep(5000);
 
 
         fL.setPower(0);
