@@ -84,14 +84,14 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //1st Place;
-        //timer.schedule(new lift(1000, 1), 0);
-        //timer.schedule(new lift(600, -1), 1400);
-        //timer.schedule(new claw(0), 1700);
+        timer.schedule(new lift(700, 1), 0);
+        timer.schedule(new claw(0), 1600);
+        timer.schedule(new lift(500, -1), 1700);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -35))
-                        //pause?
+                        .strafeTo(new Vector2d(0, -30))
+                     /*   //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
                         .strafeTo(new Vector2d(48, -14))
@@ -112,7 +112,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
                         .strafeTo(new Vector2d(50, -58))
                         .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
                         //pause?
-                        .build());
+                      */  .build());
 
         sleep(5000);
 
