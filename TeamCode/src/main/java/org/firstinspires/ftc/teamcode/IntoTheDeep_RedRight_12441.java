@@ -87,7 +87,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
 
         timer.schedule(new lift(1000, 0.55), 300);
-        timer.schedule(new lift(550, -0.7), 1500);
+        timer.schedule(new lift(550, -0.71), 1500);
 
 
         Actions.runBlocking(
