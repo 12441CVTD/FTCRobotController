@@ -55,7 +55,7 @@ import java.util.TimerTask;
 
 @TeleOp(name="ITD TeleOp THIS ONE", group="Linear OpMode")
 
-public class JasonH_Test extends LinearOpMode {
+public class ITD_TeleOP extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();

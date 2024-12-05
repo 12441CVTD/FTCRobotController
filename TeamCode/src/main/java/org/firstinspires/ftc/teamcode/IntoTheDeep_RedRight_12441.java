@@ -86,8 +86,8 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
 
-        timer.schedule(new lift(1000, 0.55), 500);
-        timer.schedule(new lift(750, -0.5), 1700);
+        timer.schedule(new lift(1000, 0.55), 300);
+        timer.schedule(new lift(550, -0.71), 1500);
 
 
         Actions.runBlocking(
