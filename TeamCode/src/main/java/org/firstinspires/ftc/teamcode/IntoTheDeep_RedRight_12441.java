@@ -90,7 +90,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -30))
+                        .strafeTo(new Vector2d(0, -32))
                      /*   //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
