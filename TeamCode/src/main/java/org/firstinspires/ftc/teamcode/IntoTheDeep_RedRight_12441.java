@@ -77,20 +77,21 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         lElbow.setPosition(0.1);
         rElbow.setPosition(0.1);
-        wrist.setPosition(0.05);
+        wrist.setPosition(0.035);
         claw.setPosition(0.4);
 
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //1st Place;
-        timer.schedule(new lift(700, 1), 0);
-        timer.schedule(new claw(0), 1600);
-        timer.schedule(new lift(500, -1), 1700);
+        timer.schedule(new lift(550, 1), 0);
+        timer.schedule(new wrist(0), 1700);
+        timer.schedule(new claw(0), 1850);
+        timer.schedule(new lift(500, -0.3), 1950);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -30))
+                        .strafeTo(new Vector2d(0, -26))
                      /*   //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
