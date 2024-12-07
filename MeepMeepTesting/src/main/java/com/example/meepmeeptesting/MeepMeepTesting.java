@@ -17,27 +17,24 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(20, -60, Math.toRadians(90)))
-                        .strafeTo(new Vector2d(0, -35))
+                        .strafeTo(new Vector2d(0, -35)) // Place
                 //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
                         .strafeTo(new Vector2d(48, -14))
                         .strafeTo(new Vector2d(58, -15))
-                        .strafeTo(new Vector2d(58, -55))
-                        .strafeTo(new Vector2d(50, -55))
-                        .strafeTo(new Vector2d(50, -58))
-                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        .strafeTo(new Vector2d(58, -50))
+                        .strafeTo(new Vector2d(50, -50)) //PickUp
+                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90)) //Place
                 //pause?
                         .strafeTo(new Vector2d(0, -50))
                         .strafeToLinearHeading(new Vector2d(58, -26), Math.toRadians(-0))
-                        .strafeToLinearHeading(new Vector2d(58, -55), Math.toRadians(270))
-                        .strafeTo(new Vector2d(50, -55))
-                        .strafeTo(new Vector2d(50, -58))
-                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        .strafeToLinearHeading(new Vector2d(58, -50), Math.toRadians(270))
+                        .strafeTo(new Vector2d(50, -50)) //PickUp
+                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90)) //Place
                 //pause?
-                        .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
-                        .strafeTo(new Vector2d(50, -58))
-                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        .strafeToLinearHeading(new Vector2d(50, -50), Math.toRadians(270)) //PickUp
+                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90)) //Place
                 //pause?
                         .build());
 
