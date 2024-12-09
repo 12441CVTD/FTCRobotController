@@ -55,7 +55,7 @@ import java.util.TimerTask;
 
 @TeleOp(name="ITD TeleOp THIS ONE", group="Linear OpMode")
 
-public class JasonH_Test extends LinearOpMode {
+public class ITD_TeleOP extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -119,8 +119,8 @@ public class JasonH_Test extends LinearOpMode {
         lArm.setDirection(DcMotor.Direction.REVERSE);
         rArm.setDirection(DcMotor.Direction.FORWARD);
 
-        lElbow.setDirection(Servo.Direction.REVERSE);
-        rElbow.setDirection(Servo.Direction.FORWARD);
+        lElbow.setDirection(Servo.Direction.FORWARD);
+        rElbow.setDirection(Servo.Direction.REVERSE);
 
         claw.setDirection(Servo.Direction.FORWARD);
         wrist.setDirection(Servo.Direction.FORWARD);
@@ -226,23 +226,23 @@ public class JasonH_Test extends LinearOpMode {
 
             // Mid low
             if(gamepad2.left_trigger > 0){
-                lElbow.setPosition(0.12);
-                rElbow.setPosition(0.12);
+                lElbow.setPosition(0.11);
+                rElbow.setPosition(0.11);
             }
             // Mid high
             if(gamepad2.right_trigger > 0){
-                lElbow.setPosition(0.25);
-                rElbow.setPosition(0.25);
+                lElbow.setPosition(0.21);
+                rElbow.setPosition(0.21);
             }
             // Lowest
             if(gamepad2.left_bumper){
-                lElbow.setPosition(0.04);
-                rElbow.setPosition(0.04);
+                lElbow.setPosition(0);
+                rElbow.setPosition(0);
             }
             // Highest
             if(gamepad2.right_bumper){
-                lElbow.setPosition(0.4);
-                rElbow.setPosition(0.4);
+                lElbow.setPosition(0.31);
+                rElbow.setPosition(0.31);
             }
                                                     // Checks for if the wrist is in one of the position
             if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
