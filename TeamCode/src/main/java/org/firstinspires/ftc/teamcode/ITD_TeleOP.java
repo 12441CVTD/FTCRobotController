@@ -128,7 +128,7 @@ public class ITD_TeleOP extends LinearOpMode {
         //start position
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0);
+        wrist.setPosition(0.51);
         claw.setPosition(0.4);
 
 
@@ -257,7 +257,7 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             if(currentGP2.x && !previousGP2.x && !isDown){
                 holdUp = !holdUp;
-                wrist.setPosition(0.04);
+                wrist.setPosition(0.69);
             }
             if(gamepad2.right_stick_button){
                 wrist.setPosition(0.05);
@@ -286,7 +286,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 wrist.setPosition(0.17);
             }
             else if(!isDown && !holdUp){
-                wrist.setPosition(0);
+                wrist.setPosition(0.51);
             }
 
             // Show the elapsed game time and wheel power.
