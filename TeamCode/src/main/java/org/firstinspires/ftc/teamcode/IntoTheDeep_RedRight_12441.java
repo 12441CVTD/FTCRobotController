@@ -80,7 +80,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0);
+        wrist.setPosition(0.5);
         claw.setPosition(0.45);
 
 

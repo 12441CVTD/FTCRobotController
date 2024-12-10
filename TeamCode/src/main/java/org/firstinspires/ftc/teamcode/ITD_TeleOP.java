@@ -218,11 +218,6 @@ public class ITD_TeleOP extends LinearOpMode {
             //0 == ground
             //1 == danger
 
-            //mid
-            if(gamepad2.left_stick_button){
-                lElbow.setPosition(0);
-                rElbow.setPosition(0);
-            }
 
             // Mid low
             if(gamepad2.left_trigger > 0){
@@ -236,8 +231,7 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             // Lowest
             if(gamepad2.left_bumper){
-                lElbow.setPosition(0);
-                rElbow.setPosition(0);
+                splitMove(lElbow.getPosition(), 0.0, 4, 500);
             }
             // Highest
             if(gamepad2.right_bumper){
@@ -286,7 +280,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 wrist.setPosition(0.17);
             }
             else if(!isDown && !holdUp){
-                wrist.setPosition(0.35);
+                wrist.setPosition(0.51);
             }
 
             // Show the elapsed game time and wheel power.
@@ -297,7 +291,28 @@ public class ITD_TeleOP extends LinearOpMode {
             telemetry.update();
         }
 
-       // public void
+
+    }
+
+    public void splitMove(double InitPos, double FinalPos, int NumPos, long times){
+
+        /*
+        Goal: Move a servo, probably the arm, from its current position to the goal position by splitting
+        the movement into "x" different positions, including the finalPos.
+
+        How:
+            1. Take the initPos (Ex: 1)
+            2. Take the finalPos (Ex: 0)                                      Between Positions
+            3. Find positions between them according to "X"(Ex: "X" = 3 so 1 | 0.75, 0.5, 0.25 | 0)
+         */
+
+        double big = Math.max(FinalPos, InitPos);
+
+        for(int i = NumPos-1; i >= 0; i--){
+            double move = Math.max(big * (((double)( i/NumPos ))), Math.min(FinalPos, InitPos));
+            timer.schedule(new elbowShmove(move), ((long)times*(3-i)));
+        }
+
     }
 
     class elbowShmove extends TimerTask{
