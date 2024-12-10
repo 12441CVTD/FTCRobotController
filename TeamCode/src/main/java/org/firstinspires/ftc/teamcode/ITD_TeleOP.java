@@ -286,7 +286,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 wrist.setPosition(0.17);
             }
             else if(!isDown && !holdUp){
-                wrist.setPosition(0.51);
+                wrist.setPosition(0.35);
             }
 
             // Show the elapsed game time and wheel power.
