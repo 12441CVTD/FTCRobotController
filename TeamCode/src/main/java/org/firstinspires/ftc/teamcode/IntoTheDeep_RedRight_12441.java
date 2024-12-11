@@ -93,10 +93,10 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //1st Place;
-        timer.schedule(new lift(1000, 0.3), 0);
+        timer.schedule(new lift(500, 0.3), 0);
         //timer.schedule((new elbow(0.11)), 50);
         timer.schedule(new claw(0), 2000);
-        timer.schedule(new lift(800, -0.3), 1925);
+        timer.schedule(new lift(200, -0.3), 1925);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
@@ -185,13 +185,15 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         }
 
         public void run(){
+            while(lArm.getCurrentPosition() != position){
+                lArm.setTargetPosition(position);
+                rArm.setTargetPosition(position);
+                lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lArm.setPower(power);
+                rArm.setPower(power);
 
-            lArm.setTargetPosition(position);
-            rArm.setTargetPosition(position);
-            lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lArm.setPower(power);
-            rArm.setPower(power);
+            }
             lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             lArm.setPower(0.04);

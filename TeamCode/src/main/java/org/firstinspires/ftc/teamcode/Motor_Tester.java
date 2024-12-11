@@ -31,14 +31,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 /*
@@ -54,9 +51,9 @@ import java.util.TimerTask;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="MotorTest", group="Testing")
+@TeleOp(name="ServoTest", group="Testing")
 
-public class Servo_Tester extends LinearOpMode {
+public class Motor_Tester extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -64,12 +61,14 @@ public class Servo_Tester extends LinearOpMode {
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
-    private DcMotor fL = null;
-    private DcMotor bL = null;
-    private DcMotor fR = null;
-    private DcMotor bR = null;
-    private DcMotor lArm = null;
-    private DcMotor rArm = null;
+    private Servo lElbow = null;
+    private Servo rElbow = null;
+    private Servo claw = null;
+    private Servo wrist = null;
+
+    private double elbowIN;
+    private double clawIN;
+    private double wristIN;
 
     private Timer timer = new Timer();
 
@@ -86,14 +85,34 @@ public class Servo_Tester extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        lArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        wristIN = 0.0;
+        elbowIN = 0.0;
+        clawIN = 0.0;
 
-        //lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // Initialize the hardware variables. Note that the strings used here as parameters
+        // to 'get' must correspond to the names assigned during the robot configuration
+        // step (using the FTC Robot Controller app on the phone).
 
-        //lArm.setDirection(DcMotor.Direction.REVERSE);
-        //rArm.setDirection(DcMotor.Direction.FORWARD);
+        lElbow = hardwareMap.get(Servo.class, "lElbow");
+        rElbow = hardwareMap.get(Servo.class, "rElbow");
+        claw = hardwareMap.get(Servo.class, "claw");
+        wrist = hardwareMap.get(Servo.class, "wrist");
+
+        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
+        // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
+        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+
+        lElbow.setDirection(Servo.Direction.FORWARD);
+        rElbow.setDirection(Servo.Direction.REVERSE);
+
+        claw.setDirection(Servo.Direction.FORWARD);
+        wrist.setDirection(Servo.Direction.FORWARD);
+
+        //start position
+        lElbow.setPosition(0);
+        rElbow.setPosition(0);
+        wrist.setPosition(0.5);
+        claw.setPosition(0);
 
 
         // Wait for the game to start (driver presses START)
@@ -107,21 +126,29 @@ public class Servo_Tester extends LinearOpMode {
 
 
             if(currentGP2.a && !previousGP2.a){
-
+                if(lElbow.getPosition() < 1)
+                    elbowIN += 0.01;
             }
             if(currentGP2.b && !previousGP2.b){
-
+                if(lElbow.getPosition() > 0)
+                    elbowIN -= 0.01;
             }
             if(currentGP2.x && !previousGP2.x){
-
+                if(wrist.getPosition() < 1)
+                    wristIN += 0.01;
             }
             if(currentGP2.y && !previousGP2.y){
-
+                if(wrist.getPosition() > 0)
+                    wristIN -= 0.01;
             }
 
+            wrist.setPosition(wristIN);
+            claw.setPosition(clawIN);
+            lElbow.setPosition(elbowIN);
+            rElbow.setPosition(elbowIN);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            //telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
+            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
             telemetry.update();
         }
 
