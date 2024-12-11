@@ -114,8 +114,8 @@ public class Servo_Tester extends LinearOpMode {
         //start position
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0);
-        claw.setPosition(0.4);
+        wrist.setPosition(0.5);
+        claw.setPosition(0);
 
 
         // Wait for the game to start (driver presses START)
@@ -135,6 +135,14 @@ public class Servo_Tester extends LinearOpMode {
             if(currentGP2.b && !previousGP2.b){
                 if(lElbow.getPosition() > 0)
                     elbowIN -= 0.01;
+            }
+            if(currentGP2.x && !previousGP2.x){
+                if(wrist.getPosition() < 1)
+                    wristIN += 0.01;
+            }
+            if(currentGP2.y && !previousGP2.y){
+                if(wrist.getPosition() > 0)
+                    wristIN -= 0.01;
             }
 
             wrist.setPosition(wristIN);

@@ -80,7 +80,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0);
+        wrist.setPosition(0.5);
         claw.setPosition(0.45);
 
 
@@ -90,11 +90,11 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         timer.schedule(new lift(1625, 1), 0);
         //timer.schedule((new elbow(0.11)), 50);
         timer.schedule(new claw(0), 2000);
-        timer.schedule(new lift(600, -0.7), 1925);
+        timer.schedule(new lift(800, -0.7), 1925);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -31))
+                        .strafeTo(new Vector2d(0, -35))
                      /*   //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
