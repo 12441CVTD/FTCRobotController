@@ -66,7 +66,6 @@ public class ITD_TeleOP extends LinearOpMode {
     private DcMotor bR = null;
     private DcMotor lArm = null;
     private DcMotor rArm = null;
-
     private Servo lElbow = null;
     private Servo rElbow = null;
     private Servo claw = null;
@@ -231,7 +230,7 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             // Lowest
             if(gamepad2.left_bumper){
-                splitMove(lElbow.getPosition(), 0.0, 4, 500);
+                splitMove(lElbow.getPosition(), 0.0, 5, 250);
             }
             // Highest
             if(gamepad2.right_bumper){
@@ -308,9 +307,12 @@ public class ITD_TeleOP extends LinearOpMode {
 
         double big = Math.max(FinalPos, InitPos);
 
-        for(int i = NumPos-1; i >= 0; i--){
-            double move = Math.max(big * (((double)( i/NumPos ))), Math.min(FinalPos, InitPos));
-            timer.schedule(new elbowShmove(move), ((long)times*(3-i)));
+        for(double i = NumPos-1; i >= 0; i--){
+            double move = Math.max(big * (i/NumPos), Math.min(FinalPos, InitPos));
+            timer.schedule(new elbowShmove(move), ((long)times*(NumPos-((int)i))));
+            if(move == Math.min(FinalPos, InitPos)){
+                i = -1;
+            }
         }
 
     }

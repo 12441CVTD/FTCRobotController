@@ -31,6 +31,8 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
     private Servo claw = null;
     private Servo wrist = null;
 
+
+
     private ElapsedTime runtime = new ElapsedTime();
     private Timer timer = new Timer();
 
@@ -51,6 +53,10 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         rElbow = hardwareMap.get(Servo.class, "rElbow");
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class, "wrist");
+
+        // (arm) encoder stuff
+        lArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -87,10 +93,10 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //1st Place;
-        timer.schedule(new lift(1625, 1), 0);
+        timer.schedule(new lift(1000, 0.3), 0);
         //timer.schedule((new elbow(0.11)), 50);
         timer.schedule(new claw(0), 2000);
-        timer.schedule(new lift(800, -0.7), 1925);
+        timer.schedule(new lift(800, -0.3), 1925);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
@@ -170,20 +176,24 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
 
     class lift extends TimerTask{
-        private double time;
+        private int position;
         private double power;
 
-        public lift(double time, double power){
-            this.time = time;
+        public lift(int position, double power){
+            this.position = position;
             this.power = power;
         }
 
         public void run(){
-            runtime.reset();
-            while(opModeIsActive() && (runtime.milliseconds() < time)){
-                lArm.setPower(power);
-                rArm.setPower(power);
-            }
+
+            lArm.setTargetPosition(position);
+            rArm.setTargetPosition(position);
+            lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lArm.setPower(power);
+            rArm.setPower(power);
+            lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             lArm.setPower(0.04);
             rArm.setPower(0.04);
         }
