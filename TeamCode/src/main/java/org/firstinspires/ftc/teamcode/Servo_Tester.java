@@ -32,6 +32,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -86,14 +88,25 @@ public class Servo_Tester extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        int up = 100;
+        int down = 0;
+
+        lArm = hardwareMap.get(DcMotor.class, "lArm");
+        rArm = hardwareMap.get(DcMotor.class, "rArm");
+
         lArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //lArm.setDirection(DcMotor.Direction.REVERSE);
-        //rArm.setDirection(DcMotor.Direction.FORWARD);
+        lArm.setDirection(DcMotor.Direction.FORWARD);
+        rArm.setDirection(DcMotor.Direction.REVERSE);
+
+        lArm.setTargetPosition(0);
+        rArm.setTargetPosition(0);
+        lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         // Wait for the game to start (driver presses START)
@@ -105,23 +118,35 @@ public class Servo_Tester extends LinearOpMode {
             previousGP2.copy(currentGP2);
             currentGP2.copy(gamepad2);
 
+            int Rposition = rArm.getCurrentPosition();
+            int Lposition = lArm.getCurrentPosition();
 
-            if(currentGP2.a && !previousGP2.a){
 
+            if(gamepad2.a){
+                lArm.setTargetPosition(100);
+                rArm.setTargetPosition(100);
+
+                lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                lArm.setPower(0.1);
+                rArm.setPower(0.1);
             }
-            if(currentGP2.b && !previousGP2.b){
 
+            if(gamepad2.b){
+                lArm.setTargetPosition(down);
+                rArm.setTargetPosition(down);
+
+                lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                
+                lArm.setPower(0.3);
+                rArm.setPower(0.3);
             }
-            if(currentGP2.x && !previousGP2.x){
-
-            }
-            if(currentGP2.y && !previousGP2.y){
-
-            }
-
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            //telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
+            telemetry.addData("Right Arm Pos: ", Rposition);
+            telemetry.addData("Left Arm Pos: ", Lposition);
             telemetry.update();
         }
 

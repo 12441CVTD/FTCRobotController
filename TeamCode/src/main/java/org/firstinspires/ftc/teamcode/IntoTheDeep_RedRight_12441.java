@@ -93,14 +93,18 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //1st Place;
-        timer.schedule(new lift(500, 0.3), 0);
+        telemetry.addData("Position", lArm.getCurrentPosition());
+        telemetry.update();
+        timer.schedule(new lift(10, 0.3), 0);
+        telemetry.addData("Position", lArm.getCurrentPosition());
+        telemetry.update();
         //timer.schedule((new elbow(0.11)), 50);
         timer.schedule(new claw(0), 2000);
-        timer.schedule(new lift(200, -0.3), 1925);
+        timer.schedule(new lift(0, -0.3), 1925);
 
-        Actions.runBlocking(
-                drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -35))
+        //Actions.runBlocking(
+               // drive.actionBuilder(beginPose)
+                        //.strafeTo(new Vector2d(0, -35))
                      /*   //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
@@ -122,7 +126,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
                         .strafeTo(new Vector2d(50, -58))
                         .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
                         //pause?
-                      */  .build());
+                      */ // .build());
 
         sleep(5000);
 
@@ -133,6 +137,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         bR.setPower(0);
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Position", lArm.getCurrentPosition());
         telemetry.update();
     }
 
@@ -186,12 +191,22 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         public void run(){
             while(lArm.getCurrentPosition() != position){
-                lArm.setTargetPosition(position);
-                rArm.setTargetPosition(position);
-                lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                lArm.setPower(power);
-                rArm.setPower(power);
+
+                if(lArm.getCurrentPosition() > position){
+                    lArm.setTargetPosition(position);
+                    rArm.setTargetPosition(position);
+                    lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lArm.setPower(-power);
+                    rArm.setPower(-power);
+                }else if (lArm.getCurrentPosition() < position){
+                    lArm.setTargetPosition(position);
+                    rArm.setTargetPosition(position);
+                    lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    lArm.setPower(power);
+                    rArm.setPower(power);
+                }
 
             }
             lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
