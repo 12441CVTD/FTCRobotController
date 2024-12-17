@@ -91,23 +91,25 @@ public class Servo_Tester extends LinearOpMode {
         int up = 100;
         int down = 0;
 
-        lArm = hardwareMap.get(DcMotor.class, "lArm");
-        rArm = hardwareMap.get(DcMotor.class, "rArm");
+        lArm = hardwareMap.dcMotor.get("lArm");
+        rArm = hardwareMap.dcMotor.get("rArm");
 
         lArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         lArm.setDirection(DcMotor.Direction.FORWARD);
         rArm.setDirection(DcMotor.Direction.REVERSE);
 
         lArm.setTargetPosition(0);
         rArm.setTargetPosition(0);
+
         lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Wait for the game to start (driver presses START)
         waitForStart();
@@ -123,14 +125,16 @@ public class Servo_Tester extends LinearOpMode {
 
 
             if(gamepad2.a){
-                lArm.setTargetPosition(100);
-                rArm.setTargetPosition(100);
+
+                lArm.setTargetPosition(200);
+                rArm.setTargetPosition(200);
 
                 lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                lArm.setPower(0.1);
-                rArm.setPower(0.1);
+                lArm.setPower(0.6);
+                rArm.setPower(0.6);
+
             }
 
             if(gamepad2.b){

@@ -190,23 +190,14 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         }
 
         public void run(){
-            while(lArm.getCurrentPosition() != position){
+            while(lArm.getCurrentPosition() < position){
 
-                if(lArm.getCurrentPosition() > position){
-                    lArm.setTargetPosition(position);
-                    rArm.setTargetPosition(position);
-                    lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lArm.setPower(-power);
-                    rArm.setPower(-power);
-                }else if (lArm.getCurrentPosition() < position){
                     lArm.setTargetPosition(position);
                     rArm.setTargetPosition(position);
                     lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     lArm.setPower(power);
                     rArm.setPower(power);
-                }
 
             }
             lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

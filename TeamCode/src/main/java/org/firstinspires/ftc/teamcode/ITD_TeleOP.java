@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -115,8 +116,8 @@ public class ITD_TeleOP extends LinearOpMode {
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
 
-        lArm.setDirection(DcMotor.Direction.REVERSE);
-        rArm.setDirection(DcMotor.Direction.FORWARD);
+        lArm.setDirection(DcMotor.Direction.FORWARD);
+        rArm.setDirection(DcMotor.Direction.REVERSE);
 
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
