@@ -100,14 +100,15 @@ public class Servo_Tester extends LinearOpMode {
         lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        lArm.setDirection(DcMotor.Direction.FORWARD);
-        rArm.setDirection(DcMotor.Direction.REVERSE);
+        lArm.setDirection(DcMotor.Direction.REVERSE);
+        rArm.setDirection(DcMotor.Direction.FORWARD);
 
         lArm.setTargetPosition(0);
         rArm.setTargetPosition(0);
 
         lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -126,8 +127,8 @@ public class Servo_Tester extends LinearOpMode {
 
             if(gamepad2.a){
 
-                lArm.setTargetPosition(200);
-                rArm.setTargetPosition(200);
+                lArm.setTargetPosition(1000);
+                rArm.setTargetPosition(1000);
 
                 lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);

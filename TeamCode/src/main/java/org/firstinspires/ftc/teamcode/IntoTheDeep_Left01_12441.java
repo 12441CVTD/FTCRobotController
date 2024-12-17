@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 @Autonomous(name="Left_Path1", group="IntoTheDeep")
 
-public class IntoTheDeep_Left_12441 extends LinearOpMode {
+public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
     private DcMotor fL = null;
     private DcMotor fR = null;

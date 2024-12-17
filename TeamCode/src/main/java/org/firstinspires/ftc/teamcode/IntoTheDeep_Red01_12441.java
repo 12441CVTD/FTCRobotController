@@ -5,10 +5,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
-import org.firstinspires.ftc.teamcode.rr.TankDrive;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,7 +14,7 @@ import java.util.*;
 
 @Autonomous(name="Right_Path1", group="IntoTheDeep")
 
-public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
+public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
     private DcMotor fL = null;
     private DcMotor fR = null;
@@ -46,17 +44,24 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         bL = hardwareMap.get(DcMotor.class, "bL");
         bR = hardwareMap.get(DcMotor.class, "bR");
 
-        lArm = hardwareMap.get(DcMotor.class, "lArm");
-        rArm = hardwareMap.get(DcMotor.class, "rArm");
-
         lElbow = hardwareMap.get(Servo.class, "lElbow");
         rElbow = hardwareMap.get(Servo.class, "rElbow");
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
         // (arm) encoder stuff
+        lArm = hardwareMap.dcMotor.get("lArm");
+        rArm = hardwareMap.dcMotor.get("rArm");
+
         lArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        lArm.setDirection(DcMotor.Direction.REVERSE);
+        rArm.setDirection(DcMotor.Direction.FORWARD);
+
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -70,9 +75,6 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         bL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         bR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        lArm.setDirection(DcMotor.Direction.REVERSE);
-        rArm.setDirection(DcMotor.Direction.FORWARD);
-
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
 
@@ -84,6 +86,15 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         waitForStart();
 
+        lArm.setTargetPosition(0);
+        rArm.setTargetPosition(0);
+
+        lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         lElbow.setPosition(0);
         rElbow.setPosition(0);
         wrist.setPosition(0.5);
@@ -92,41 +103,37 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
-        //1st Place;
-        telemetry.addData("Position", lArm.getCurrentPosition());
-        telemetry.update();
-        timer.schedule(new lift(10, 0.3), 0);
-        telemetry.addData("Position", lArm.getCurrentPosition());
-        telemetry.update();
-        //timer.schedule((new elbow(0.11)), 50);
-        timer.schedule(new claw(0), 2000);
-        timer.schedule(new lift(0, -0.3), 1925);
+        //Specimen Place code NOTE: the robot must have a lower grip on the specimen to place properly;
+        timer.schedule(new lift(3080, 1), 0);
+        timer.schedule(new lift(1750, 1), 1700);  // +1700 delay from previous schedule
+        timer.schedule(new claw(0), 2000); // +300 delay from previous schedule
 
-        //Actions.runBlocking(
-               // drive.actionBuilder(beginPose)
-                        //.strafeTo(new Vector2d(0, -35))
-                     /*   //pause?
-                        .strafeTo(new Vector2d(48, -38))
-                        .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
-                        .strafeTo(new Vector2d(48, -14))
-                        .strafeTo(new Vector2d(58, -15))
-                        .strafeTo(new Vector2d(58, -55))
-                        .strafeTo(new Vector2d(50, -55))
-                        .strafeTo(new Vector2d(50, -58))
-                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
-                        //pause?
-                        .strafeTo(new Vector2d(0, -50))
-                        .strafeToLinearHeading(new Vector2d(58, -26), Math.toRadians(-0))
-                        .strafeToLinearHeading(new Vector2d(58, -55), Math.toRadians(270))
-                        .strafeTo(new Vector2d(50, -55))
-                        .strafeTo(new Vector2d(50, -58))
-                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
-                        //pause?
-                        .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
-                        .strafeTo(new Vector2d(50, -58))
-                        .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
-                        //pause?
-                      */ // .build());
+
+        Actions.runBlocking(
+                drive.actionBuilder(beginPose)
+                        .strafeTo(new Vector2d(0, -34.5))
+                        /*   //pause?
+                           .strafeTo(new Vector2d(48, -38))
+                           .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
+                           .strafeTo(new Vector2d(48, -14))
+                           .strafeTo(new Vector2d(58, -15))
+                           .strafeTo(new Vector2d(58, -55))
+                           .strafeTo(new Vector2d(50, -55))
+                           .strafeTo(new Vector2d(50, -58))
+                           .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                           //pause?
+                           .strafeTo(new Vector2d(0, -50))
+                           .strafeToLinearHeading(new Vector2d(58, -26), Math.toRadians(-0))
+                           .strafeToLinearHeading(new Vector2d(58, -55), Math.toRadians(270))
+                           .strafeTo(new Vector2d(50, -55))
+                           .strafeTo(new Vector2d(50, -58))
+                           .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                           //pause?
+                           .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
+                           .strafeTo(new Vector2d(50, -58))
+                           .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                           //pause?
+                         */  .build());
 
         sleep(5000);
 
@@ -190,20 +197,14 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
         }
 
         public void run(){
-            while(lArm.getCurrentPosition() < position){
+                lArm.setTargetPosition(position);
+                rArm.setTargetPosition(position);
 
-                    lArm.setTargetPosition(position);
-                    rArm.setTargetPosition(position);
-                    lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    lArm.setPower(power);
-                    rArm.setPower(power);
+                lArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            }
-            lArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            rArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            lArm.setPower(0.04);
-            rArm.setPower(0.04);
+                lArm.setPower(power);
+                rArm.setPower(power);
         }
     }
 

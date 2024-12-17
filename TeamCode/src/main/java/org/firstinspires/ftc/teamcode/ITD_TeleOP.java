@@ -116,8 +116,8 @@ public class ITD_TeleOP extends LinearOpMode {
         bL.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
 
-        lArm.setDirection(DcMotor.Direction.FORWARD);
-        rArm.setDirection(DcMotor.Direction.REVERSE);
+        lArm.setDirection(DcMotor.Direction.REVERSE);
+        rArm.setDirection(DcMotor.Direction.FORWARD);
 
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
@@ -157,9 +157,6 @@ public class ITD_TeleOP extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-         //   boolean x = gamepad1.x;
-         //   boolean y = gamepad1.y;
-         //   boolean a = gamepad1.a;
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
