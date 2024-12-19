@@ -3,18 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import java.util.*;
 
-@Autonomous(name="Right_Path1", group="IntoTheDeep")
+import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
 
-public class IntoTheDeep_Red01_12441 extends LinearOpMode {
+import java.util.Timer;
+import java.util.TimerTask;
+
+@Autonomous(name="AutoSpin", group="Test")
+
+public class AutoSpinTest extends LinearOpMode {
 
     private DcMotor fL = null;
     private DcMotor fR = null;
@@ -103,46 +105,17 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
-        //Specimen Place code NOTE: the robot must have a mid-low grip on the specimen to place properly;
-        timer.schedule(new lift(3040, 1), 0);
-        timer.schedule(new lift(200, 1), 1600);  // +1700 delay from previous schedule
-        timer.schedule(new claw(0), 2200); // +300 delay from previous schedule
-
-        // Sample pickUP
-        timer.schedule(new lift(50, 1), 4000);
-        timer.schedule(new claw(0.45), 4050);
-        timer.schedule(new lift(50, 1), 4070);
-
-        // Sample drop + Specimen pickUP
-        timer.schedule(new claw(0), 5500);
-
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -34))
-                           //pause?
-                        .strafeTo(new Vector2d(48.5, -34.5))
-                            .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270))
-                            .strafeToLinearHeading(new Vector2d(48.5, -14), Math.toRadians(90))
-                         //  .strafeTo(new Vector2d(58, -15))
-                         //  .strafeTo(new Vector2d(58, -55))
-                         //  .strafeTo(new Vector2d(50, -55))
-                         //  .strafeTo(new Vector2d(50, -58))
-                         //  .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
-                           //pause?
-                         //  .strafeTo(new Vector2d(0, -50))
-                         //  .strafeToLinearHeading(new Vector2d(58, -26), Math.toRadians(-0))
-                         //  .strafeToLinearHeading(new Vector2d(58, -55), Math.toRadians(270))
-                         //  .strafeTo(new Vector2d(50, -55))
-                         //  .strafeTo(new Vector2d(50, -58))
-                         //  .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
-                           //pause?
-                         //  .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
-                         //  .strafeTo(new Vector2d(50, -58))
-                         //  .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
-                           //pause?
-                           .build());
-
-        sleep(5000);
+                        .strafeTo(new Vector2d(0, -50))
+                        .turnTo(Math.toRadians(180))
+                        .waitSeconds(0.5)
+                        .turnTo(Math.toRadians(270))
+                        .waitSeconds(0.5)
+                        .turnTo(Math.toRadians(0))
+                        .waitSeconds(0.5)
+                        .turnTo(Math.toRadians(90))
+                        .build());
 
 
         fL.setPower(0);
