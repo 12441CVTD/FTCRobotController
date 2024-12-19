@@ -107,13 +107,9 @@ public class AutoSpinTest extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -50))
                         .turnTo(Math.toRadians(180))
-                        .waitSeconds(0.5)
                         .turnTo(Math.toRadians(270))
-                        .waitSeconds(0.5)
                         .turnTo(Math.toRadians(0))
-                        .waitSeconds(0.5)
                         .turnTo(Math.toRadians(90))
                         .build());
 
