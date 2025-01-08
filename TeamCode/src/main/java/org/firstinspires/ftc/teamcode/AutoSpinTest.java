@@ -107,10 +107,11 @@ public class AutoSpinTest extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .turnTo(Math.toRadians(180))
-                        .turnTo(Math.toRadians(270))
-                        .turnTo(Math.toRadians(0))
-                        .turnTo(Math.toRadians(90))
+                        //+12 about deg to all turns kinda works
+                        .turnTo(Math.toRadians(192))
+                        .turnTo(Math.toRadians(282))
+                        .turnTo(Math.toRadians(12))
+                        .turnTo(Math.toRadians(102))
                         .build());
 
 

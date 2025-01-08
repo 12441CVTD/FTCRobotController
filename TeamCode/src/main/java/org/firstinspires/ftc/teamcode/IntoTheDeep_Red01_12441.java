@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.*;
 
+
 @Autonomous(name="Right_Path1", group="IntoTheDeep")
 
 public class IntoTheDeep_Red01_12441 extends LinearOpMode {
@@ -28,6 +29,8 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
     private Servo rElbow = null;
     private Servo claw = null;
     private Servo wrist = null;
+
+    private ArrayList times = new ArrayList<String>();
 
 
 
@@ -105,29 +108,41 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         //Specimen Place code NOTE: the robot must have a mid-low grip on the specimen to place properly;
         timer.schedule(new lift(3040, 1), 0);
-        timer.schedule(new lift(200, 1), 1600);  // +1700 delay from previous schedule
-        timer.schedule(new claw(0), 2200); // +300 delay from previous schedule
+        timer.schedule(new lift(1420, 1), 1650);
+        timer.schedule(new lift(200, 1), 2000);
+        timer.schedule(new claw(0), 2100);
+
 
         // Sample pickUP
-        timer.schedule(new lift(50, 1), 4000);
-        timer.schedule(new claw(0.45), 4050);
-        timer.schedule(new lift(50, 1), 4070);
+        timer.schedule(new lift(20, 1), 4800);
+        timer.schedule(new claw(0.45), 4850); //+100 from last
+        timer.schedule(new lift(375, 1), 5140); //+240 from last
 
-        // Sample drop + Specimen pickUP
-        timer.schedule(new claw(0), 5500);
+        // Sample drop
+        timer.schedule(new claw(0), 6850);
+
+        //Specimen pickUp
+        timer.schedule(new lift(1180, 1), 11000);
+        timer.schedule(new claw(0.45), 11750);
+
+        //Specimen place2
+        timer.schedule(new lift(3040, 1), 12800);
+        timer.schedule(new lift(1420, 1), 14650);
+        timer.schedule(new lift(200, 1), 15000);
+        timer.schedule(new claw(0), 15100);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -34))
-                           //pause?
-                        .strafeTo(new Vector2d(48.5, -34.5))
-                            .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270))
-                            .strafeToLinearHeading(new Vector2d(48.5, -14), Math.toRadians(90))
-                         //  .strafeTo(new Vector2d(58, -15))
-                         //  .strafeTo(new Vector2d(58, -55))
+                        .strafeTo(new Vector2d(0, -33.75))
+                        .strafeTo(new Vector2d(0, -37))
+                        .strafeTo(new Vector2d(48, -35.5))
+                        .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270.0000000001))
+                        .strafeTo(new Vector2d(48, -10))
+                        .strafeTo(new Vector2d(60, -10))
+                        .strafeTo(new Vector2d(58, -48))
                          //  .strafeTo(new Vector2d(50, -55))
                          //  .strafeTo(new Vector2d(50, -58))
-                         //  .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                        .strafeToLinearHeading(new Vector2d(0, -33.75), Math.toRadians(89))
                            //pause?
                          //  .strafeTo(new Vector2d(0, -50))
                          //  .strafeToLinearHeading(new Vector2d(58, -26), Math.toRadians(-0))
@@ -142,17 +157,10 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
                            //pause?
                            .build());
 
-        sleep(5000);
-
-
         fL.setPower(0);
         fR.setPower(0);
         bL.setPower(0);
         bR.setPower(0);
-
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Position", lArm.getCurrentPosition());
-        telemetry.update();
     }
 
     class elbow extends TimerTask{
@@ -193,7 +201,6 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
     }
 
-
     class lift extends TimerTask{
         private int position;
         private double power;
@@ -204,6 +211,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
         }
 
         public void run(){
+
                 lArm.setTargetPosition(position);
                 rArm.setTargetPosition(position);
 
@@ -212,34 +220,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
                 lArm.setPower(power);
                 rArm.setPower(power);
-        }
-    }
-
-
-
-
-    //AutoLeft/Right
-    class Spline extends TimerTask{
-
-        public void run(){
 
         }
     }
-
-    //AutoBack/Forth
-    class strafe extends TimerTask{
-
-        public void run(){
-
-        }
-    }
-    //AutoRotation
-    class turn extends TimerTask{
-
-
-        public void run(){
-
-        }
-    }
-
 }
