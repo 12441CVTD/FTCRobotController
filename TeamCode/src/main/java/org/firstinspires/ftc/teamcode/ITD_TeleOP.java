@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -66,7 +67,6 @@ public class ITD_TeleOP extends LinearOpMode {
     private DcMotor bR = null;
     private DcMotor lArm = null;
     private DcMotor rArm = null;
-
     private Servo lElbow = null;
     private Servo rElbow = null;
     private Servo claw = null;
@@ -157,9 +157,6 @@ public class ITD_TeleOP extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-         //   boolean x = gamepad1.x;
-         //   boolean y = gamepad1.y;
-         //   boolean a = gamepad1.a;
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
@@ -231,7 +228,7 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             // Lowest
             if(gamepad2.left_bumper){
-                splitMove(lElbow.getPosition(), 0.0, 4, 500);
+                splitMove(lElbow.getPosition(), 0.0, 5, 250);
             }
             // Highest
             if(gamepad2.right_bumper){
@@ -308,9 +305,12 @@ public class ITD_TeleOP extends LinearOpMode {
 
         double big = Math.max(FinalPos, InitPos);
 
-        for(int i = NumPos-1; i >= 0; i--){
-            double move = Math.max(big * (((double)( i/NumPos ))), Math.min(FinalPos, InitPos));
-            timer.schedule(new elbowShmove(move), ((long)times*(3-i)));
+        for(double i = NumPos-1; i >= 0; i--){
+            double move = Math.max(big * (i/NumPos), Math.min(FinalPos, InitPos));
+            timer.schedule(new elbowShmove(move), ((long)times*(NumPos-((int)i))));
+            if(move == Math.min(FinalPos, InitPos)){
+                i = -1;
+            }
         }
 
     }

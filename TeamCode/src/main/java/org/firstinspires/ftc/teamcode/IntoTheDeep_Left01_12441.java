@@ -3,20 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
-import org.firstinspires.ftc.teamcode.rr.TankDrive;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import java.util.*;
 
-@Autonomous(name="Right_Path1", group="IntoTheDeep")
+import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
 
-public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
+import java.util.Timer;
+import java.util.TimerTask;
+
+@Autonomous(name="Left_Path1", group="IntoTheDeep")
+
+public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
     private DcMotor fL = null;
     private DcMotor fR = null;
@@ -36,7 +36,7 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
     public void runOpMode() {
 
-        Pose2d beginPose = new Pose2d(20, -60, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(-20, -60, Math.toRadians(90));
 
         // Initialize the drive system variables.
         fL = hardwareMap.get(DcMotor.class, "fL");
@@ -80,21 +80,21 @@ public class IntoTheDeep_RedRight_12441 extends LinearOpMode {
 
         lElbow.setPosition(0);
         rElbow.setPosition(0);
-        wrist.setPosition(0.5);
+        wrist.setPosition(0);
         claw.setPosition(0.45);
 
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //1st Place;
-        timer.schedule(new lift(1625, 1), 0);
+        timer.schedule(new lift(1500, 1), 0);
         //timer.schedule((new elbow(0.11)), 50);
         timer.schedule(new claw(0), 2000);
-        timer.schedule(new lift(800, -0.7), 1925);
+        timer.schedule(new lift(600, -0.7), 1925);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -35))
+                        .strafeTo(new Vector2d(0, -30))
                      /*   //pause?
                         .strafeTo(new Vector2d(48, -38))
                         .strafeToLinearHeading(new Vector2d(48, -50), Math.toRadians(270))
