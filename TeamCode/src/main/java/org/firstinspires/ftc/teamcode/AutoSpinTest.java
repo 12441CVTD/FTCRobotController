@@ -38,7 +38,7 @@ public class AutoSpinTest extends LinearOpMode {
 
     public void runOpMode() {
 
-        Pose2d beginPose = new Pose2d(20, -60, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(20, -60, Math.toRadians(0));
 
         // Initialize the drive system variables.
         fL = hardwareMap.get(DcMotor.class, "fL");
@@ -108,10 +108,10 @@ public class AutoSpinTest extends LinearOpMode {
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         //+12 about deg to all turns kinda works
-                        .turnTo(Math.toRadians(192))
-                        .turnTo(Math.toRadians(282))
-                        .turnTo(Math.toRadians(12))
-                        .turnTo(Math.toRadians(102))
+                        .turnTo(Math.toDegrees(90))
+                        .turnTo(Math.toDegrees(180))
+                        .turnTo(Math.toDegrees(270))
+                        .turnTo(Math.toDegrees(0))
                         .build());
 
 
