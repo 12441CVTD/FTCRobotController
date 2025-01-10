@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.TurnConstraints;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -112,6 +113,11 @@ public class AutoSpinTest extends LinearOpMode {
                         .turnTo(Math.toDegrees(180))
                         .turnTo(Math.toDegrees(270))
                         .turnTo(Math.toDegrees(0))
+                        //googoo
+                        .turnTo(Math.toRadians(180), new TurnConstraints(1, 0, 1))
+                        .turnTo(Math.toRadians(270))
+                        .turnTo(Math.toRadians(0))
+                        .turnTo(Math.toRadians(90))
                         .build());
 
 

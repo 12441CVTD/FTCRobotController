@@ -107,7 +107,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         //Specimen Place code NOTE: the robot must have a mid-low grip on the specimen to place properly;
-        timer.schedule(new lift(3100, 1), 0);
+        timer.schedule(new lift(3050, 1), 0);
         timer.schedule(new lift(1420, 1), 1650);
         timer.schedule(new lift(200, 1), 2000);
         timer.schedule(new claw(0), 2100);
@@ -126,7 +126,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
         timer.schedule(new claw(0.45), 11900); //11700
 
         //Specimen place2
-        timer.schedule(new lift(3100, 1), 12900);
+        timer.schedule(new lift(3050, 1), 12900);
         timer.schedule(new lift(1420, 1), 15350);
         timer.schedule(new lift(200, 1), 15700);
         timer.schedule(new claw(0), 15800);
