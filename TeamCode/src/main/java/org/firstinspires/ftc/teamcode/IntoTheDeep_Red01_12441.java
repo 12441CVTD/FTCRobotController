@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
 
@@ -29,10 +33,6 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
     private Servo rElbow = null;
     private Servo claw = null;
     private Servo wrist = null;
-
-    private ArrayList times = new ArrayList<String>();
-
-
 
     private ElapsedTime runtime = new ElapsedTime();
     private Timer timer = new Timer();
@@ -108,63 +108,69 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         //Specimen Place code NOTE: the robot must have a mid-low grip on the specimen to place properly;
         timer.schedule(new lift(3050, 1), 0);
-        timer.schedule(new lift(1420, 1), 1650);
-        timer.schedule(new lift(200, 1), 2000);
-        timer.schedule(new claw(0), 2100);
+        timer.schedule(new lift(1420, 1), 1725);
+        timer.schedule(new lift(200, 1), 2100);
+        timer.schedule(new claw(0), 2210);
 
 
         // Sample pickUP
-        timer.schedule(new lift(20, 1), 4800);
-        timer.schedule(new claw(0.45), 4850); //+100 from last
-        timer.schedule(new lift(375, 1), 5140); //+240 from last
+        timer.schedule(new lift(20, 1), 4740);
+        timer.schedule(new claw(0.45), 4790); //+100 from last
+        timer.schedule(new lift(375, 1), 5060); //+240 from last
 
         // Sample drop
-        timer.schedule(new claw(0), 6850);
+        timer.schedule(new claw(0), 6700);
 
         //Specimen pickUp
-        timer.schedule(new lift(1180, 1), 11150); //10950
-        timer.schedule(new claw(0.45), 11900); //11700
+        timer.schedule(new lift(1130, 1), 11150); //10950
+        timer.schedule(new claw(0.45), 11400); //11700
 
         //Specimen place2
-        timer.schedule(new lift(3050, 1), 12900);
-        timer.schedule(new lift(1420, 1), 15350);
-        timer.schedule(new lift(200, 1), 15700);
-        timer.schedule(new claw(0), 15800);
+        timer.schedule(new lift(3050, 1), 11800);
+        timer.schedule(new lift(1420, 1), 15450);
+        timer.schedule(new lift(200, 1), 15800);
+        timer.schedule(new claw(0), 15900);
 
         //Final Sample
-        timer.schedule(new lift(20, 1), 19100);
-        timer.schedule(new claw(0.45), 19150);
-        timer.schedule(new lift(1180, 1), 19290);
-        timer.schedule(new claw(0), 21200);
+        //timer.schedule(new lift(20, 1), 19100);
+        //timer.schedule(new claw(0.45), 19150);
+        //timer.schedule(new lift(1180, 1), 19290);
+        //timer.schedule(new claw(0), 21200);
 
         //Specimen Rush
-        timer.schedule(new claw(0.45), 21700);
-        timer.schedule(new lift(3100, 1), 21950);
-        timer.schedule(new lift(1420, 1), 25500);
-        timer.schedule(new lift(200, 1), 25850);
-        timer.schedule(new claw(0), 26950);
+        //timer.schedule(new claw(0.45), 21700);
+        //timer.schedule(new lift(3100, 1), 21950);
+        //timer.schedule(new lift(1420, 1), 25500);
+        //timer.schedule(new lift(200, 1), 25850);
+        //timer.schedule(new claw(0), 26950);
 
 
         // Move arm into end position
-        timer.schedule(new lift(0, 1), 29000);
+        timer.schedule(new lift(0, 1), 17000);
+
+
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -33.1))
+                        .strafeTo(new Vector2d(0, -35))
+                        .waitSeconds(0.1)
                         .strafeTo(new Vector2d(0, -37))
-                        .strafeTo(new Vector2d(48, -35.5))
+                        .strafeTo(new Vector2d(48.5, -36))
+                        .waitSeconds(0.125)
                         .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270.0000000001))
                         .strafeTo(new Vector2d(48, -10))
                         .strafeTo(new Vector2d(60, -10))
-                        .strafeTo(new Vector2d(58, -48.5))
-                        .strafeToLinearHeading(new Vector2d(0, -38), Math.toRadians(89.7))
-                        .strafeTo(new Vector2d(0, -33))
+                        .strafeTo(new Vector2d(58, -48.2))
+                        .waitSeconds(0.1)
+                        .strafeToLinearHeading(new Vector2d(3, -38), Math.toRadians(89.9))
+                        .strafeTo(new Vector2d(3, -34.9))
+                        .waitSeconds(5)
                            //pause?
-                        .strafeTo(new Vector2d(0, -40))
-                        .strafeToLinearHeading(new Vector2d(53, -24), Math.toRadians(-0))
-                        .strafeToLinearHeading(new Vector2d(50, -48), Math.toRadians(270))
-                        .strafeToLinearHeading(new Vector2d(0, -38), Math.toRadians(89.7))
-                        .strafeTo(new Vector2d(0, -33))
+                        //.strafeTo(new Vector2d(0, -40))
+                        //.strafeToLinearHeading(new Vector2d(53, -24), Math.toRadians(-0))
+                        //.strafeToLinearHeading(new Vector2d(50, -48), Math.toRadians(270))
+                        //.strafeToLinearHeading(new Vector2d(0, -38), Math.toRadians(89.7))
+                        //.strafeTo(new Vector2d(0, -33))
                            //pause?
                          //  .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
                          //  .strafeTo(new Vector2d(50, -58))
@@ -178,6 +184,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
         bR.setPower(0);
     }
 
+//TimerTasks
     class elbow extends TimerTask{
         private double position;
 
@@ -238,4 +245,28 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         }
     }
+
+    abstract class alift implements Action {
+        int pos;
+        double pow;
+        int delay = 0;
+        public alift(int pos) {
+            this.pos = pos;
+        }
+        public alift(int pos, int delay) {
+            this.pos = pos;
+            this.delay = delay;
+        }
+        public alift(int pos, int delay, double pow){
+            this.pos = pos;
+            this.delay = delay;
+            this.pow = pow;
+        }
+
+        public void run(){
+            timer.schedule(new lift(pos, 1), delay);
+        }
+
+    }
+
 }

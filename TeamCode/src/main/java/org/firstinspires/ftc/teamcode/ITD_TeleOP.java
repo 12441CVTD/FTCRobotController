@@ -218,8 +218,8 @@ public class ITD_TeleOP extends LinearOpMode {
 
             // Mid low
             if(gamepad2.left_trigger > 0){
-                lElbow.setPosition(0.11);
-                rElbow.setPosition(0.11);
+                lElbow.setPosition(0.10);
+                rElbow.setPosition(0.10);
             }
             // Mid high
             if(gamepad2.right_trigger > 0){
@@ -229,6 +229,8 @@ public class ITD_TeleOP extends LinearOpMode {
             // Lowest
             if(gamepad2.left_bumper){
                 splitMove(lElbow.getPosition(), 0.0, 5, 250);
+                //lElbow.setPosition(0.0);
+                //rElbow.setPosition(0.0);
             }
             // Highest
             if(gamepad2.right_bumper){
@@ -300,7 +302,7 @@ public class ITD_TeleOP extends LinearOpMode {
         How:
             1. Take the initPos (Ex: 1)
             2. Take the finalPos (Ex: 0)                                      Between Positions
-            3. Find positions between them according to "X"(Ex: "X" = 3 so 1 | 0.75, 0.5, 0.25 | 0)
+        3. Find positions between them according to "X"(Ex: "X" = 3 so 1 | 0.75, 0.5, 0.25 | 0)
          */
 
         double big = Math.max(FinalPos, InitPos);
