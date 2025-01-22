@@ -72,6 +72,7 @@ public class Servo_Tester extends LinearOpMode {
     private DcMotor bR = null;
     private DcMotor lArm = null;
     private DcMotor rArm = null;
+    private DcMotor hangOne = null;
 
     private Timer timer = new Timer();
 
@@ -94,6 +95,8 @@ public class Servo_Tester extends LinearOpMode {
         lArm = hardwareMap.dcMotor.get("lArm");
         rArm = hardwareMap.dcMotor.get("rArm");
 
+        hangOne = hardwareMap.dcMotor.get("hangOne");
+
         lArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -102,6 +105,8 @@ public class Servo_Tester extends LinearOpMode {
 
         lArm.setDirection(DcMotor.Direction.REVERSE);
         rArm.setDirection(DcMotor.Direction.FORWARD);
+
+        hangOne.setDirection(DcMotor.Direction.FORWARD);
 
         lArm.setTargetPosition(0);
         rArm.setTargetPosition(0);
@@ -124,6 +129,8 @@ public class Servo_Tester extends LinearOpMode {
             int Rposition = rArm.getCurrentPosition();
             int Lposition = lArm.getCurrentPosition();
 
+            hangOne.setPower(gamepad1.left_stick_y);
+            
 
             if(gamepad2.a){
 

@@ -107,7 +107,8 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         // 1st Sample Drop (0 is open, 0.45 is close)
-        timer.schedule(new lift(5000, 1), 0);
+        timer.schedule(new lift(3000, 1), 0);
+        timer.schedule(new elbow(0.3), 0);
         timer.schedule(new claw(0), 2000);
 
 
@@ -116,7 +117,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new claw(0.45), 3650);
 
         // 2nd Sample Drop
-        timer.schedule(new lift(5000, 1), 3900);
+        timer.schedule(new lift(3000, 1), 3900);
         timer.schedule(new claw(0), 5500);
 
         // 3rd Sample Pickup
@@ -124,7 +125,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new claw(0.45), 7200);
 
         // 3rd Sample Drop
-        timer.schedule(new lift(5000, 1), 7500);
+        timer.schedule(new lift(3000, 1), 7500);
         timer.schedule(new claw(0), 9000);
 
         // 4th Sample Pickup
@@ -132,24 +133,24 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new claw(0.45), 10800);
 
         // 4th Sample Drop
-        timer.schedule(new lift(5000, 1), 11000);
+        timer.schedule(new lift(3000, 1), 11000);
         timer.schedule(new claw(0), 12600);
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225)) // Place
+                        .strafeToLinearHeading(new Vector2d(-52, -52), Math.toRadians(225)) // Place
                         .waitSeconds(0.1)
                         .strafeToLinearHeading(new Vector2d(-48, -38), Math.toRadians(90))
                         .waitSeconds(0.1)
-                        .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
+                        .strafeToLinearHeading(new Vector2d(-52, -52), Math.toRadians(225))
                         .waitSeconds(0.1)
                         .strafeToLinearHeading(new Vector2d(-57, -38), Math.toRadians(90))
                         .waitSeconds(0.1)
-                        .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
+                        .strafeToLinearHeading(new Vector2d(-52, -52), Math.toRadians(225))
                         .waitSeconds(0.1)
                         .strafeToLinearHeading(new Vector2d(-56, -26), Math.toRadians(180))
                         .waitSeconds(0.1)
-                        .strafeToLinearHeading(new Vector2d(-54,-54), Math.toRadians(225))
+                        .strafeToLinearHeading(new Vector2d(-52,-52), Math.toRadians(225))
                         .build());
 
 
