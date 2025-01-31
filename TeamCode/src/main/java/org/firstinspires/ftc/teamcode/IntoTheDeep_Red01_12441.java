@@ -152,7 +152,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -35))
+                        .strafeTo(new Vector2d(0, -33.5))
                         .waitSeconds(0.1)
                         .strafeTo(new Vector2d(0, -37))
                         .strafeTo(new Vector2d(48.5, -36))

@@ -107,6 +107,9 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
         // 1st Sample Drop (0 is open, 0.45 is close)
+
+        //Position 5000 is too high
+
         timer.schedule(new lift(5000, 1), 0);
         timer.schedule(new claw(0), 2000);
 
