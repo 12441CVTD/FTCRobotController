@@ -142,6 +142,23 @@ public class Motor_Tester extends LinearOpMode {
                     wristIN -= 0.01;
             }
 
+            // Mid low
+            if(gamepad2.left_trigger > 0){
+                elbowIN = 0.08;
+            }
+            // Mid high
+            if(gamepad2.right_trigger > 0){
+                elbowIN = 0.21;
+            }
+            // Lowest
+            if(gamepad2.left_bumper){
+                elbowIN = 0.0;
+            }
+            // Highest
+            if(gamepad2.right_bumper){
+                elbowIN = 0.31;
+            }
+
             wrist.setPosition(wristIN);
             claw.setPosition(clawIN);
             lElbow.setPosition(elbowIN);
