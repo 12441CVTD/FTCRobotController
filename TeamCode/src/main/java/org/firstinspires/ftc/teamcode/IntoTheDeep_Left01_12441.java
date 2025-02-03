@@ -201,14 +201,16 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
                     }
                 }
             }
+            else if(positionNum > 0){
+                lElbow.setPosition(ElbowPositions[positionNum]);
+                rElbow.setPosition(ElbowPositions[positionNum]);
+            }
+
             if(positionNum == -1){
                 lElbow.setPosition(position);
                 rElbow.setPosition(position);
             }
-            else{
-                lElbow.setPosition(ElbowPositions[positionNum]);
-                rElbow.setPosition(ElbowPositions[positionNum]);
-            }
+
 
 
         }
