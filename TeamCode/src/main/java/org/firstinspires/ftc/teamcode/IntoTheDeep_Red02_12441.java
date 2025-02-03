@@ -1,25 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
-
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.acmerobotics.roadrunner.Action;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import java.util.*;
+
+import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
-@Autonomous(name="Right_Path1", group="IntoTheDeep")
+@Autonomous(name="Right_Path2", group="IntoTheDeep")
 
-public class IntoTheDeep_Red01_12441 extends LinearOpMode {
+public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
     private DcMotor fL = null;
     private DcMotor fR = null;
@@ -248,16 +247,20 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
         }
     }
 
-    abstract class alift implements Action {
+
+
+    public class alift {
         int pos;
         double pow;
         int delay = 0;
         public alift(int pos) {
             this.pos = pos;
+            pow = 1;
         }
         public alift(int pos, int delay) {
             this.pos = pos;
             this.delay = delay;
+            pow = 1;
         }
         public alift(int pos, int delay, double pow){
             this.pos = pos;

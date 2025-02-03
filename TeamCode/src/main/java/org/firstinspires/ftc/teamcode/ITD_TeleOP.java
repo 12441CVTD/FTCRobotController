@@ -41,6 +41,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+
 /*
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
  * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
@@ -185,7 +186,6 @@ public class ITD_TeleOP extends LinearOpMode {
                 bLPower = -0.8;
                 bRPower = 0.8;
             }
-
             //Slow Mode
             if(gamepad1.dpad_up){
                 fLPower = 0.25;
@@ -218,8 +218,8 @@ public class ITD_TeleOP extends LinearOpMode {
 
             // Mid low
             if(gamepad2.left_trigger > 0){
-                lElbow.setPosition(0.10);
-                rElbow.setPosition(0.10);
+                lElbow.setPosition(0.08);
+                rElbow.setPosition(0.08);
             }
             // Mid high
             if(gamepad2.right_trigger > 0){
