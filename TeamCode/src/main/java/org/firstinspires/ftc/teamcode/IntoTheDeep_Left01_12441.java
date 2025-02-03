@@ -189,7 +189,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
         public void run(){
 
-            if(positionNum == 0){
+            if((positionNum == 0) && (lElbow.getPosition() == ElbowPositions[3])){
 
                 double big = lElbow.getPosition();
 
