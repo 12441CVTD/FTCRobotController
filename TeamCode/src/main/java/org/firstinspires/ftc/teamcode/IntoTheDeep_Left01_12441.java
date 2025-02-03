@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.teamcode.constants.AutoConstants;
+
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -30,7 +32,10 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
     private Servo claw = null;
     private Servo wrist = null;
 
+    private int DELAY_BETWEEN_MOVES = 100;
+
     private ArrayList times = new ArrayList<String>();
+    private double[] ElbowPositions = AutoConstants.ElbowConstants;
 
 
 
@@ -111,13 +116,17 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         //Position 5000 is too high
 
         timer.schedule(new lift(3000, 1), 0);
+        timer.schedule(new elbow(1), 100);
+        timer.schedule(new wrist(0.17), 100);
         timer.schedule(new claw(0), 2000);
 
 
         // 2nd Sample Pickup
-        timer.schedule(new lift(20, 1), 2400);
-        timer.schedule(new claw(0.45), 3650);
-
+        timer.schedule(new lift(20, 1), 3500);
+        timer.schedule(new elbow(0), 3900);
+        timer.schedule(new wrist(0.51), 3900);
+        timer.schedule(new claw(0.45), 4000);
+/*
         // 2nd Sample Drop
         timer.schedule(new lift(3000, 1), 3900);
         timer.schedule(new claw(0), 5500);
@@ -137,22 +146,22 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         // 4th Sample Drop
         timer.schedule(new lift(3000, 1), 11000);
         timer.schedule(new claw(0), 12600);
-
+*/
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225)) // Place
-                        .waitSeconds(0.1)
+                        .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-48, -38), Math.toRadians(90))
-                        .waitSeconds(0.1)
+                        .waitSeconds(1) /*
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                        .waitSeconds(0.1)
+                        .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-57, -38), Math.toRadians(90))
-                        .waitSeconds(0.1)
+                        .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                        .waitSeconds(0.1)
+                        .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-56, -26), Math.toRadians(180))
-                        .waitSeconds(0.1)
-                        .strafeToLinearHeading(new Vector2d(-52,-52), Math.toRadians(225))
+                        .waitSeconds(1)
+                        .strafeToLinearHeading(new Vector2d(-52,-52), Math.toRadians(225)) */
                         .build());
 
 
@@ -164,15 +173,15 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
     }
 
     class elbow extends TimerTask{
-        private double position;
+        private int positionNum;
 
-        public elbow(double position){
-            this.position = position;
+        public elbow(int positionNum){
+            this.positionNum = positionNum;
         }
 
         public void run(){
-            lElbow.setPosition(position);
-            rElbow.setPosition(position);
+            lElbow.setPosition(ElbowPositions[positionNum]);
+            rElbow.setPosition(ElbowPositions[positionNum]);
         }
     }
 
