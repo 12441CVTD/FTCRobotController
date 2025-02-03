@@ -68,11 +68,11 @@ public class ITD_TeleOP extends LinearOpMode {
     private DcMotor bR = null;
     private DcMotor lArm = null;
     private DcMotor rArm = null;
+    private DcMotor act = null;
     private Servo lElbow = null;
     private Servo rElbow = null;
     private Servo claw = null;
     private Servo wrist = null;
-
 
 
     private Timer timer = new Timer();
@@ -103,6 +103,7 @@ public class ITD_TeleOP extends LinearOpMode {
 
         lArm = hardwareMap.get(DcMotor.class, "lArm");
         rArm = hardwareMap.get(DcMotor.class, "rArm");
+        act = hardwareMap.get(DcMotor.class, "actuator");
 
         lElbow = hardwareMap.get(Servo.class, "lElbow");
         rElbow = hardwareMap.get(Servo.class, "rElbow");
@@ -216,6 +217,7 @@ public class ITD_TeleOP extends LinearOpMode {
             //1 == danger
 
 
+
             // Mid low
             if(gamepad2.left_trigger > 0){
                 lElbow.setPosition(0.08);
@@ -254,6 +256,12 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             if(gamepad2.right_stick_button){
                 wrist.setPosition(0.05);
+            }
+            if(gamepad1.a){
+                act.setPower(-0.5);
+            }
+            if(gamepad1.y){
+                act.setPower(0.5);
             }
 
             // Send calculated power to wheels

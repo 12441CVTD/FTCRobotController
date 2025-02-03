@@ -110,7 +110,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
         //Position 5000 is too high
 
-        timer.schedule(new lift(5000, 1), 0);
+        timer.schedule(new lift(3000, 1), 0);
         timer.schedule(new claw(0), 2000);
 
 
@@ -119,7 +119,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new claw(0.45), 3650);
 
         // 2nd Sample Drop
-        timer.schedule(new lift(5000, 1), 3900);
+        timer.schedule(new lift(3000, 1), 3900);
         timer.schedule(new claw(0), 5500);
 
         // 3rd Sample Pickup
