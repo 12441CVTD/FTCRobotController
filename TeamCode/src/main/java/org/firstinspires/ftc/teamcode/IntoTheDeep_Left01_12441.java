@@ -149,7 +149,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 */
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225)) // Place
+                        .strafeToLinearHeading(new Vector2d(-53, -52), Math.toRadians(225)) // Place
                         .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-48, -38), Math.toRadians(90))
                         .waitSeconds(1) /*
