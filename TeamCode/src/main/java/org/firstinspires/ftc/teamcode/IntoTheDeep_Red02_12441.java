@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -249,28 +252,33 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
 
 
-    public class alift {
+    public class Arm {
         int pos;
         double pow;
         int delay = 0;
-        public alift(int pos) {
+        public Arm(int pos) {
             this.pos = pos;
             pow = 1;
         }
-        public alift(int pos, int delay) {
+        public Arm(int pos, int delay) {
             this.pos = pos;
             this.delay = delay;
             pow = 1;
         }
-        public alift(int pos, int delay, double pow){
+        public Arm(int pos, int delay, double pow){
             this.pos = pos;
             this.delay = delay;
             this.pow = pow;
         }
 
-        public void run(){
-            timer.schedule(new lift(pos, 1), delay);
+        public class alift implements Action{
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            }
         }
+
 
     }
 
