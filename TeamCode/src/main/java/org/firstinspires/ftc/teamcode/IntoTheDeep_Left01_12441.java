@@ -174,14 +174,45 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
     class elbow extends TimerTask{
         private int positionNum;
+        private double position;
 
         public elbow(int positionNum){
             this.positionNum = positionNum;
+            position = -1;
         }
 
+        private elbow(double position){
+            this.position = position;
+            positionNum = -1;
+        }
+
+
         public void run(){
-            lElbow.setPosition(ElbowPositions[positionNum]);
-            rElbow.setPosition(ElbowPositions[positionNum]);
+
+            if((positionNum == 0) && (lElbow.getPosition() == ElbowPositions[3])){
+
+                double big = lElbow.getPosition();
+
+                for(double i = 5-1; i >= 0; i--){
+                    double move = Math.max(big * (i/5), 0);
+                    timer.schedule(new elbow(move), ((long)250*(5-((int)i))));
+                    if(move == 0){
+                        i = -1;
+                    }
+                }
+            }
+            else if(positionNum > 0){
+                lElbow.setPosition(ElbowPositions[positionNum]);
+                rElbow.setPosition(ElbowPositions[positionNum]);
+            }
+
+            if(positionNum == -1){
+                lElbow.setPosition(position);
+                rElbow.setPosition(position);
+            }
+
+
+
         }
     }
 

@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import org.firstinspires.ftc.teamcode.constants.TeleopConstants;
 
 
 /*
@@ -85,6 +85,8 @@ public class ITD_TeleOP extends LinearOpMode {
     boolean isDown = false;
     boolean holdUp = false;
     boolean turney;
+
+    private double[] elbowPositions = TeleopConstants.ElbowConstants;
 
 
 
