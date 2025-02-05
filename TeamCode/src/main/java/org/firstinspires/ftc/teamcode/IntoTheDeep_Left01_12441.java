@@ -34,9 +34,8 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
     private int DELAY_BETWEEN_MOVES = 100;
 
-    private ArrayList times = new ArrayList<String>();
     private double[] ElbowPositions = AutoConstants.ElbowConstants;
-
+    private int[] LiftConstants = AutoConstants.SampleLiftConstants;
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -123,9 +122,9 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
         // 2nd Sample Pickup
         timer.schedule(new lift(20, 1), 3500);
-        timer.schedule(new elbow(0), 3900);
-        timer.schedule(new wrist(0.51), 3900);
-        timer.schedule(new claw(0.45), 4000);
+        timer.schedule(new elbow(0), 4300);
+        timer.schedule(new wrist(0.51), 4300);
+        timer.schedule(new claw(0.45), 4500);
 /*
         // 2nd Sample Drop
         timer.schedule(new lift(3000, 1), 3900);
@@ -193,9 +192,9 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
                 double big = lElbow.getPosition();
 
-                for(double i = 5-1; i >= 0; i--){
-                    double move = Math.max(big * (i/5), 0);
-                    timer.schedule(new elbow(move), ((long)250*(5-((int)i))));
+                for(int i = 4; i >= 0; i--){
+                    double move = Math.max(big * ((double)i/5), 0);
+                    timer.schedule(new elbow(move), ((long)250*(5-(i))));
                     if(move == 0){
                         i = -1;
                     }

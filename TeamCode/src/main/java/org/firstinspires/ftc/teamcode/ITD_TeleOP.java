@@ -68,7 +68,7 @@ public class ITD_TeleOP extends LinearOpMode {
     private DcMotor bR = null;
     private DcMotor lArm = null;
     private DcMotor rArm = null;
-    private DcMotor act = null;
+    // private DcMotor act = null;
     private Servo lElbow = null;
     private Servo rElbow = null;
     private Servo claw = null;
@@ -105,7 +105,7 @@ public class ITD_TeleOP extends LinearOpMode {
 
         lArm = hardwareMap.get(DcMotor.class, "lArm");
         rArm = hardwareMap.get(DcMotor.class, "rArm");
-        act = hardwareMap.get(DcMotor.class, "actuator");
+        // act = hardwareMap.get(DcMotor.class, "actuator");
 
         lElbow = hardwareMap.get(Servo.class, "lElbow");
         rElbow = hardwareMap.get(Servo.class, "rElbow");
@@ -125,6 +125,8 @@ public class ITD_TeleOP extends LinearOpMode {
 
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
+
+    //    act.setDirection(DcMotor.Direction.FORWARD);
 
         claw.setDirection(Servo.Direction.FORWARD);
         wrist.setDirection(Servo.Direction.FORWARD);
@@ -252,19 +254,17 @@ public class ITD_TeleOP extends LinearOpMode {
                     isOpened = false;
                 }
             }
-            if(currentGP2.x && !previousGP2.x && !isDown){
+            if(currentGP2.b && !previousGP2.b){
                 holdUp = !holdUp;
-                wrist.setPosition(0.69);
+                wrist.setPosition(0.27);
             }
-            if(gamepad2.right_stick_button){
-                wrist.setPosition(0.05);
-            }
-            if(gamepad1.a){
+            /* if(gamepad1.a){
                 act.setPower(-0.5);
             }
             if(gamepad1.y){
                 act.setPower(0.5);
             }
+            */
 
             // Send calculated power to wheels
             fL.setPower(fLPower);
@@ -285,12 +285,13 @@ public class ITD_TeleOP extends LinearOpMode {
                 claw.setPosition(0.4);
             }
             // 0.05 == THROWING
-            if(isDown){
+            if(isDown && !holdUp){
                 wrist.setPosition(0.17);
             }
             else if(!isDown && !holdUp){
                 wrist.setPosition(0.51);
             }
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
