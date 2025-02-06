@@ -146,6 +146,8 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new lift(3000, 1), 11000);
         timer.schedule(new claw(0), 12600);
 */
+        //its doing random stuff and i dont know why
+        //its turning and the claw isnt moving and its really bad
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .strafeToLinearHeading(new Vector2d(-53, -52), Math.toRadians(225)) // Place
