@@ -115,45 +115,55 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         //Position 5000 is too high
 
         timer.schedule(new lift(3000, 1), 0);
-        timer.schedule(new elbow(1), 100);
+        timer.schedule(new elbow(3), 100);
         timer.schedule(new wrist(0.17), 100);
         timer.schedule(new claw(0), 2000);
 
 
         // 2nd Sample Pickup
-        timer.schedule(new lift(20, 1), 3500);
+        timer.schedule(new lift(20, 1), 4000);
         timer.schedule(new elbow(0), 4300);
-        timer.schedule(new wrist(0.51), 4300);
-        timer.schedule(new claw(0.45), 4500);
-/*
-        // 2nd Sample Drop
-        timer.schedule(new lift(3000, 1), 3900);
-        timer.schedule(new claw(0), 5500);
+        timer.schedule(new wrist(0.5), 4300);
+        timer.schedule(new claw(0.45), 6000);
 
+        // 2nd Sample Drop (All delays from here are wrong)
+        timer.schedule(new lift(3000, 1), 6500);
+        timer.schedule(new elbow(3), 6600);
+        timer.schedule(new wrist(0.17), 6600);
+        timer.schedule(new claw(0), 10000);
+        /*
         // 3rd Sample Pickup
         timer.schedule(new lift(20, 1), 6000);
+        timer.schedule(new elbow(0), 6100);
+        timer.schedule(new wrist(0.5), 4300);
         timer.schedule(new claw(0.45), 7200);
 
         // 3rd Sample Drop
         timer.schedule(new lift(3000, 1), 7500);
+        timer.schedule(new elbow(3), 4000);
+        timer.schedule(new wrist(0.17), 4000);
         timer.schedule(new claw(0), 9000);
 
         // 4th Sample Pickup
         timer.schedule(new lift(20, 1), 9500);
+        timer.schedule(new elbow(0), 4300);
+        timer.schedule(new wrist(0.5), 4300);
         timer.schedule(new claw(0.45), 10800);
 
         // 4th Sample Drop
         timer.schedule(new lift(3000, 1), 11000);
+        timer.schedule(new elbow(3), 4000);
+        timer.schedule(new wrist(0.17), 4000);
         timer.schedule(new claw(0), 12600);
 */
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .strafeToLinearHeading(new Vector2d(-53, -52), Math.toRadians(225)) // Place
-                        .waitSeconds(1)
-                        .strafeToLinearHeading(new Vector2d(-48, -38), Math.toRadians(90))
-                        .waitSeconds(1) /*
+                        .waitSeconds(1.25)
+                        .strafeToLinearHeading(new Vector2d(-51, -38), Math.toRadians(90))
+                        .waitSeconds(1.25)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                        .waitSeconds(1)
+                        .waitSeconds(1) /*
                         .strafeToLinearHeading(new Vector2d(-57, -38), Math.toRadians(90))
                         .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))

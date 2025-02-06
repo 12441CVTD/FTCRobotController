@@ -275,7 +275,7 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
+                return false;
             }
         }
 
