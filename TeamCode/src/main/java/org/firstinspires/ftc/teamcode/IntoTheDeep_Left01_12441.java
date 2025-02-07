@@ -122,7 +122,7 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
 
         // 2nd Sample Pickup
         timer.schedule(new lift(20, 1), 4000);
-        timer.schedule(new elbow(0), 4300);
+        timer.schedule(new elbow(0), 4100);
         timer.schedule(new wrist(0.5), 4300);
         timer.schedule(new claw(0.45), 6000);
 
