@@ -127,17 +127,17 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new claw(0.45), 6000);
 
         // 2nd Sample Drop (All delays from here are wrong)
-        timer.schedule(new lift(3000, 1), 6500);
-        timer.schedule(new elbow(3), 6600);
-        timer.schedule(new wrist(0.17), 6600);
-        timer.schedule(new claw(0), 10000);
-        /*
-        // 3rd Sample Pickup
-        timer.schedule(new lift(20, 1), 6000);
-        timer.schedule(new elbow(0), 6100);
-        timer.schedule(new wrist(0.5), 4300);
-        timer.schedule(new claw(0.45), 7200);
+        timer.schedule(new lift(3000, 1), 6400);
+        timer.schedule(new elbow(3), 6500);
+        timer.schedule(new wrist(0.17), 6500);
+        timer.schedule(new claw(0), 9000);
 
+        // 3rd Sample Pickup
+        timer.schedule(new lift(20, 1), 9500);
+        timer.schedule(new elbow(0), 9600);
+        timer.schedule(new wrist(0.5), 9600);
+        timer.schedule(new claw(0.45), 10000);
+        /*
         // 3rd Sample Drop
         timer.schedule(new lift(3000, 1), 7500);
         timer.schedule(new elbow(3), 4000);
@@ -165,9 +165,9 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-51, -38), Math.toRadians(90))
                         .waitSeconds(1.25)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                        .waitSeconds(1) /*
+                        .waitSeconds(1.5)
                         .strafeToLinearHeading(new Vector2d(-57, -38), Math.toRadians(90))
-                        .waitSeconds(1)
+                        .waitSeconds(1) /*
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
                         .waitSeconds(1)
                         .strafeToLinearHeading(new Vector2d(-56, -26), Math.toRadians(180))
