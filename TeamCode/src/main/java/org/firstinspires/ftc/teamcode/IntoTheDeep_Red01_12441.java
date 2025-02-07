@@ -115,19 +115,19 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         // Sample pickUP
         timer.schedule(new lift(20, 1), 4740);
-        timer.schedule(new claw(0.45), 4790); //+100 from last
-        timer.schedule(new lift(375, 1), 5060); //+240 from last
+        timer.schedule(new claw(0.45), 5000); //+100 from last
+        timer.schedule(new lift(375, 1), 5350); //+240 from last
 
         // Sample drop
         timer.schedule(new claw(0), 6700);
 
         //Specimen pickUp
-        timer.schedule(new lift(1130, 1), 11150); //10950
-        timer.schedule(new claw(0.45), 11400); //11700
+        timer.schedule(new lift(1130, 1), 11350); //10950
+        timer.schedule(new claw(0.45), 13350); //11700
 
         //Specimen place2
-        timer.schedule(new lift(3050, 1), 12000);
-        timer.schedule(new lift(1420, 1), 15650);
+        timer.schedule(new lift(3050, 1), 14000);
+        timer.schedule(new lift(1420, 1), 17650);
         timer.schedule(new lift(200, 1), 16000);
         timer.schedule(new claw(0), 16100);
 
@@ -153,17 +153,19 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .strafeTo(new Vector2d(0, -33.5))
-                        .waitSeconds(0.1)
-                        .strafeTo(new Vector2d(0, -37))
-                        .strafeTo(new Vector2d(48.5, -36))
-                        .waitSeconds(0.125)
+                        .strafeTo(new Vector2d(0, -33.1))
+                        .waitSeconds(0.4)
+                        .strafeTo(new Vector2d(0, -34.3))
+                        .strafeTo(new Vector2d(50, -35))
+                        .waitSeconds(0.4)
                         .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270.0000000001))
+                        .waitSeconds(1)
                         .strafeTo(new Vector2d(48, -10))
                         .strafeTo(new Vector2d(60, -10))
+                        .waitSeconds(0.2)
                         .strafeTo(new Vector2d(58, -48.2))
                         .waitSeconds(0.1)
-                        .strafeToLinearHeading(new Vector2d(3, -38), Math.toRadians(89.9))
+                        .strafeToLinearHeading(new Vector2d(3, -33), Math.toRadians(89.9))
                         .strafeTo(new Vector2d(3, -33.5))
                         .strafeTo(new Vector2d(3, -38))
                         .waitSeconds(5)
