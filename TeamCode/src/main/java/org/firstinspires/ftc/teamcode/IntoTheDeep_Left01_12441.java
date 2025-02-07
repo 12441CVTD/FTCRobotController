@@ -117,47 +117,46 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
         timer.schedule(new lift(3000, 1), 0);
         timer.schedule(new elbow(3), 100);
         timer.schedule(new wrist(0.17), 100);
-        timer.schedule(new claw(0), 2000);
+        timer.schedule(new claw(0), 2100);
 
 
         // 2nd Sample Pickup
-        timer.schedule(new lift(20, 1), 4000);
-        timer.schedule(new elbow(0), 4100);
-        timer.schedule(new wrist(0.5), 4300);
+        timer.schedule(new lift(20, 1), 4400);
+        timer.schedule(new elbow(0), 4500);
+        timer.schedule(new wrist(0.5), 4500);
         timer.schedule(new claw(0.45), 6000);
 
         // 2nd Sample Drop (All delays from here are wrong)
-        timer.schedule(new lift(3000, 1), 6400);
+        timer.schedule(new lift(3000, 1), 6300);
         timer.schedule(new elbow(3), 6500);
         timer.schedule(new wrist(0.17), 6500);
-        timer.schedule(new claw(0), 9000);
+        timer.schedule(new claw(0), 8800);
 
         // 3rd Sample Pickup
-        timer.schedule(new lift(20, 1), 9500);
+        timer.schedule(new lift(20, 1), 9600);
         timer.schedule(new elbow(0), 9600);
         timer.schedule(new wrist(0.5), 9600);
-        timer.schedule(new claw(0.45), 10000);
-        /*
+        timer.schedule(new claw(0.45), 11000);
+
         // 3rd Sample Drop
-        timer.schedule(new lift(3000, 1), 7500);
-        timer.schedule(new elbow(3), 4000);
-        timer.schedule(new wrist(0.17), 4000);
-        timer.schedule(new claw(0), 9000);
+        timer.schedule(new lift(3000, 1), 11600);
+        timer.schedule(new elbow(3), 11700);
+        timer.schedule(new wrist(0.17), 11700);
+        timer.schedule(new claw(0), 13400);
 
         // 4th Sample Pickup
-        timer.schedule(new lift(20, 1), 9500);
-        timer.schedule(new elbow(0), 4300);
-        timer.schedule(new wrist(0.5), 4300);
-        timer.schedule(new claw(0.45), 10800);
-
+        timer.schedule(new lift(20, 1), 15600);
+        timer.schedule(new elbow(0), 16000);
+        timer.schedule(new wrist(0.5), 16600);
+        timer.schedule(new claw(0.45), 17200);
+        /*
         // 4th Sample Drop
         timer.schedule(new lift(3000, 1), 11000);
         timer.schedule(new elbow(3), 4000);
         timer.schedule(new wrist(0.17), 4000);
         timer.schedule(new claw(0), 12600);
 */
-        //its doing random stuff and i dont know why
-        //its turning and the claw isnt moving and its really bad
+
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .strafeToLinearHeading(new Vector2d(-53, -52), Math.toRadians(225)) // Place
@@ -165,13 +164,13 @@ public class IntoTheDeep_Left01_12441 extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-51, -38), Math.toRadians(90))
                         .waitSeconds(1.25)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                        .waitSeconds(1.5)
-                        .strafeToLinearHeading(new Vector2d(-57, -38), Math.toRadians(90))
-                        .waitSeconds(1) /*
+                        .waitSeconds(1.25)
+                        .strafeToLinearHeading(new Vector2d(-58, -38), Math.toRadians(90))
+                        .waitSeconds(1.25)
                         .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                        .waitSeconds(1)
-                        .strafeToLinearHeading(new Vector2d(-56, -26), Math.toRadians(180))
-                        .waitSeconds(1)
+                        .waitSeconds(1.25)
+                        .strafeToLinearHeading(new Vector2d(-56, -24), Math.toRadians(180))
+                        .waitSeconds(1) /*
                         .strafeToLinearHeading(new Vector2d(-52,-52), Math.toRadians(225)) */
                         .build());
 
