@@ -227,7 +227,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 lElbow.setPosition(0.08);
                 rElbow.setPosition(0.08);
             }
-            // Mid high
+            // All around the world
             if(gamepad2.right_trigger > 0){
                 lElbow.setPosition(0.21);
                 rElbow.setPosition(0.21);
@@ -240,8 +240,8 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             // Highest
             if(gamepad2.right_bumper){
-                lElbow.setPosition(0.31);
-                rElbow.setPosition(0.31);
+                lElbow.setPosition(0.675);
+                rElbow.setPosition(0.675);
             }
                                                     // Checks for if the wrist is in one of the position
             if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
@@ -254,9 +254,9 @@ public class ITD_TeleOP extends LinearOpMode {
                     isOpened = false;
                 }
             }
-            if(currentGP2.b && !previousGP2.b){
+            if(currentGP2.x && !previousGP2.x){
                 holdUp = !holdUp;
-                wrist.setPosition(0.27);
+                wrist.setPosition(0.25);
             }
             /* if(gamepad1.a){
                 act.setPower(-0.5);
@@ -279,7 +279,7 @@ public class ITD_TeleOP extends LinearOpMode {
 
             // Check claw positions
             if(isOpened){
-                claw.setPosition(0);
+                claw.setPosition(0.01);
             }
             else if(!isOpened){
                 claw.setPosition(0.4);
@@ -327,6 +327,9 @@ public class ITD_TeleOP extends LinearOpMode {
         }
 
     }
+
+    public void splitApex(){}
+
 
     class elbowShmove extends TimerTask{
         private double position;
