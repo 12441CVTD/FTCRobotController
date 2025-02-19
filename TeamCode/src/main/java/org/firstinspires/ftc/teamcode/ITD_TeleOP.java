@@ -330,9 +330,13 @@ public class ITD_TeleOP extends LinearOpMode {
                 for(int x = 0; x < valSave.size(); x++){
                     if(big == InitPos){
                         timer.schedule(new elbowShmove(valSave.get(x)), (times*(x+1)));
+                        if(x==0)
+                            valSave.remove(0);
                     }
                     else{
                         timer.schedule(new elbowShmove(valSave.get(valSave.size()-(x+1))), (times*(x+1)));
+                        if(x==0)
+                            valSave.remove(valSave.size()-1);
                     }
                 }
             }
@@ -365,11 +369,7 @@ public class ITD_TeleOP extends LinearOpMode {
 
     public void theWORLD(){
         if(!around){
-//            lElbow.setPosition(0.405);
-//            rElbow.setPosition(0.405);
-            //timer.schedule(new delaySplit(lElbow.getPosition(), 0.68, 5, 250), 0);
             splitMove(lElbow.getPosition(), 0.68, 5, 400);
-            //timer.schedule(new wristShmove(0.34), 500);
             wrist.setPosition(0.34);
             around = !around;
         }
