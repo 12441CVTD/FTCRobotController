@@ -230,7 +230,7 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             // All around the world
             if(currentGP2.right_trigger > 0 && !(previousGP2.right_trigger > 0)){
-                holdUp = !holdUp;
+                holdUp = true;
                 theWORLD();
             }
             // Lowest
@@ -318,8 +318,8 @@ public class ITD_TeleOP extends LinearOpMode {
          */
 
         double big = Math.max(FinalPos, InitPos);
-        ArrayList<Double> valSave = new ArrayList<Double>();
-
+        ArrayList<Double> valSave = new ArrayList<>();
+        valSave.add(0, big);
 
 
         for(double i = numSp-1; i >= 0; i--){
@@ -365,15 +365,18 @@ public class ITD_TeleOP extends LinearOpMode {
 
     public void theWORLD(){
         if(!around){
-            timer.schedule(new elbowShmove(0.405), 0);
-            timer.schedule(new delaySplit(0.405, 0.68, 4, 250), 750);
-            timer.schedule(new wristShmove(0.34), 0);
+//            lElbow.setPosition(0.405);
+//            rElbow.setPosition(0.405);
+            //timer.schedule(new delaySplit(lElbow.getPosition(), 0.68, 5, 250), 0);
+            splitMove(lElbow.getPosition(), 0.68, 5, 400);
+            //timer.schedule(new wristShmove(0.34), 500);
+            wrist.setPosition(0.34);
             around = !around;
         }
         else{
             timer.schedule(new elbowShmove(0.405), 0);
-            timer.schedule(new wristShmove(0.68), 1750);
-            timer.schedule(new delaySplit(0.405, 0.14, 4, 250), 750);
+            timer.schedule(new wristShmove(0.68), 25);
+            timer.schedule(new delaySplit(0.405, 0.14, 4, 250), 600);
             around = !around;
         }
     }
