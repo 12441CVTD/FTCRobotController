@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.ArrayList;
 import org.firstinspires.ftc.teamcode.constants.TeleopConstants;
 
 
@@ -84,7 +85,7 @@ public class ITD_TeleOP extends LinearOpMode {
     boolean isOpened = true;
     boolean isDown = false;
     boolean holdUp = false;
-    boolean turney;
+    boolean around = false;
 
     private double[] elbowPositions = TeleopConstants.ElbowConstants;
 
@@ -228,9 +229,9 @@ public class ITD_TeleOP extends LinearOpMode {
                 rElbow.setPosition(0.08);
             }
             // All around the world
-            if(gamepad2.right_trigger > 0){
-                lElbow.setPosition(0.21);
-                rElbow.setPosition(0.21);
+            if(currentGP2.right_trigger > 0 && !(previousGP2.right_trigger > 0)){
+                holdUp = !holdUp;
+                theWORLD();
             }
             // Lowest
             if(gamepad2.left_bumper){
@@ -240,8 +241,8 @@ public class ITD_TeleOP extends LinearOpMode {
             }
             // Highest
             if(gamepad2.right_bumper){
-                lElbow.setPosition(0.675);
-                rElbow.setPosition(0.675);
+                lElbow.setPosition(0.31);
+                rElbow.setPosition(0.31);
             }
                                                     // Checks for if the wrist is in one of the position
             if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
@@ -304,7 +305,7 @@ public class ITD_TeleOP extends LinearOpMode {
 
     }
 
-    public void splitMove(double InitPos, double FinalPos, int NumPos, long times){
+    public void splitMove(double InitPos, double FinalPos, int numSp, long times){
 
         /*
         Goal: Move a servo, probably the arm, from its current position to the goal position by splitting
@@ -317,18 +318,65 @@ public class ITD_TeleOP extends LinearOpMode {
          */
 
         double big = Math.max(FinalPos, InitPos);
+        ArrayList<Double> valSave = new ArrayList<Double>();
 
-        for(double i = NumPos-1; i >= 0; i--){
-            double move = Math.max(big * (i/NumPos), Math.min(FinalPos, InitPos));
-            timer.schedule(new elbowShmove(move), ((long)times*(NumPos-((int)i))));
-            if(move == Math.min(FinalPos, InitPos)){
+
+
+        for(double i = numSp-1; i >= 0; i--){
+            double move = Math.max(big * ((i/numSp)), Math.min(InitPos, FinalPos));
+            valSave.add(move);
+            if(move == Math.min(InitPos, FinalPos) || i == 0){
                 i = -1;
+                for(int x = 0; x < valSave.size(); x++){
+                    if(big == InitPos){
+                        timer.schedule(new elbowShmove(valSave.get(x)), (times*(x+1)));
+                    }
+                    else{
+                        timer.schedule(new elbowShmove(valSave.get(valSave.size()-(x+1))), (times*(x+1)));
+                    }
+                }
             }
+        }
+
+
+    }
+
+    class delaySplit extends TimerTask{
+        private double initPos;
+        private double finalPos;
+        private int numPos;
+        private long times;
+
+
+        public delaySplit(double initPos, double finalPos, int numPos, long times){
+            this.initPos = initPos;
+            this.finalPos = finalPos;
+            this.numPos = numPos;
+            this.times = times;
+        }
+
+
+        public void run(){
+            splitMove(initPos, finalPos, numPos, times);
         }
 
     }
 
-    public void splitApex(){}
+
+    public void theWORLD(){
+        if(!around){
+            timer.schedule(new elbowShmove(0.405), 0);
+            timer.schedule(new delaySplit(0.405, 0.68, 4, 250), 750);
+            timer.schedule(new wristShmove(0.34), 0);
+            around = !around;
+        }
+        else{
+            timer.schedule(new elbowShmove(0.405), 0);
+            timer.schedule(new wristShmove(0.68), 1750);
+            timer.schedule(new delaySplit(0.405, 0.14, 4, 250), 750);
+            around = !around;
+        }
+    }
 
 
     class elbowShmove extends TimerTask{
