@@ -17,19 +17,31 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-20, -60, Math.toRadians(90)))
-                .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225)) // Place
-                .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-48, -38), Math.toRadians(90))
-                .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-57, -38), Math.toRadians(90))
-                .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-54, -54), Math.toRadians(225))
-                .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-56, -26), Math.toRadians(180))
-                .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-54,-54), Math.toRadians(225))
+                .strafeTo(new Vector2d(0, -33.5))
+                .waitSeconds(0.1)
+                .strafeTo(new Vector2d(0, -37))
+                .strafeTo(new Vector2d(48.5, -36))
+                .waitSeconds(0.125)
+                .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270.0000000001))
+                .strafeTo(new Vector2d(48, -10))
+                .strafeTo(new Vector2d(60, -10))
+                .strafeTo(new Vector2d(58, -48.2))
+                .waitSeconds(0.1)
+                .strafeToLinearHeading(new Vector2d(3, -38), Math.toRadians(89.9))
+                .strafeTo(new Vector2d(3, -33.5))
+                .strafeTo(new Vector2d(3, -38))
+                .waitSeconds(5)
+                //pause?
+                .strafeTo(new Vector2d(0, -40))
+                .strafeToLinearHeading(new Vector2d(53, -24), Math.toRadians(-0))
+                .strafeToLinearHeading(new Vector2d(50, -48), Math.toRadians(270))
+                .strafeToLinearHeading(new Vector2d(0, -38), Math.toRadians(89.7))
+                .strafeTo(new Vector2d(0, -33))
+                //pause?
+                .strafeToLinearHeading(new Vector2d(50, -55), Math.toRadians(270))
+                .strafeTo(new Vector2d(50, -58))
+                .strafeToLinearHeading(new Vector2d(0, -35), Math.toRadians(90))
+                //pause?
                 .build());
 
 
