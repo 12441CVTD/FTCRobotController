@@ -283,7 +283,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 claw.setPosition(0.01);
             }
             else if(!isOpened){
-                claw.setPosition(0.4);
+                claw.setPosition(0.415);
             }
             // 0.05 == THROWING
             if(isDown && !holdUp){

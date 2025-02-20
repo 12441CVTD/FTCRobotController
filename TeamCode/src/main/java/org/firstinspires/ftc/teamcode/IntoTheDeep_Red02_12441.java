@@ -124,17 +124,6 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
 
     //Actions
-    public class movement{
-
-
-        public class strafeTo implements Action{
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                //new MecanumDrive()
-                return false;
-            }
-        }
-    }
 
 
     public class aLift implements Action{
