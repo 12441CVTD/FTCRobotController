@@ -87,6 +87,9 @@ public class ITD_TeleOP extends LinearOpMode {
     boolean holdUp = false;
     boolean around = false;
 
+    int numR2 = 0;
+
+
     private double[] elbowPositions = TeleopConstants.ElbowConstants;
 
 
@@ -368,16 +371,20 @@ public class ITD_TeleOP extends LinearOpMode {
 
 
     public void theWORLD(){
-        if(!around){
-            splitMove(lElbow.getPosition(), 0.68, 5, 400);
+        if(numR2 == 0){
+            splitMove(lElbow.getPosition(), 0.68, 5, 500);
             wrist.setPosition(0.34);
-            around = !around;
+            numR2++;
         }
-        else{
+        else if (numR2 == 1){
             timer.schedule(new elbowShmove(0.405), 0);
             timer.schedule(new wristShmove(0.68), 25);
-            timer.schedule(new delaySplit(0.405, 0.14, 4, 250), 600);
-            around = !around;
+            timer.schedule(new delaySplit(0.405, 0.14, 4, 300), 650);
+            numR2--;
+        }
+        else {
+
+            numR2 = 0;
         }
     }
 
