@@ -383,7 +383,6 @@ public class ITD_TeleOP extends LinearOpMode {
             numR2--;
         }
         else {
-
             numR2 = 0;
         }
     }
