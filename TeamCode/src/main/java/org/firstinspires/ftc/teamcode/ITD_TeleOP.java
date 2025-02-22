@@ -87,9 +87,6 @@ public class ITD_TeleOP extends LinearOpMode {
     boolean holdUp = false;
     boolean around = false;
 
-    int numR2 = 0;
-
-
     private double[] elbowPositions = TeleopConstants.ElbowConstants;
 
 
@@ -230,6 +227,7 @@ public class ITD_TeleOP extends LinearOpMode {
             if(gamepad2.left_trigger > 0){
                 lElbow.setPosition(0.08);
                 rElbow.setPosition(0.08);
+                around = false;
             }
             // All around the world
             if(currentGP2.right_trigger > 0 && !(previousGP2.right_trigger > 0)){
@@ -241,11 +239,13 @@ public class ITD_TeleOP extends LinearOpMode {
                 splitMove(lElbow.getPosition(), 0.0, 5, 250);
                 //lElbow.setPosition(0.0);
                 //rElbow.setPosition(0.0);
+                around = false;
             }
             // Highest
             if(gamepad2.right_bumper){
                 lElbow.setPosition(0.31);
                 rElbow.setPosition(0.31);
+                around = false;
             }
                                                     // Checks for if the wrist is in one of the position
             if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
@@ -286,7 +286,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 claw.setPosition(0.01);
             }
             else if(!isOpened){
-                claw.setPosition(0.415);
+                claw.setPosition(0.425);
             }
             // 0.05 == THROWING
             if(isDown && !holdUp){
@@ -371,19 +371,16 @@ public class ITD_TeleOP extends LinearOpMode {
 
 
     public void theWORLD(){
-        if(numR2 == 0){
+        if(!around){
             splitMove(lElbow.getPosition(), 0.68, 5, 500);
             wrist.setPosition(0.34);
-            numR2++;
+            around = !around;
         }
-        else if (numR2 == 1){
+        else{
             timer.schedule(new elbowShmove(0.405), 0);
             timer.schedule(new wristShmove(0.68), 25);
-            timer.schedule(new delaySplit(0.405, 0.14, 4, 300), 650);
-            numR2--;
-        }
-        else {
-            numR2 = 0;
+            timer.schedule(new delaySplit(0.405, 0.14, 5, 300), 650);
+            around = !around;
         }
     }
 
