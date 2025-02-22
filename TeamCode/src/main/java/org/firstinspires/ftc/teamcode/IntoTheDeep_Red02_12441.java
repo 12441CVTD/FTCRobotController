@@ -283,7 +283,7 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
         }
 
     }
-
+    // Big Actions
     public class GrabFromGround implements Action{
         TrajectoryActionBuilder actionBuilder;
 
@@ -296,6 +296,21 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(actionBuilder.afterTime(0, new CloseClaw()).build(),
                                                     actionBuilder.afterTime(0.2, new Kickback()).build(),
                                                     actionBuilder.afterTime(1.8, new OpenClaw()).build()));
+            return false;
+        }
+    }
+
+    public class SpecimenPlace implements Action{
+        TrajectoryActionBuilder actionBuilder;
+        double variance;
+        public SpecimenPlace(MecanumDrive drive, double diff){
+            actionBuilder = drive.actionBuilder(drive.pose);
+            variance = diff;
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            Actions.runBlocking(actionBuilder.);
             return false;
         }
     }
