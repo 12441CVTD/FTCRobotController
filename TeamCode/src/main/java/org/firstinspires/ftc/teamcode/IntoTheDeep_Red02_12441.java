@@ -5,10 +5,13 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.Path;
 import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.pedropathing.util.Timer;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.PathChain;
@@ -35,7 +38,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.constants.AutoConstants;
 import org.firstinspires.ftc.teamcode.rr.MecanumDrive;
 
-import java.util.Timer;
+
 import java.util.TimerTask;
 
 
@@ -43,6 +46,19 @@ import java.util.TimerTask;
 
 public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
+    //PedroPathing
+    private Follower follower;
+    int pathState;
+
+
+    private Path scorePreload, park;
+    private PathChain grabPickup1, grabPickup2, grabPickup3, scorePickup1, scorePickup2, scorePickup3;
+    private Timer time = new Timer(), times = new Timer();
+
+    private final Pose startPose = new Pose(31.4, 121.1, 0);
+
+
+    //Normalcy
     private DcMotor fL = null;
     private DcMotor fR = null;
     private DcMotor bL = null;
@@ -58,6 +74,8 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private Timer timer = new Timer();
+
+
 
     private boolean around = false;
 
@@ -195,7 +213,7 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
         while(opModeIsActive()){
 
-            GoGoGo(drive);
+            //GoGoGo(drive);
 
             sleep(15000);
             break;
@@ -211,7 +229,112 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 */
     }
 
+    //Methods
+    public class autoUpdate implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            switch (pathState) {
+                case 0:
+                    follower.followPath(scorePreload);
+                    setPath(1);
+                    break;
+                case 1:
+
+                /* You could check for
+                - Follower State: "if(!follower.isBusy() {}"
+                - Time: "if(pathTimer.getElapsedTimeSeconds() > 1) {}"
+                - Robot Position: "if(follower.getPose().getX() > 36) {}"
+                */
+
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                    if(!follower.isBusy()) {
+                        /* Score Preload */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                        follower.followPath(grabPickup1,true);
+                        setPath(2);
+                    }
+                    break;
+                case 2:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup1Pose's position */
+                    if(!follower.isBusy()) {
+                        /* Grab Sample */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
+                        follower.followPath(scorePickup1,true);
+                        setPath(3);
+                    }
+                    break;
+                case 3:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                    if(!follower.isBusy()) {
+                        /* Score Sample */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                        follower.followPath(grabPickup2,true);
+                        setPath(4);
+                    }
+                    break;
+                case 4:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup2Pose's position */
+                    if(!follower.isBusy()) {
+                        /* Grab Sample */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
+                        follower.followPath(scorePickup2,true);
+                        setPath(5);
+                    }
+                    break;
+                case 5:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                    if(!follower.isBusy()) {
+                        /* Score Sample */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                        follower.followPath(grabPickup3,true);
+                        setPath(6);
+                    }
+                    break;
+                case 6:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup3Pose's position */
+                    if(!follower.isBusy()) {
+                        /* Grab Sample */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
+                        follower.followPath(scorePickup3, true);
+                        setPath(7);
+                    }
+                    break;
+                case 7:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                    if(!follower.isBusy()) {
+                        /* Score Sample */
+
+                        /* Since this is a pathChain, we can have Pedro hold the end point while we are parked */
+                        follower.followPath(park,true);
+                        setPath(8);
+                    }
+                    break;
+                case 8:
+                    /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                    if(!follower.isBusy()) {
+                        /* Level 1 Ascent */
+
+                        /* Set the state to a Case we won't use or define, so it just stops running an new paths */
+                        setPath(-1);
+                    }
+                    break;
+            }
+            return false;
+        }
+    }
+    public void setPath(int p){
+        pathState = p;
+        times.resetTimer();
+    }
+
     //Arm Actions
+    /*
     public class Kickback implements Action{
 
         @Override
@@ -234,6 +357,7 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
         }
 
     }
+    */
 
     //Claw Actions
 
@@ -299,6 +423,8 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
 
     }
     // Big Actions
+
+    /*
     public class GrabFromGround implements Action{
         TrajectoryActionBuilder actionBuilder;
 
@@ -314,6 +440,7 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
             return false;
         }
     }
+    */
 
     public class SpecimenPlace implements Action{
         TrajectoryActionBuilder actionBuilder;
@@ -330,6 +457,21 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
         }
     }
 
+    // Merriment
+
+    public class path implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            return false;
+        }
+    }
+    private void notPedro(MecanumDrive drive){
+        TrajectoryActionBuilder actionBuilder = drive.actionBuilder(drive.pose);
+        follower.update();
+        Actions.runBlocking(new SequentialAction(actionBuilder.afterTime(0, new autoUpdate()).build()));
+    }
+/*
     private void GoGoGo(MecanumDrive drive){
         TrajectoryActionBuilder actionBuilder = drive.actionBuilder(drive.pose);
 
@@ -352,6 +494,6 @@ public class IntoTheDeep_Red02_12441 extends LinearOpMode {
                                                 actionBuilder.afterTime(0, new UpLift()).build()));
 
     }
-
+*/
 
 }

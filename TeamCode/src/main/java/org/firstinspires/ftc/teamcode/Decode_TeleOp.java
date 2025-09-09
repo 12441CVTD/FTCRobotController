@@ -56,9 +56,9 @@ import org.firstinspires.ftc.teamcode.constants.TeleopConstants;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="ITD TeleOp NOT THIS ONE", group="Linear OpMode")
+@TeleOp(name="Decode TeleOp THIS ONE", group="Linear OpMode")
 
-public class ITD_TeleOP extends LinearOpMode {
+public class Decode_TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -127,7 +127,7 @@ public class ITD_TeleOP extends LinearOpMode {
         lElbow.setDirection(Servo.Direction.FORWARD);
         rElbow.setDirection(Servo.Direction.REVERSE);
 
-    //    act.setDirection(DcMotor.Direction.FORWARD);
+        //    act.setDirection(DcMotor.Direction.FORWARD);
 
         claw.setDirection(Servo.Direction.FORWARD);
         wrist.setDirection(Servo.Direction.FORWARD);
@@ -164,7 +164,7 @@ public class ITD_TeleOP extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            
+
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
 
@@ -247,7 +247,7 @@ public class ITD_TeleOP extends LinearOpMode {
                 rElbow.setPosition(0.31);
                 around = false;
             }
-                                                    // Checks for if the wrist is in one of the position
+            // Checks for if the wrist is in one of the position
             if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
                 isOpened = !isOpened;
             }
