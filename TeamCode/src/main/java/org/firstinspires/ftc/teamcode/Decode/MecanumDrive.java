@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.tel
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "MecanumDrive NO USE")
@@ -59,6 +59,27 @@ public class MecanumDrive extends LinearOpMode {
             double bLPower;
             double fRPower;
             double bRPower;
+
+            double drive = -gamepad1.left_stick_y;
+            double turn  =  gamepad1.right_stick_x;
+
+            fLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
+            fRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
+            bLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
+            bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
+
+            fL.setPower(fLPower);
+            fR.setPower(fRPower);
+            bL.setPower(bLPower);
+            bR.setPower(bRPower);
+
+            if (gamepad1.dpad_up) {
+                fL.setPower(0.3);
+                fR.setPower(0.3);
+                bL.setPower(0.3);
+                bR.setPower(0.3);
+            }
+
         }
     }
 }
