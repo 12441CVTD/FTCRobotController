@@ -79,7 +79,54 @@ public class MecanumDrive extends LinearOpMode {
                 bL.setPower(0.3);
                 bR.setPower(0.3);
             }
+            if (gamepad1.dpad_down) {
+                fL.setPower(-0.3);
+                fR.setPower(-0.3);
+                bL.setPower(-0.3);
+                bR.setPower(-0.3);
+            }
+            if (gamepad1.dpad_left) {
+                fL.setPower(-0.3);
+                fR.setPower(0.3);
+                bL.setPower(0.3);
+                bR.setPower(-0.3);
+            }
+            if (gamepad1.dpad_right) {
+                fL.setPower(0.3);
+                fR.setPower(-0.3);
+                bL.setPower(-0.3);
+                bR.setPower(0.3);
+            }
 
+            /*
+
+            if (gamepad1.dpad_up && gamepad1.dpad_left) {
+                fL.setPower(0.3);
+                fR.setPower(-0.3);
+                bL.setPower(-0.3);
+                bR.setPower(0.3);
+            }
+            if (gamepad1.dpad_up && gamepad1.dpad_right) {
+                fL.setPower(-0.3);
+                fR.setPower(0.3);
+                bL.setPower(0.3);
+                bR.setPower(-0.3);
+            }
+            if (gamepad1.dpad_down && gamepad1.dpad_left) {
+                fL.setPower(-0.3);
+                fR.setPower(0.3);
+                bL.setPower(0.3);
+                bR.setPower(-0.3);
+            }
+            if (gamepad1.dpad_down && gamepad1.dpad_right) {
+                fL.setPower(0.3);
+                fR.setPower(-0.3);
+                bL.setPower(-0.3);
+                bR.setPower(0.3);
+            }
+
+
+             */
         }
     }
 }
