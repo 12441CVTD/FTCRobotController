@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Decode;
 
-
+//
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class DecodeAuto extends LinearOpMode {
