@@ -163,7 +163,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
                         .strafeTo(new Vector2d(0, -31.7))
                         .waitSeconds(0.4)
                         .strafeTo(new Vector2d(0, -34.3))
-                        .strafeTo(new Vector2d(50.65, -38))
+                        .strafeTo(new Vector2d(50.4 , -38))
                         .strafeTo(new Vector2d(50, -36.5))
                         .waitSeconds(0.6)
                         .strafeToLinearHeading(new Vector2d(48, -47), Math.toRadians(270.0000000001))
@@ -174,7 +174,7 @@ public class IntoTheDeep_Red01_12441 extends LinearOpMode {
                         .strafeTo(new Vector2d(58, -52))
                         .waitSeconds(0.6)
                         .strafeToLinearHeading(new Vector2d(3, -38.5), Math.toRadians(89.9))
-                        .strafeTo(new Vector2d(3, -31.3))
+                        .strafeTo(new Vector2d(3, -31))
                         .waitSeconds(1)
                         .strafeTo(new Vector2d(58, -52))
 

@@ -62,17 +62,7 @@ public class Decode_TeleOp extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    private DcMotor fL = null;
-    private DcMotor bL = null;
-    private DcMotor fR = null;
-    private DcMotor bR = null;
-    private DcMotor lArm = null;
-    private DcMotor rArm = null;
-    // private DcMotor act = null;
-    private Servo lElbow = null;
-    private Servo rElbow = null;
-    private Servo claw = null;
-    private Servo wrist = null;
+
 
 
     private Timer timer = new Timer();
@@ -81,10 +71,6 @@ public class Decode_TeleOp extends LinearOpMode {
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
-    boolean isOpened = true;
-    boolean isDown = false;
-    boolean holdUp = false;
-    boolean around = false;
 
     private double[] elbowPositions = TeleopConstants.ElbowConstants;
 
@@ -98,44 +84,18 @@ public class Decode_TeleOp extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        fL  = hardwareMap.get(DcMotor.class, "fL");
-        fR = hardwareMap.get(DcMotor.class, "fR");
-        bL  = hardwareMap.get(DcMotor.class, "bL");
-        bR = hardwareMap.get(DcMotor.class, "bR");
 
-        lArm = hardwareMap.get(DcMotor.class, "lArm");
-        rArm = hardwareMap.get(DcMotor.class, "rArm");
+
+
         // act = hardwareMap.get(DcMotor.class, "actuator");
 
-        lElbow = hardwareMap.get(Servo.class, "lElbow");
-        rElbow = hardwareMap.get(Servo.class, "rElbow");
-        claw = hardwareMap.get(Servo.class, "claw");
-        wrist = hardwareMap.get(Servo.class, "wrist");
+
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.FORWARD);
-        bL.setDirection(DcMotor.Direction.REVERSE);
-        bR.setDirection(DcMotor.Direction.REVERSE);
 
-        lArm.setDirection(DcMotor.Direction.REVERSE);
-        rArm.setDirection(DcMotor.Direction.FORWARD);
 
-        lElbow.setDirection(Servo.Direction.FORWARD);
-        rElbow.setDirection(Servo.Direction.REVERSE);
-
-        //    act.setDirection(DcMotor.Direction.FORWARD);
-
-        claw.setDirection(Servo.Direction.FORWARD);
-        wrist.setDirection(Servo.Direction.FORWARD);
-
-        //start position
-        lElbow.setPosition(0);
-        rElbow.setPosition(0);
-        wrist.setPosition(0.51);
-        claw.setPosition(0.4);
 
 
         // Wait for the game to start (driver presses START)
@@ -164,13 +124,7 @@ public class Decode_TeleOp extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
 
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
 
-            fLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
-            fRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
-            bLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
-            bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
 
             if(gamepad2.dpad_up){
                 armPow = 0.8;
@@ -222,45 +176,7 @@ public class Decode_TeleOp extends LinearOpMode {
 
 
 
-            // Mid low
-            if(gamepad2.left_trigger > 0){
-                lElbow.setPosition(0.08);
-                rElbow.setPosition(0.08);
-                around = false;
-            }
-            // All around the world
-            if(currentGP2.right_trigger > 0 && !(previousGP2.right_trigger > 0)){
-                holdUp = true;
-                theWORLD();
-            }
-            // Lowest
-            if(gamepad2.left_bumper){
-                splitMove(lElbow.getPosition(), 0.0, 5, 250);
-                //lElbow.setPosition(0.0);
-                //rElbow.setPosition(0.0);
-                around = false;
-            }
-            // Highest
-            if(gamepad2.right_bumper){
-                lElbow.setPosition(0.31);
-                rElbow.setPosition(0.31);
-                around = false;
-            }
-            // Checks for if the wrist is in one of the position
-            if(currentGP2.a && !previousGP2.a && ((wrist.getPosition() != 0.05) || (wrist.getPosition() != 1))){
-                isOpened = !isOpened;
-            }
-            if(currentGP2.y && !previousGP2.y){
-                isDown = !isDown;
-                holdUp = false;
-                if(isOpened){
-                    isOpened = false;
-                }
-            }
-            if(currentGP2.x && !previousGP2.x){
-                holdUp = !holdUp;
-                wrist.setPosition(0.25);
-            }
+
             /* if(gamepad1.a){
                 act.setPower(-0.5);
             }
@@ -269,211 +185,26 @@ public class Decode_TeleOp extends LinearOpMode {
             }
             */
 
-            // Send calculated power to wheels
-            fL.setPower(fLPower);
-            fR.setPower(fRPower);
-            bL.setPower(bLPower);
-            bR.setPower(bRPower);
-
-            // Send power to the arms
-            // Sends power to the arms
-            lArm.setPower(armPow);
-            rArm.setPower(armPow);
-
-            // Check claw positions
-            if(isOpened){
-                claw.setPosition(0.01);
-            }
-            else if(!isOpened){
-                claw.setPosition(0.425);
-            }
-            // 0.05 == THROWING
-            if(isDown && !holdUp){
-                wrist.setPosition(0.17);
-            }
-            else if(!isDown && !holdUp){
-                wrist.setPosition(0.51);
-            }
-
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
-            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
-            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
-            telemetry.update();
+//            // Send calculated power to wheels
+//            fL.setPower(fLPower);
+//            fR.setPower(fRPower);
+//            bL.setPower(bLPower);
+//            bR.setPower(bRPower);
+//
+//
+//
+//            // Show the elapsed game time and wheel power.
+//            telemetry.addData("Status", "Run Time: " + runtime.toString());
+//            telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
+//            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
+//            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
+//            telemetry.update();
         }
 
 
     }
 
-    public void splitMove(double InitPos, double FinalPos, int numSp, long times){
 
-        /*
-        Goal: Move a servo, probably the arm, from its current position to the goal position by splitting
-        the movement into "x" different positions, including the finalPos.
-
-        How:
-            1. Take the initPos (Ex: 1)
-            2. Take the finalPos (Ex: 0)                                      Between Positions
-        3. Find positions between them according to "X"(Ex: "X" = 3 so 1 | 0.75, 0.5, 0.25 | 0)
-         */
-
-        double big = Math.max(FinalPos, InitPos);
-        ArrayList<Double> valSave = new ArrayList<>();
-        valSave.add(0, big);
-
-
-        for(double i = numSp-1; i >= 0; i--){
-            double move = Math.max(big * ((i/numSp)), Math.min(InitPos, FinalPos));
-            valSave.add(move);
-            if(move == Math.min(InitPos, FinalPos) || i == 0){
-                i = -1;
-                for(int x = 0; x < valSave.size(); x++){
-                    if(big == InitPos){
-                        timer.schedule(new elbowShmove(valSave.get(x)), (times*(x+1)));
-                        if(x==0)
-                            valSave.remove(0);
-                    }
-                    else{
-                        timer.schedule(new elbowShmove(valSave.get(valSave.size()-(x+1))), (times*(x+1)));
-                        if(x==0)
-                            valSave.remove(valSave.size()-1);
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    class delaySplit extends TimerTask{
-        private double initPos;
-        private double finalPos;
-        private int numPos;
-        private long times;
-
-
-        public delaySplit(double initPos, double finalPos, int numPos, long times){
-            this.initPos = initPos;
-            this.finalPos = finalPos;
-            this.numPos = numPos;
-            this.times = times;
-        }
-
-
-        public void run(){
-            splitMove(initPos, finalPos, numPos, times);
-        }
-
-    }
-
-
-    public void theWORLD(){
-        if(!around){
-            splitMove(lElbow.getPosition(), 0.68, 5, 500);
-            wrist.setPosition(0.34);
-            around = !around;
-        }
-        else{
-            timer.schedule(new elbowShmove(0.405), 0);
-            timer.schedule(new wristShmove(0.68), 25);
-            timer.schedule(new delaySplit(0.405, 0.14, 5, 300), 650);
-            around = !around;
-        }
-    }
-
-
-    class elbowShmove extends TimerTask{
-        private double position;
-
-        public elbowShmove(double position){
-            this.position = position;
-        }
-
-        public void run(){
-            lElbow.setPosition(position);
-            rElbow.setPosition(position);
-        }
-    }
-
-    class wristShmove extends TimerTask{
-        private double position;
-
-        public wristShmove(double position){
-            this.position = position;
-        }
-
-        public void run(){
-            wrist.setPosition(position);
-        }
-    }
-
-
-
-    //AutoLeft/Right
-    class shmove extends TimerTask{
-        private double power;
-        private double time;
-
-
-        public shmove(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time) {
-                fR.setPower(power);
-                fL.setPower(-power);
-                bR.setPower(-power);
-                bL.setPower(power);
-            }
-        }
-    }
-
-    //AutoBack/Forth
-    class frontToBack extends TimerTask{
-        private double power;
-        private double time;
-
-        public frontToBack(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time){
-                fR.setPower(power);
-                fL.setPower(power);
-                bR.setPower(power);
-                bL.setPower(power);
-            }
-        }
-    }
-    //AutoRotation
-    class turn extends TimerTask{
-        private double power;
-        private double time;
-
-        public turn(double power, double time){
-            this.power = power;
-            this.time = time;
-            runtime.reset();
-        }
-
-        public void run(){
-            while(opModeIsActive() && runtime.milliseconds() < time){
-                fR.setPower(power);
-                fL.setPower(-power);
-                bR.setPower(power);
-                bL.setPower(-power);
-            }
-        }
-
-    }
 
 }
 

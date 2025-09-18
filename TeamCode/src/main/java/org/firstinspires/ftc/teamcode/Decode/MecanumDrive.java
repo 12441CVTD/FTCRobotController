@@ -14,120 +14,83 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name = "MecanumDrive NO USE")
-public class MecanumDrive extends LinearOpMode {
+
+public class MecanumDrive {
     private DcMotor fL = null;
     private DcMotor bL = null;
     private DcMotor fR = null;
     private DcMotor bR = null;
 
-    private Gamepad previousGP2 = new Gamepad();
-    private Gamepad currentGP2 = new Gamepad();
 
-    @Override
-    public void runOpMode(){
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
 
-        fL  = hardwareMap.get(DcMotor.class, "fL");
-        fR = hardwareMap.get(DcMotor.class, "fR");
-        bL  = hardwareMap.get(DcMotor.class, "bL");
-        bR = hardwareMap.get(DcMotor.class, "bR");
+    public void init(HardwareMap hwMap){
+        fL = hwMap.get(DcMotor.class, "frontLeft");
+        bL = hwMap.get(DcMotor.class, "frontRight");
+        fR = hwMap.get(DcMotor.class, "backLeft");
+        bR = hwMap.get(DcMotor.class, "backRight");
 
-        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-        // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
-        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        fL.setDirection(DcMotor.Direction.FORWARD);
-        fR.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.REVERSE);
         bL.setDirection(DcMotor.Direction.REVERSE);
+        fR.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
+    }
 
         // Wait for the game to start (driver presses START)
-        waitForStart();
+
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+
 
             // Can be used to make toggleable inputs
-            previousGP2.copy(currentGP2);
-            currentGP2.copy(gamepad2);
+            //previousGP2.copy(currentGP2);
+            //currentGP2.copy(gamepad2);
 
             // Format: if(currentGP2.*insertInput* && !previousGP2.*insertInput*)
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double fLPower;
-            double bLPower;
-            double fRPower;
-            double bRPower;
+            //double fLPower;
+            //double bLPower;
+            //double fRPower;
+            //double bRPower;
 
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
+            //double drive = -gamepad1.left_stick_y;
+            //double turn  =  gamepad1.right_stick_x;
 
-            fLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
-            fRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
-            bLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
-            bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
+            //fLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
+            //fRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
+            //bLPower    = Range.clip(drive + turn, -0.8, 0.8) ;
+            //bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
 
-            fL.setPower(fLPower);
-            fR.setPower(fRPower);
-            bL.setPower(bLPower);
-            bR.setPower(bRPower);
+        private void setPowers(double fl, double fr, double bl, double br) {
+            double maxSpeed = 1.0;
 
-            if (gamepad1.dpad_up) {
-                fL.setPower(0.3);
-                fR.setPower(0.3);
-                bL.setPower(0.3);
-                bR.setPower(0.3);
-            }
-            if (gamepad1.dpad_down) {
-                fL.setPower(-0.3);
-                fR.setPower(-0.3);
-                bL.setPower(-0.3);
-                bR.setPower(-0.3);
-            }
-            if (gamepad1.dpad_left) {
-                fL.setPower(-0.3);
-                fR.setPower(0.3);
-                bL.setPower(0.3);
-                bR.setPower(-0.3);
-            }
-            if (gamepad1.dpad_right) {
-                fL.setPower(0.3);
-                fR.setPower(-0.3);
-                bL.setPower(-0.3);
-                bR.setPower(0.3);
-            }
+            maxSpeed = Math.max(maxSpeed, Math.abs(fl));
+            maxSpeed = Math.max(maxSpeed, Math.abs(fr));
+            maxSpeed = Math.max(maxSpeed, Math.abs(bl));
+            maxSpeed = Math.max(maxSpeed, Math.abs(br));
 
-            /*
+            fl /= maxSpeed;
+            fr /= maxSpeed;
+            bl /= maxSpeed;
+            br /= maxSpeed;
 
-            if (gamepad1.dpad_up && gamepad1.dpad_left) {
-                fL.setPower(0.3);
-                fR.setPower(-0.3);
-                bL.setPower(-0.3);
-                bR.setPower(0.3);
-            }
-            if (gamepad1.dpad_up && gamepad1.dpad_right) {
-                fL.setPower(-0.3);
-                fR.setPower(0.3);
-                bL.setPower(0.3);
-                bR.setPower(-0.3);
-            }
-            if (gamepad1.dpad_down && gamepad1.dpad_left) {
-                fL.setPower(-0.3);
-                fR.setPower(0.3);
-                bL.setPower(0.3);
-                bR.setPower(-0.3);
-            }
-            if (gamepad1.dpad_down && gamepad1.dpad_right) {
-                fL.setPower(0.3);
-                fR.setPower(-0.3);
-                bL.setPower(-0.3);
-                bR.setPower(0.3);
-            }
-
-
-             */
+            fL.setPower(fl);
+            fR.setPower(fr);
+            bL.setPower(bl);
+            bR.setPower(br);
         }
+
+            public void drive(double forward, double right, double rotate) {
+                double fLPower = forward + right + rotate;
+                double fRPower = forward - right - rotate;
+                double bLPower = forward - right + rotate;
+                double bRPower = forward + right - rotate;
+
+                setPowers(fLPower, fRPower, bLPower, bRPower);
+            }
+
+
+
     }
-}
+
 
