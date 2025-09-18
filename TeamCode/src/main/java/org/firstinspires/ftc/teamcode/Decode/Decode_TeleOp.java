@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -40,6 +41,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
 import org.firstinspires.ftc.teamcode.constants.TeleopConstants;
+
+import org.firstinspires.ftc.teamcode.Decode.DecodeArms;
+import org.firstinspires.ftc.teamcode.Decode.DecodeIntake;
+import org.firstinspires.ftc.teamcode.Decode.DecodeMecanumDrive;
+
+
 
 
 /*
@@ -57,14 +64,14 @@ import org.firstinspires.ftc.teamcode.constants.TeleopConstants;
 
 @TeleOp(name="Decode TeleOp THIS ONE", group="Linear OpMode")
 
-public class Decode_TeleOp extends LinearOpMode {
+public class Decode_TeleOp extends OpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
     DecodeArms launcher = new DecodeArms();
     DecodeIntake intake = new DecodeIntake();
-    DecodeMecanumDrive chasis = new DecodeMecanumDrive();
+    DecodeMecanumDrive chassis = new DecodeMecanumDrive();
 
     private Timer timer = new Timer();
 
@@ -72,12 +79,23 @@ public class Decode_TeleOp extends LinearOpMode {
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
+    @Override
+    public void init() {
+        launcher.init(hardwareMap);
+        intake.init(hardwareMap);
+        chassis.init(hardwareMap);
+    }
+
 
 
     @Override
-    public void runOpMode() {
+    public void loop() {
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        chassis.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -97,11 +115,10 @@ public class Decode_TeleOp extends LinearOpMode {
 
 
         // Wait for the game to start (driver presses START)
-        waitForStart();
-        runtime.reset();
+
+
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
 
             // Can be used to make toggleable inputs
             previousGP2.copy(currentGP2);
@@ -197,7 +214,7 @@ public class Decode_TeleOp extends LinearOpMode {
 //            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
 //            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
 //            telemetry.update();
-        }
+
 
 
     }
