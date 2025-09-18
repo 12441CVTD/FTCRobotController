@@ -5,8 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class DecodeAuto extends LinearOpMode {
 
-    private double location;
-
+    private double x;
+    private double y;
+    double[] coordinates = {x, y};;
 
     @Override
     public void runOpMode() throws InterruptedException {

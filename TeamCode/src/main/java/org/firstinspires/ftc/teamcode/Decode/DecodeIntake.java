@@ -4,8 +4,14 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 //import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DecodeIntake {
+
+    public void init(HardwareMap hwaremap) {
+        leftIntake = hwaremap.get(CRServo.class, "leftIntake");
+        rightIntake = hwaremap.get(CRServo.class, "rightIntake");
+    }
 
     private CRServo leftIntake;
     private CRServo rightIntake;
