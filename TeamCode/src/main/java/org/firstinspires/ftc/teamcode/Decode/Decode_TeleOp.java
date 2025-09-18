@@ -62,17 +62,15 @@ public class Decode_TeleOp extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-
-
+    DecodeArms launcher = new DecodeArms();
+    DecodeIntake intake = new DecodeIntake();
+    DecodeMecanumDrive chasis = new DecodeMecanumDrive();
 
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
-
-
-    private double[] elbowPositions = TeleopConstants.ElbowConstants;
 
 
 
