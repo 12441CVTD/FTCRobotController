@@ -15,24 +15,15 @@ public class DecodeIntake {
 
     private CRServo leftIntake;
     private CRServo rightIntake;
-    private boolean isOn;
 
-    public void Intaking (){
-        if (gamepad2.right_bumper) {
-            isOn = true;
-        }
-        if (gamepad2.left_bumper) {
-            isOn = false;
-        }
+    public void on() {
+        leftIntake.setPower(0.6);
+        rightIntake.setPower(0.6);
+    }
 
-        while (isOn) {
-            leftIntake.setPower(1);
-            rightIntake.setPower(1);
-        }
-        while (!isOn) {
-            leftIntake.setPower(0);
-            rightIntake.setPower(0);
-        }
+    public void off() {
+        leftIntake.setPower(0);
+        rightIntake.setPower(0);
     }
     /*telemetry.addData("Initialized",);
     telemetry.update();*/

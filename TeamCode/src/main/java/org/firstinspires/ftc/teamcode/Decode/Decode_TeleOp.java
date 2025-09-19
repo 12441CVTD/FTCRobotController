@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode.Decode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -76,6 +78,8 @@ public class Decode_TeleOp extends OpMode {
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
+    boolean isOn = false;
+
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
@@ -138,6 +142,16 @@ public class Decode_TeleOp extends OpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
+
+        if (currentGP2.a && !(previousGP2.a)) {
+            if(!isOn) {
+                intake.on();
+                isOn = true;
+            } else {
+                intake.off();
+                isOn = false;
+            }
+        }
 
 
 

@@ -15,11 +15,14 @@ public class DecodeArms {
     private DcMotor leftLauncher;
     private DcMotor rightLauncher;
 
-    public void Launch() {
-        if (gamepad2.a) {
+    public void on() {
             leftLauncher.setPower(0.6);
             rightLauncher.setPower(0.6);
-        }
+    }
+
+    public void off() {
+        leftLauncher.setPower(0);
+        rightLauncher.setPower(0);
     }
 
 
