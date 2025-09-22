@@ -78,7 +78,8 @@ public class Decode_TeleOp extends OpMode {
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
-    boolean isOn = false;
+    boolean intakeIsOn = false;
+    boolean launcherIsOn = false;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -144,14 +145,26 @@ public class Decode_TeleOp extends OpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
 
         if (currentGP2.a && !(previousGP2.a)) {
-            if(!isOn) {
+            if(!intakeIsOn) {
                 intake.on();
-                isOn = true;
+                intakeIsOn = true;
             } else {
                 intake.off();
-                isOn = false;
+                intakeIsOn = false;
             }
         }
+
+        if (currentGP2.y && !(previousGP2.y)) {
+            if(!launcherIsOn) {
+                launcher.on();
+                launcherIsOn = true;
+            } else {
+                launcher.off();
+                launcherIsOn = false;
+            }
+        }
+
+
 
 
 
