@@ -71,7 +71,7 @@ public class Decode_TeleOp extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    //DecodeArms launcher = new DecodeArms();
+    DecodeArms launcher = new DecodeArms();
     DecodeIntake intake = new DecodeIntake();
     DecodeMecanumDrive chassis = new DecodeMecanumDrive();
 
@@ -79,14 +79,14 @@ public class Decode_TeleOp extends OpMode {
 
     // booleans and stuff for control improvements
     boolean intakeIsOn = false;
-    //boolean launcherIsOn = false;
+    boolean launcherIsOn = false;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
     @Override
     public void init() {
-        //launcher.init(hardwareMap);
+        launcher.init(hardwareMap);
         intake.init(hardwareMap);
         chassis.init(hardwareMap);
     }
@@ -154,7 +154,7 @@ public class Decode_TeleOp extends OpMode {
             }
         }
 
-        /* if (currentGP2.y && !(previousGP2.y)) {
+         if (currentGP2.y && !(previousGP2.y)) {
             if(!launcherIsOn) {
                 launcher.on();
                 launcherIsOn = true;
@@ -162,7 +162,7 @@ public class Decode_TeleOp extends OpMode {
                 launcher.off();
                 launcherIsOn = false;
             }
-        } */
+        }
 
 
 

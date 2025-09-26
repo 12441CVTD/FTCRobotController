@@ -8,15 +8,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DecodeArms {
 
     public void init(HardwareMap hwareMap) {
-        //leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
-        //rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
+        leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
+        rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
     }
 
     private DcMotor leftLauncher;
     private DcMotor rightLauncher;
 
     public void on() {
-            leftLauncher.setPower(0.6);
+            leftLauncher.setPower(-0.6);
             rightLauncher.setPower(0.6);
     }
 
