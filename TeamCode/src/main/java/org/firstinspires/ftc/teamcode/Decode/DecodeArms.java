@@ -16,8 +16,8 @@ public class DecodeArms {
     private DcMotor rightLauncher;
 
     public void on() {
-            leftLauncher.setPower(-0.6);
-            rightLauncher.setPower(0.6);
+            leftLauncher.setPower(-0.8);
+            rightLauncher.setPower(0.8);
     }
 
     public void off() {

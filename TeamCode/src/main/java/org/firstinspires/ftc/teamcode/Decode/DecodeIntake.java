@@ -18,7 +18,7 @@ public class DecodeIntake {
 
     public void on() {
         leftIntake.setPower(0.6);
-        rightIntake.setPower(0.6);
+        rightIntake.setPower(-0.6);
     }
 
     public void off() {
