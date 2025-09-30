@@ -90,5 +90,5 @@ public class DecodeAuto extends LinearOpMode {
         bL.setPower(0);
         bR.setPower(0);
     }
-}
+}//
 //
