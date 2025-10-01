@@ -25,6 +25,9 @@ public class DecodeArms {
             leftLauncher.setPower(-0.55);
             rightLauncher.setPower(0.55);
         } else if (infTech == 1){
+            leftLauncher.setPower(-0.8);
+            rightLauncher.setPower(0.8);
+        } else if (infTech == 2){
             leftLauncher.setPower(0);
             rightLauncher.setPower(0);
         }
@@ -32,11 +35,14 @@ public class DecodeArms {
 
     public void powReversal(int infTech) {
         if(infTech == 0) {
-            leftLauncher.setPower(-0.55);
-            rightLauncher.setPower(0.55);
+            leftLauncher.setPower(-0.8);
+            rightLauncher.setPower(0.8);
         } else if (infTech == 1){
             leftLauncher.setPower(0);
             rightLauncher.setPower(0);
+        } else if (infTech == 2){
+            leftLauncher.setPower(-0.55);
+            rightLauncher.setPower(0.55);
         }
     }
 

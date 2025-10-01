@@ -156,19 +156,19 @@ public class Decode_TeleOp extends OpMode {
 
         if (currentGP2.right_bumper && !(previousGP2.right_bumper)) {
                 launcher.powAmplification(powSet);
-                if(powSet == 0){
+                if(powSet < 2){
                     powSet++;
-                }else if(powSet == 1){
+                }else if(powSet == 2){
                     powSet = 0;
                 }
         }
 
         if (currentGP2.left_bumper && !(previousGP2.left_bumper)) {
             launcher.powReversal(powSet);
-            if(powSet == 0){
-                powSet = 1;
-            }else if(powSet == 1){
+            if(powSet > 0){
                 powSet--;
+            }else if(powSet == 0){
+                powSet = 2;
             }
         }
 
