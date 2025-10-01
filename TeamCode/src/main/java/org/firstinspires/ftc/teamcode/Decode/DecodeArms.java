@@ -15,15 +15,36 @@ public class DecodeArms {
     private DcMotor leftLauncher;
     private DcMotor rightLauncher;
 
-    public void on() {
+    /*public void on() {
             leftLauncher.setPower(-0.55);
             rightLauncher.setPower(0.55);
+    }*/
+
+    public void powAmplification(int infTech) {
+        if(infTech == 0) {
+            leftLauncher.setPower(-0.55);
+            rightLauncher.setPower(0.55);
+        } else if (infTech == 1){
+            leftLauncher.setPower(0);
+            rightLauncher.setPower(0);
+        }
     }
 
-    public void off() {
+    public void powReversal(int infTech) {
+        if(infTech == 0) {
+            leftLauncher.setPower(-0.55);
+            rightLauncher.setPower(0.55);
+        } else if (infTech == 1){
+            leftLauncher.setPower(0);
+            rightLauncher.setPower(0);
+        }
+    }
+
+
+    /*public void off() {
         leftLauncher.setPower(0);
         rightLauncher.setPower(0);
-    }
+    }*/
 
 
 

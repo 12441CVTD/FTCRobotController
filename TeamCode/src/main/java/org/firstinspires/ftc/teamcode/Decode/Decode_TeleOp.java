@@ -79,7 +79,7 @@ public class Decode_TeleOp extends OpMode {
 
     // booleans and stuff for control improvements
     boolean intakeIsOn = false;
-    boolean launcherIsOn = false;
+    int powSet = 0;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -154,7 +154,25 @@ public class Decode_TeleOp extends OpMode {
             }
         }
 
-         if (currentGP2.y && !(previousGP2.y)) {
+        if (currentGP2.right_bumper && !(previousGP2.right_bumper)) {
+                launcher.powAmplification(powSet);
+                if(powSet == 0){
+                    powSet++;
+                }else if(powSet == 1){
+                    powSet = 0;
+                }
+        }
+
+        if (currentGP2.left_bumper && !(previousGP2.left_bumper)) {
+            launcher.powReversal(powSet);
+            if(powSet == 0){
+                powSet = 1;
+            }else if(powSet == 1){
+                powSet--;
+            }
+        }
+
+        /*if (currentGP2.y && !(previousGP2.y)) {
             if(!launcherIsOn) {
                 launcher.on();
                 launcherIsOn = true;
@@ -162,7 +180,7 @@ public class Decode_TeleOp extends OpMode {
                 launcher.off();
                 launcherIsOn = false;
             }
-        }
+        } */
 
 
 
@@ -175,42 +193,19 @@ public class Decode_TeleOp extends OpMode {
                 armPow = -0.7;
             }
 
-            if(gamepad1.left_trigger > 0) {
-                fLPower = -0.8;
-                fRPower = 0.8;
-                bLPower = 0.8;
-                bRPower = -0.8;
-            }
-            if(gamepad1.right_trigger > 0) {
-                fLPower = 0.8;
-                fRPower = -0.8;
-                bLPower = -0.8;
-                bRPower = 0.8;
-            }
+
             //Slow Mode
             if(gamepad1.dpad_up){
-                fLPower = 0.25;
-                fRPower = 0.25;
-                bLPower = 0.25;
-                bRPower = 0.25;
+                chassis.slowDrive(0.25,0.25,0.25,0.25);
             }
             if(gamepad1.dpad_down){
-                fLPower = -0.25;
-                fRPower = -0.25;
-                bLPower = -0.25;
-                bRPower = -0.25;
+                chassis.slowDrive(-0.25,-0.25,-0.25,-0.25);
             }
             if(gamepad1.dpad_left){
-                fLPower = -0.25;
-                fRPower = 0.25;
-                bLPower = 0.25;
-                bRPower = -0.25;
+                chassis.slowDrive(-0.25,0.25,0.25,-0.25);
             }
             if(gamepad1.dpad_right){
-                fLPower = 0.25;
-                fRPower = -0.25;
-                bLPower = -0.25;
-                bRPower = 0.25;
+                chassis.slowDrive(0.25,-0.25,-0.25,0.25);
             }
             //Stuff has changed
             //0 == ground

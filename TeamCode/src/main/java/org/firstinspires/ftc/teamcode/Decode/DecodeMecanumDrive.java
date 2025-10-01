@@ -80,6 +80,10 @@ public class DecodeMecanumDrive {
                 setPowers(fLPower, fRPower, bLPower, bRPower);
             }
 
+            public void slowDrive(double fLPower, double fRPower, double bLPower, double bRPower){
+                setPowers(fLPower, fRPower, bLPower, bRPower);
+            }
+
 
 
     }
