@@ -75,6 +75,8 @@ public class Decode_TeleOp extends OpMode {
     DecodeIntake intake = new DecodeIntake();
     DecodeMecanumDrive chassis = new DecodeMecanumDrive();
 
+    boolean gOpen = false;
+
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
@@ -153,6 +155,14 @@ public class Decode_TeleOp extends OpMode {
                 intakeIsOn = false;
             }
         }
+        if (gamepad2.b && gOpen == false) {
+            ;launcher.gateOpen();
+            gOpen = true;
+        }
+        if(gamepad2.b && gOpen == true) {
+            launcher.gateClose();
+            gOpen = false;
+        }
 
         if (currentGP2.right_bumper && !(previousGP2.right_bumper)) {
                 launcher.powAmplification(powSet);
@@ -195,6 +205,7 @@ public class Decode_TeleOp extends OpMode {
 
 
             //Slow Mode
+        /*
             if(gamepad1.dpad_up){
                 chassis.slowDrive(0.25,0.25,0.25,0.25);
             }
@@ -207,6 +218,8 @@ public class Decode_TeleOp extends OpMode {
             if(gamepad1.dpad_right){
                 chassis.slowDrive(0.25,-0.25,-0.25,0.25);
             }
+
+         */
             //Stuff has changed
             //0 == ground
             //1 == danger
