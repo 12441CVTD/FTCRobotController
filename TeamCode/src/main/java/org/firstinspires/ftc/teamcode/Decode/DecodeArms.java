@@ -4,16 +4,19 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gam
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class DecodeArms {
 
     public void init(HardwareMap hwareMap) {
         leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
         rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
+        gate = hwareMap.get(Servo.class, "gate");
     }
 
     private DcMotor leftLauncher;
     private DcMotor rightLauncher;
+    private Servo gate;
 
     /*public void on() {
             leftLauncher.setPower(-0.55);
@@ -44,6 +47,13 @@ public class DecodeArms {
             leftLauncher.setPower(-0.55);
             rightLauncher.setPower(0.55);
         }
+    }
+
+    public void gateOpen() {
+        gate.setPosition(1);
+    }
+    public void gateClose() {
+        gate.setPosition(0);
     }
 
 
