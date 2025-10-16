@@ -81,7 +81,8 @@ public class Decode_TeleOp extends OpMode {
 
     // booleans and stuff for control improvements
     boolean intakeIsOn = false;
-    int powSet = 0;
+    boolean amplification = false;
+    boolean amplificationMAX = false;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -155,15 +156,38 @@ public class Decode_TeleOp extends OpMode {
                 intakeIsOn = false;
             }
         }
-        if (gamepad2.b && gOpen == false) {
-            ;launcher.gateOpen();
+        if (gamepad2.x) {
+            launcher.gateOpen();
             gOpen = true;
         }
-        if(gamepad2.b && gOpen == true) {
+        if(gamepad2.b) {
             launcher.gateClose();
             gOpen = false;
         }
 
+        if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
+            if(amplificationMAX){
+                launcher.powReversal();
+                amplificationMAX = false;
+            } else {
+                launcher.powAmplificationMAX();
+                amplificationMAX = true;
+                amplification = false;
+            }
+        }
+
+        if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
+            if(amplification){
+                launcher.powReversal();
+                amplification = false;
+            } else {
+                launcher.powAmplification();
+                amplification = true;
+                amplificationMAX = false;
+            }
+        }
+
+        /*
         if (currentGP2.right_bumper && !(previousGP2.right_bumper)) {
                 launcher.powAmplification(powSet);
                 if(powSet < 2){
@@ -181,6 +205,8 @@ public class Decode_TeleOp extends OpMode {
                 powSet = 2;
             }
         }
+
+         */
 
         /*if (currentGP2.y && !(previousGP2.y)) {
             if(!launcherIsOn) {
@@ -207,16 +233,16 @@ public class Decode_TeleOp extends OpMode {
             //Slow Mode
         /*
             if(gamepad1.dpad_up){
-                chassis.slowDrive(0.25,0.25,0.25,0.25);
+                chassis.fourDrive(0.25,0.25,0.25,0.25);
             }
             if(gamepad1.dpad_down){
-                chassis.slowDrive(-0.25,-0.25,-0.25,-0.25);
+                chassis.fourDrive(-0.25,-0.25,-0.25,-0.25);
             }
             if(gamepad1.dpad_left){
-                chassis.slowDrive(-0.25,0.25,0.25,-0.25);
+                chassis.fourDrive(-0.25,0.25,0.25,-0.25);
             }
             if(gamepad1.dpad_right){
-                chassis.slowDrive(0.25,-0.25,-0.25,0.25);
+                chassis.fourDrive(0.25,-0.25,-0.25,0.25);
             }
 
          */
