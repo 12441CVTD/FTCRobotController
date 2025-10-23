@@ -75,14 +75,13 @@ public class Decode_TeleOp extends OpMode {
     DecodeIntake intake = new DecodeIntake();
     DecodeMecanumDrive chassis = new DecodeMecanumDrive();
 
-    boolean gOpen = false;
-
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
     boolean intakeIsOn = false;
     boolean amplification = false;
     boolean amplificationMAX = false;
+    boolean gOpen = false;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -157,11 +156,11 @@ public class Decode_TeleOp extends OpMode {
                 intakeIsOn = false;
             }
         }
-        if (gamepad2.x) {
+        if (currentGP2.x && !(previousGP2.x) && !gOpen) {
             launcher.gateOpen();
             gOpen = true;
         }
-        if(gamepad2.b) {
+        if(currentGP2.x && !(previousGP2.x) && gOpen) {
             launcher.gateClose();
             gOpen = false;
         }
