@@ -11,20 +11,16 @@ public class DecodeIntake {
 
     public void init(HardwareMap hwaremap) {
         leftIntake = hwaremap.get(DcMotor.class, "leftIntake");
-        rightIntake = hwaremap.get(DcMotor.class, "rightIntake");
     }
 
     private DcMotor leftIntake;
-    private DcMotor rightIntake;
 
     public void on() {
-        leftIntake.setPower(-0.6);
-        rightIntake.setPower(0.6);
+        leftIntake.setPower(0.6);
     }
 
     public void off() {
         leftIntake.setPower(0);
-        rightIntake.setPower(0);
     }
     /*telemetry.addData("Initialized",);
     telemetry.update();*/
