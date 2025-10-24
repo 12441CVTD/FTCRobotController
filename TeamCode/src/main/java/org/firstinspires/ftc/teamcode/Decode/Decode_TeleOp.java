@@ -156,13 +156,14 @@ public class Decode_TeleOp extends OpMode {
                 intakeIsOn = false;
             }
         }
-        if (currentGP2.x && !(previousGP2.x) && !gOpen) {
-            launcher.gateOpen();
-            gOpen = true;
-        }
-        if(currentGP2.x && !(previousGP2.x) && gOpen) {
-            launcher.gateClose();
-            gOpen = false;
+        if (currentGP2.x && !(previousGP2.x)) {
+            if(!gOpen) {
+                gOpen = true;
+                launcher.gateOpen();
+            } else {
+                gOpen = false;
+                launcher.gateClose();
+            }
         }
 
         if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
@@ -269,13 +270,14 @@ public class Decode_TeleOp extends OpMode {
 //
 //
 //
-//            // Show the elapsed game time and wheel power.
+//            // Show the elapsed game time and wheel power
+//
 //            telemetry.addData("Status", "Run Time: " + runtime.toString());
 //            telemetry.addData("Motors", "left (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
 //            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
 //            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
 //            telemetry.update();
-
+        telemetry.addData("Gate Open Status", gOpen);
 
 
     }
