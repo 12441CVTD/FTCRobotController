@@ -71,14 +71,15 @@ public class Decode_TeleOp extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    DecodeArms launcher = new DecodeArms();
-    DecodeIntake intake = new DecodeIntake();
-    DecodeMecanumDrive chassis = new DecodeMecanumDrive();
+    DecodeArms launcher = null;
+    DecodeIntake intake = null;
+    DecodeMecanumDrive chassis = null;
 
     private Timer timer = new Timer();
 
     // booleans and stuff for control improvements
     boolean intakeIsOn = false;
+    boolean intakeReverse = false;
     boolean amplification = false;
     boolean amplificationMAX = false;
     boolean gOpen = false;
@@ -88,9 +89,9 @@ public class Decode_TeleOp extends OpMode {
 
     @Override
     public void init() {
-        launcher.init(hardwareMap);
-        intake.init(hardwareMap);
-        chassis.init(hardwareMap);
+        launcher = new DecodeArms(hardwareMap);
+        intake = new DecodeIntake(hardwareMap);
+        chassis = new DecodeMecanumDrive(hardwareMap);
 
     }
 
@@ -102,7 +103,7 @@ public class Decode_TeleOp extends OpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        chassis.drive(gamepad1.left_stick_y, gamepad1.left_stick_x, -gamepad1.right_stick_x);
+        chassis.drive(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
 
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -156,6 +157,9 @@ public class Decode_TeleOp extends OpMode {
                 intakeIsOn = false;
             }
         }
+
+
+
         if (currentGP2.x && !(previousGP2.x)) {
             if(!gOpen) {
                 gOpen = true;

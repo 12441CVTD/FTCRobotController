@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class DecodeArms {
 
-    public void init(HardwareMap hwareMap) {
+    public DecodeArms(HardwareMap hwareMap) {
         leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
         rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
         gate = hwareMap.get(Servo.class, "gate");

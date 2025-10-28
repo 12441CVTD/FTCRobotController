@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DecodeIntake {
 
-    public void init(HardwareMap hwaremap) {
+    public DecodeIntake(HardwareMap hwaremap) {
         leftIntake = hwaremap.get(DcMotor.class, "leftIntake");
     }
 

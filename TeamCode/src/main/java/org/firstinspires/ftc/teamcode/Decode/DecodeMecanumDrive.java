@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Decode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
@@ -14,14 +15,14 @@ public class DecodeMecanumDrive {
 
 
 
-    public void init(HardwareMap hwMap){
+    public DecodeMecanumDrive(HardwareMap hwMap){
         fL = hwMap.get(DcMotor.class, "frontLeft");
         bL = hwMap.get(DcMotor.class, "frontRight");
         fR = hwMap.get(DcMotor.class, "backLeft");
         bR = hwMap.get(DcMotor.class, "backRight");
 
-        fL.setDirection(DcMotor.Direction.REVERSE);
-        bL.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotor.Direction.FORWARD);
+        bL.setDirection(DcMotor.Direction.FORWARD);
         fR.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
     }
