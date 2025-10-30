@@ -21,8 +21,8 @@ public class DecodeMecanumDrive {
         fR = hwMap.get(DcMotor.class, "backLeft");
         bR = hwMap.get(DcMotor.class, "backRight");
 
-        fL.setDirection(DcMotor.Direction.FORWARD);
-        bL.setDirection(DcMotor.Direction.FORWARD);
+        fL.setDirection(DcMotor.Direction.REVERSE);
+        bL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.REVERSE);
         bR.setDirection(DcMotor.Direction.REVERSE);
     }

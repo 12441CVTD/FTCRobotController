@@ -16,7 +16,11 @@ public class DecodeIntake {
     private DcMotor leftIntake;
 
     public void on() {
-        leftIntake.setPower(0.6);
+        leftIntake.setPower(0.75);
+    }
+
+    public void reverse() {
+        leftIntake.setPower(-0.75);
     }
 
     public void off() {

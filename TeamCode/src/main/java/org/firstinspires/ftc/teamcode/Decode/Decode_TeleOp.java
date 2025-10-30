@@ -103,7 +103,7 @@ public class Decode_TeleOp extends OpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        chassis.drive(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
+        chassis.drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -152,9 +152,24 @@ public class Decode_TeleOp extends OpMode {
             if(!intakeIsOn) {
                 intake.on();
                 intakeIsOn = true;
+                intakeReverse = false;
             } else {
                 intake.off();
                 intakeIsOn = false;
+                intakeReverse = false;
+            }
+        }
+
+        //Reverse intake
+        if (currentGP2.b && !(previousGP2.b)) {
+            if(!intakeReverse) {
+                intake.reverse();
+                intakeReverse = true;
+                intakeIsOn = false;
+            } else {
+                intake.off();
+                intakeIsOn = false;
+                intakeReverse = false;
             }
         }
 

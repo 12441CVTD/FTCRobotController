@@ -29,8 +29,8 @@ public class DecodeArms {
     }
 
     public void powAmplificationMAX(){
-        leftLauncher.setPower(-0.75);
-        rightLauncher.setPower(0.75);
+        leftLauncher.setPower(-0.7);
+        rightLauncher.setPower(0.7);
     }
 
     public void powReversal() {
@@ -71,7 +71,7 @@ public class DecodeArms {
         gate.setPosition(1);
     }
     public void gateClose() {
-        gate.setPosition(0.5);
+        gate.setPosition(0.75);
     }
 
 
