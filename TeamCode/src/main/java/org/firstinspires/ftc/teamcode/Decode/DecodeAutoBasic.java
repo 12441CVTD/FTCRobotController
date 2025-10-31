@@ -26,6 +26,8 @@ public class DecodeAutoBasic extends LinearOpMode {
 
         waitForStart();
 
+        chassis.drive(0.1,0,0);
+
         runtime.reset();
 
         while(opModeIsActive() && runtime.milliseconds() < 1500){
@@ -35,12 +37,12 @@ public class DecodeAutoBasic extends LinearOpMode {
         runtime.reset();
 
         while(opModeIsActive() && runtime.milliseconds() < 8000){
-            launcher.gateClose();
+            launcher.gateOpen();
         }
 
         runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < 10000) {
-            chassis.drive(0.5,0,0);
+        while(opModeIsActive() && runtime.milliseconds() < 1000) {
+            chassis.drive(0,-0.5,0);
         }
         launcher.powReversal();
 

@@ -72,11 +72,11 @@ public class DecodeMecanumDrive {
             bR.setPower(br);
         }
 
-            public void drive(double forward, double right, double rotate) {
-                double fLPower = forward + right + rotate;
-                double fRPower = forward - right - rotate;
-                double bLPower = forward - right + rotate;
-                double bRPower = forward + right - rotate;
+            public void drive(double right, double forward, double rotate) {
+                double fLPower = right + forward + rotate;
+                double fRPower = right - forward - rotate;
+                double bLPower = right - forward + rotate;
+                double bRPower = right + forward - rotate;
 
                 setPowers(fLPower, fRPower, bLPower, bRPower);
             }
