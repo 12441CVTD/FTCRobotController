@@ -24,13 +24,13 @@ public class DecodeArms {
     }*/
 
     public void powAmplification(){
-        leftLauncher.setPower(-0.65);
-        rightLauncher.setPower(0.65);
+        leftLauncher.setPower(-0.58);
+        rightLauncher.setPower(0.58);
     }
 
     public void powAmplificationMAX(){
-        leftLauncher.setPower(-0.7);
-        rightLauncher.setPower(0.7);
+        leftLauncher.setPower(-0.66);
+        rightLauncher.setPower(0.66);
     }
 
     public void powReversal() {

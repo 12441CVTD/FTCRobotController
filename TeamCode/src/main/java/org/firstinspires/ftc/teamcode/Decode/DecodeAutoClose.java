@@ -36,21 +36,17 @@ public class DecodeAutoClose extends LinearOpMode {
 
         runtime.reset();
 
-        sleep(300);
-
         while(opModeIsActive() && runtime.milliseconds() < 1000){
             launcher.powAmplification();
         }
 
         runtime.reset();
-        sleep(300);
 
         while(opModeIsActive() && runtime.milliseconds() < 1000){
             launcher.gateOpen();
         }
 
         runtime.reset();
-        sleep(300);
 
         while(opModeIsActive() && runtime.milliseconds() < 1000){
             chassis.drive(-0.3, 0, 0);
@@ -59,5 +55,7 @@ public class DecodeAutoClose extends LinearOpMode {
         chassis.drive(0,0,0);
         launcher.gateClose();
         launcher.powReversal();
+
+        sleep(300);
     }
 }

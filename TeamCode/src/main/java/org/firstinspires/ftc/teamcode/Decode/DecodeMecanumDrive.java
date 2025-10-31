@@ -21,10 +21,10 @@ public class DecodeMecanumDrive {
         fR = hwMap.get(DcMotor.class, "backLeft");
         bR = hwMap.get(DcMotor.class, "backRight");
 
-        fL.setDirection(DcMotor.Direction.REVERSE);
+        fL.setDirection(DcMotor.Direction.FORWARD);
         bL.setDirection(DcMotor.Direction.REVERSE);
         fR.setDirection(DcMotor.Direction.REVERSE);
-        bR.setDirection(DcMotor.Direction.REVERSE);
+        bR.setDirection(DcMotor.Direction.FORWARD);
     }
 
         // Wait for the game to start (driver presses START)
