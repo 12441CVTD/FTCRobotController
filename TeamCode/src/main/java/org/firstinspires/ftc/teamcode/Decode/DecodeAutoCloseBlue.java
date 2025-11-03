@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class DecodeAutoClose extends LinearOpMode {
+public class DecodeAutoCloseBlue extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -28,7 +26,7 @@ public class DecodeAutoClose extends LinearOpMode {
 
         runtime.reset();
 
-        while(opModeIsActive() && runtime.milliseconds() < 2000){
+        while(opModeIsActive() && runtime.milliseconds() < 1600){
             chassis.drive(0,0.4,0);
         }
 
@@ -50,7 +48,7 @@ public class DecodeAutoClose extends LinearOpMode {
         runtime.reset();
 
         while(opModeIsActive() && runtime.milliseconds() < 1000){
-            chassis.drive(0, 0.3, 0);
+            chassis.drive(0.3, 0, 0);
         }
 
         chassis.drive(0,0,0);

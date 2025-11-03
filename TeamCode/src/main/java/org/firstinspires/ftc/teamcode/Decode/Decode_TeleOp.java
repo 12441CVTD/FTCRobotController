@@ -92,6 +92,7 @@ public class Decode_TeleOp extends OpMode {
         launcher = new DecodeArms(hardwareMap);
         intake = new DecodeIntake(hardwareMap);
         chassis = new DecodeMecanumDrive(hardwareMap);
+        launcher.gateClose();
 
     }
 
@@ -251,7 +252,7 @@ public class Decode_TeleOp extends OpMode {
 
 
             //Slow Mode
-        /*
+
             if(gamepad1.dpad_up){
                 chassis.fourDrive(0.25,0.25,0.25,0.25);
             }
@@ -265,7 +266,7 @@ public class Decode_TeleOp extends OpMode {
                 chassis.fourDrive(0.25,-0.25,-0.25,0.25);
             }
 
-         */
+
             //Stuff has changed
             //0 == ground
             //1 == danger

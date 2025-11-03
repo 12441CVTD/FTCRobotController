@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class DecodeAutoBasic extends LinearOpMode {
+public class DecodeAutoFar extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -26,7 +24,8 @@ public class DecodeAutoBasic extends LinearOpMode {
 
         waitForStart();
 
-        chassis.drive(0.1,0,0);
+        chassis.drive(0,0.2,0);
+        intake.on();
 
         runtime.reset();
 
@@ -41,10 +40,11 @@ public class DecodeAutoBasic extends LinearOpMode {
         }
 
         runtime.reset();
-        while(opModeIsActive() && runtime.milliseconds() < 1000) {
+        while(opModeIsActive() && runtime.milliseconds() < 400) {
             chassis.drive(0,-0.5,0);
         }
         launcher.powReversal();
+        launcher.gateClose();
 
 
         sleep(300);

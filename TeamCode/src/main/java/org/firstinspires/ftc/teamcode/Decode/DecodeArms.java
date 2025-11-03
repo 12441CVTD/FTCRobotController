@@ -71,7 +71,7 @@ public class DecodeArms {
         gate.setPosition(0.75);
     }
     public void gateClose() {
-        gate.setPosition(1);
+        gate.setPosition(0.99);
     }
 
 
