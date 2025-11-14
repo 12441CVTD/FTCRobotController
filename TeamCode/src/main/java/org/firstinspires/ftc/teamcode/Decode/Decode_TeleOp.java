@@ -260,10 +260,10 @@ public class Decode_TeleOp extends OpMode {
                 chassis.fourDrive(-0.25,-0.25,-0.25,-0.25);
             }
             if(gamepad1.dpad_left){
-                chassis.fourDrive(-0.25,0.25,0.25,-0.25);
+                chassis.drive(0,0,0.3);
             }
             if(gamepad1.dpad_right){
-                chassis.fourDrive(0.25,-0.25,-0.25,0.25);
+                chassis.drive(0,0,-0.3);
             }
 
 
