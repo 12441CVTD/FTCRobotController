@@ -1,22 +1,30 @@
 package org.firstinspires.ftc.teamcode.Decode;
 //
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class DecodeArms {
 
     public DecodeArms(HardwareMap hwareMap) {
-        leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
-        rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
+        leftLauncher = hwareMap.get(DcMotorEx.class, "leftLauncher");
+        rightLauncher = hwareMap.get(DcMotorEx.class, "rightLauncher");
         gate = hwareMap.get(Servo.class, "gate");
+        leftLauncher.setZeroPowerBehavior(BRAKE);
+        rightLauncher.setZeroPowerBehavior(BRAKE);
+        leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
+        rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
     }
 
-    private DcMotor leftLauncher;
-    private DcMotor rightLauncher;
+    private DcMotorEx leftLauncher;
+    private DcMotorEx rightLauncher;
     private Servo gate;
+
 
     /*public void on() {
             leftLauncher.setPower(-0.55);
@@ -24,18 +32,19 @@ public class DecodeArms {
     }*/
 
     public void powAmplification(){
-        leftLauncher.setPower(-0.6);
-        rightLauncher.setPower(0.6);
+        leftLauncher.setVelocity(-1000);
+        rightLauncher.setVelocity(1000);
+
     }
 
     public void powAmplificationMAX(){
-        leftLauncher.setPower(-0.66);
-        rightLauncher.setPower(0.66);
+        leftLauncher.setVelocity(-2500);
+        rightLauncher.setVelocity(2500);
     }
 
     public void powReversal() {
-        leftLauncher.setPower(0);
-        rightLauncher.setPower(0);
+        leftLauncher.setVelocity(0);
+        rightLauncher.setVelocity(0);
     }
 
     /*
