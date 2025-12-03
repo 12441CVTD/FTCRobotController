@@ -57,7 +57,7 @@ import java.util.Timer;
 public class Decode_TeleOp2 extends OpMode {
 
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime delay = new ElapsedTime();
 
     DecodeArms2 launcher = null;
     DecodeIntake intake = null;
@@ -70,8 +70,8 @@ public class Decode_TeleOp2 extends OpMode {
     boolean intakeReverse = false;
     boolean amplification = false;
     boolean amplificationMAX = false;
-    boolean gOpen = false;
-    boolean gReverse = false;
+    boolean transfersOn = false;
+    boolean transfersReverse = false;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -81,7 +81,6 @@ public class Decode_TeleOp2 extends OpMode {
         launcher = new DecodeArms2(hardwareMap);
         intake = new DecodeIntake(hardwareMap);
         chassis = new DecodeMecanumDrive(hardwareMap);
-        launcher.gateOff();
 
     }
 
@@ -166,24 +165,11 @@ public class Decode_TeleOp2 extends OpMode {
 
 
         if (currentGP2.x && !(previousGP2.x)) {
-            if(!gOpen) {
-                gOpen = true;
-                launcher.gateOn();
-            } else {
-                gOpen = false;
-                launcher.gateOff();
-            }
+
+
         }
         if (currentGP2.y && !(previousGP2.y)) {
-            if(!gOpen) {
-                launcher.gateReverse();
-                gReverse = true;
-                gOpen = false;
-            } else {
-                launcher.gateOff();
-                gOpen = false;
-                gReverse = false;
-            }
+
         }
 
         if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
@@ -194,6 +180,7 @@ public class Decode_TeleOp2 extends OpMode {
                 launcher.powAmplificationMAX();
                 amplificationMAX = true;
                 amplification = false;
+                delay.reset();
             }
         }
 
@@ -205,6 +192,34 @@ public class Decode_TeleOp2 extends OpMode {
                 launcher.powAmplification();
                 amplification = true;
                 amplificationMAX = false;
+            }
+        }
+
+        if (currentGP2.x && !(previousGP2.x)) {
+            if(!transfersOn) {
+                launcher.transferFOff();
+                launcher.transferSOff();
+                transfersOn = false;
+                transfersReverse = false;
+            } else {
+                launcher.transferFOn();
+                launcher.transferSOn();
+                transfersOn = true;
+                transfersReverse = false;
+            }
+        }
+
+        if (currentGP2.y && !(previousGP2.y)) {
+            if(!transfersReverse) {
+                launcher.transferFOff();
+                launcher.transferSOff();
+                transfersOn = false;
+                transfersReverse = false;
+            } else {
+                launcher.transferFR();
+                launcher.transferSR();
+                transfersOn = false;
+                transfersReverse = true;
             }
         }
 
@@ -297,13 +312,10 @@ public class Decode_TeleOp2 extends OpMode {
 //            telemetry.addData("Servos", "lElbow (%.2f), rElbow (%.2f), wrist (%.2f), claw (%.2f)", lElbow.getPosition(), rElbow.getPosition(), wrist.getPosition(), claw.getPosition());
 //            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
 //            telemetry.update();
-        telemetry.addData("Gate Open Status", gOpen);
+
 
 
     }
-
-
-
 }
 
 

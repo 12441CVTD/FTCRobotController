@@ -1,21 +1,21 @@
 package org.firstinspires.ftc.teamcode.Decode;
 //
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 public class DecodeArms2 {
 
     public DecodeArms2(HardwareMap hwareMap) {
-        leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
-        rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
-        gate = hwareMap.get(DcMotor.class, "gate");
+        launcher = hwareMap.get(DcMotor.class, "leftLauncher");
+        transferF = hwareMap.get(CRServo.class, "setF");
+        TransferS = hwareMap.get(CRServo.class, "setS");
     }
 
-    private DcMotor leftLauncher;
-    private DcMotor rightLauncher;
-    private DcMotor gate;
+    private DcMotor launcher;
+    private CRServo transferF;
+    private CRServo TransferS;
 
     /*public void on() {
             leftLauncher.setPower(-0.55);
@@ -23,18 +23,15 @@ public class DecodeArms2 {
     }*/
 
     public void powAmplification(){
-        leftLauncher.setPower(-0.6);
-        rightLauncher.setPower(0.6);
+        launcher.setPower(-0.6);
     }
 
     public void powAmplificationMAX(){
-        leftLauncher.setPower(-0.66);
-        rightLauncher.setPower(0.66);
+        launcher.setPower(-0.66);
     }
 
     public void powReversal() {
-        leftLauncher.setPower(0);
-        rightLauncher.setPower(0);
+        launcher.setPower(0);
     }
 
     /*
@@ -66,15 +63,14 @@ public class DecodeArms2 {
 
      */
 
-    public void gateOn() {
-        gate.setPower(0.75);
-    }
-    public void gateOff() {
-        gate.setPower(0);
-    }
-    public void gateReverse() {
-        gate.setPower(-0.75);
-    }
+    public void transferFOn() {transferF.setPower(1);}
+    public void transferFOff() {transferF.setPower(0);}
+    public void transferFR() {transferF.setPower(-1);}
+    public void transferSOn() {TransferS.setPower(1);}
+    public void transferSOff() {TransferS.setPower(0);}
+    public void transferSR() {transferF.setPower(-1);}
+
+
 
 
     /*public void off() {
