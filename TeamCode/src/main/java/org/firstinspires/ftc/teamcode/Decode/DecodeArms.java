@@ -12,17 +12,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class DecodeArms {
 
     public DecodeArms(HardwareMap hwareMap) {
-        leftLauncher = hwareMap.get(DcMotorEx.class, "leftLauncher");
-        rightLauncher = hwareMap.get(DcMotorEx.class, "rightLauncher");
+        leftLauncher = hwareMap.get(DcMotor.class, "leftLauncher");
+        rightLauncher = hwareMap.get(DcMotor.class, "rightLauncher");
         gate = hwareMap.get(Servo.class, "gate");
         leftLauncher.setZeroPowerBehavior(BRAKE);
         rightLauncher.setZeroPowerBehavior(BRAKE);
-        leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
-        rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
+        //leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
+        //rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
     }
 
-    private DcMotorEx leftLauncher;
-    private DcMotorEx rightLauncher;
+    private DcMotor leftLauncher;
+    private DcMotor rightLauncher;
     private Servo gate;
 
 
@@ -32,19 +32,19 @@ public class DecodeArms {
     }*/
 
     public void powAmplification(){
-        leftLauncher.setVelocity(-1000);
-        rightLauncher.setVelocity(1000);
+        leftLauncher.setPower(-0.5);
+        rightLauncher.setPower(0.5);
 
     }
 
     public void powAmplificationMAX(){
-        leftLauncher.setVelocity(-2500);
-        rightLauncher.setVelocity(2500);
+        leftLauncher.setPower(-0.75);
+        rightLauncher.setPower(0.75);
     }
 
     public void powReversal() {
-        leftLauncher.setVelocity(0);
-        rightLauncher.setVelocity(0);
+        leftLauncher.setPower(0);
+        rightLauncher.setPower(0);
     }
 
     /*
