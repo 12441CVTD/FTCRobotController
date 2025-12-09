@@ -177,7 +177,7 @@ public class Decode_TeleOp2 extends OpMode {
                 launcher.powReversal();
                 amplificationMAX = false;
             } else {
-                launcher.powAmplificationMAX();
+                launcher.powAmpMAX();
                 amplificationMAX = true;
                 amplification = false;
                 delay.reset();
@@ -189,7 +189,7 @@ public class Decode_TeleOp2 extends OpMode {
                 launcher.powReversal();
                 amplification = false;
             } else {
-                launcher.powAmplification();
+                launcher.powAmp();
                 amplification = true;
                 amplificationMAX = false;
             }

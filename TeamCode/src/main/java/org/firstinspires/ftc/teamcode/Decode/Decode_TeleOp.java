@@ -83,6 +83,7 @@ public class Decode_TeleOp extends OpMode {
     boolean amplification = false;
     boolean amplificationMAX = false;
     boolean gOpen = false;
+    boolean hgOpen = false;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -130,24 +131,24 @@ public class Decode_TeleOp extends OpMode {
 
         // run until the end of the match (driver presses STOP)
 
-            // Can be used to make toggleable inputs
-            previousGP2.copy(currentGP2);
-            currentGP2.copy(gamepad2);
-            // Format: if(currentGP2.*insertInput* && !previousGP2.*insertInput*){`
+        // Can be used to make toggleable inputs
+        previousGP2.copy(currentGP2);
+        currentGP2.copy(gamepad2);
+        // Format: if(currentGP2.*insertInput* && !previousGP2.*insertInput*){`
 
-            // Setup a variable for each drive wheel to save power level for telemetry
-            double fLPower;
-            double bLPower;
-            double fRPower;
-            double bRPower;
+        // Setup a variable for each drive wheel to save power level for telemetry
+        double fLPower;
+        double bLPower;
+        double fRPower;
+        double bRPower;
 
-            double armPow = 0.04;
+        double armPow = 0.04;
 
-            // Choose to drive using either Tank Mode, or POV Mode
-            // Comment out the method that's not used.  The default below is POV.
+        // Choose to drive using either Tank Mode, or POV Mode
+        // Comment out the method that's not used.  The default below is POV.
 
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
+        // POV Mode uses left stick to go forward, and right stick to turn.
+        // - This uses basic math to combine motions and is easier to drive straight.
 
         if (currentGP2.a && !(previousGP2.a)) {
             if(!intakeIsOn) {
@@ -186,23 +187,33 @@ public class Decode_TeleOp extends OpMode {
             }
         }
 
-        if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
+        if (currentGP2.y && !(previousGP2.y)) {
+            if(!hgOpen) {
+                hgOpen = true;
+                launcher.highGateOpen();
+            } else {
+                hgOpen = false;
+                launcher.highGateClosed();
+            }
+        }
+
+        if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
             if(amplificationMAX){
                 launcher.powReversal();
                 amplificationMAX = false;
             } else {
-                launcher.powAmplificationMAX();
+                launcher.powAmpMed();
                 amplificationMAX = true;
                 amplification = false;
             }
         }
 
-        if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
+        if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
             if(amplification){
                 launcher.powReversal();
                 amplification = false;
             } else {
-                launcher.powAmplification();
+                launcher.powAmp();
                 amplification = true;
                 amplificationMAX = false;
             }
@@ -242,34 +253,34 @@ public class Decode_TeleOp extends OpMode {
 
 
 
+/*
+        if(gamepad2.dpad_up){
+            armPow = 0.8;
+        }
+        if(gamepad2.dpad_down){
+            armPow = -0.7;
+        }
+*/
 
-            if(gamepad2.dpad_up){
-                armPow = 0.8;
-            }
-            if(gamepad2.dpad_down){
-                armPow = -0.7;
-            }
+        //Slow Mode
+
+        if(gamepad1.dpad_up){
+            chassis.fourDrive(-0.35,0.35,0.35,-0.35);
+        }
+        if(gamepad1.dpad_down){
+            chassis.fourDrive(0.35,-0.35,-0.35,0.35);
+        }
+        if(gamepad1.dpad_left){
+            chassis.fourDrive(0.35,0.35,-0.35,-0.35);
+        }
+        if(gamepad1.dpad_right){
+            chassis.fourDrive(-0.35,-0.35,0.35,0.35);
+        }
 
 
-            //Slow Mode
-
-            if(gamepad1.dpad_up){
-                chassis.fourDrive(0.25,0.25,0.25,0.25);
-            }
-            if(gamepad1.dpad_down){
-                chassis.fourDrive(-0.25,-0.25,-0.25,-0.25);
-            }
-            if(gamepad1.dpad_left){
-                chassis.drive(0,0,0.3);
-            }
-            if(gamepad1.dpad_right){
-                chassis.drive(0,0,-0.3);
-            }
-
-
-            //Stuff has changed
-            //0 == ground
-            //1 == danger
+        //Stuff has changed
+        //0 == ground
+        //1 == danger
 
 
 

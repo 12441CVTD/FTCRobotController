@@ -22,11 +22,11 @@ public class DecodeArms2 {
             rightLauncher.setPower(0.55);
     }*/
 
-    public void powAmplification(){
+    public void powAmp(){
         launcher.setPower(-0.6);
     }
 
-    public void powAmplificationMAX(){
+    public void powAmpMAX(){
         launcher.setPower(-0.66);
     }
 

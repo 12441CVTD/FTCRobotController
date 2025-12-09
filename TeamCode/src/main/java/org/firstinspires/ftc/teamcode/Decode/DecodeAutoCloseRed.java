@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 @Autonomous
 public class DecodeAutoCloseRed extends LinearOpMode {
 
@@ -13,6 +16,8 @@ public class DecodeAutoCloseRed extends LinearOpMode {
     DecodeIntake intake = null;
     DecodeMecanumDrive chassis = null;
 
+    private Timer timer = new Timer();
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -21,12 +26,13 @@ public class DecodeAutoCloseRed extends LinearOpMode {
         chassis = new DecodeMecanumDrive(hardwareMap);
 
         runtime = new ElapsedTime();
+        timer = new Timer();
 
         waitForStart();
 
         runtime.reset();
 
-        while(opModeIsActive() && runtime.milliseconds() < 1600){
+        while(opModeIsActive() && runtime.milliseconds() < 2000){
             chassis.drive(0,0.4,0);
         }
 
@@ -35,7 +41,7 @@ public class DecodeAutoCloseRed extends LinearOpMode {
         runtime.reset();
 
         while(opModeIsActive() && runtime.milliseconds() < 500){
-            launcher.powAmplification();
+            launcher.powAmp();
             intake.on();
         }
 
@@ -43,12 +49,14 @@ public class DecodeAutoCloseRed extends LinearOpMode {
 
         while(opModeIsActive() && runtime.milliseconds() < 7000){
             launcher.gateOpen();
+            timer.schedule(new DecodeAutoCloseRed.highGateOpen(), 0);
+            timer.schedule(new DecodeAutoCloseRed.highGateClosed(), 5000);
         }
 
         runtime.reset();
 
-        while(opModeIsActive() && runtime.milliseconds() < 1000){
-            chassis.drive(-0.3, 0, 0);
+        while(opModeIsActive() && runtime.milliseconds() < 1300){
+            chassis.drive(-0.5, 0, 0);
         }
 
         chassis.drive(0,0,0);
@@ -57,5 +65,20 @@ public class DecodeAutoCloseRed extends LinearOpMode {
         intake.off();
 
         sleep(300);
+    }
+    class highGateOpen extends TimerTask {
+
+        @Override
+        public void run() {
+            launcher.highGateOpen();
+        }
+    }
+
+    class highGateClosed extends TimerTask{
+
+        @Override
+        public void run() {
+            launcher.highGateClosed();
+        }
     }
 }

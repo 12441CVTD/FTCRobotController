@@ -16,10 +16,10 @@ public class DecodeMecanumDrive {
 
 
     public DecodeMecanumDrive(HardwareMap hwMap){
-        fL = hwMap.get(DcMotor.class, "frontLeft");
-        bL = hwMap.get(DcMotor.class, "frontRight");
-        fR = hwMap.get(DcMotor.class, "backLeft");
-        bR = hwMap.get(DcMotor.class, "backRight");
+        fL = hwMap.get(DcMotor.class, "fL");
+        bL = hwMap.get(DcMotor.class, "fR");
+        fR = hwMap.get(DcMotor.class, "bL");
+        bR = hwMap.get(DcMotor.class, "bR");
 
         fL.setDirection(DcMotor.Direction.FORWARD);
         bL.setDirection(DcMotor.Direction.REVERSE);
