@@ -15,14 +15,15 @@ import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import java.util.TimerTask;
+
 
 import org.firstinspires.ftc.teamcode.Decode.DecodeArms;
 import org.firstinspires.ftc.teamcode.Decode.DecodeIntake;
 
-import java.util.TimerTask;
 
 
-@Autonomous(name = "Blue Far", group = "Examples")
+@Autonomous(name = "Blue Far Pedro", group = "Examples")
 @Configurable
 public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
@@ -41,7 +42,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
 
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(124, 124, Math.toRadians(217)));
+        follower.setStartingPose(new Pose(56, 8, Math.toRadians(270)));
 
         follower.setMaxPowerScaling(.5);
 
@@ -53,6 +54,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
         pathTimer = new Timer();
 
         intake = new DecodeIntake(hardwareMap);
+        launcher = new DecodeArms(hardwareMap);
     }
 
     @Override
@@ -70,6 +72,8 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
         panelsTelemetry.debug("X", follower.getPose().getX());
         panelsTelemetry.debug("Y", follower.getPose().getY());
         panelsTelemetry.debug("Heading", follower.getPose().getHeading());
+        panelsTelemetry.debug("Timer", pathTimer.getElapsedTimeSeconds());
+        panelsTelemetry.debug("IsBusy", follower.isBusy());
         panelsTelemetry.update(telemetry);
     }
 
@@ -82,8 +86,8 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
     }
 
 
-    public static class Paths {
 
+    public static class Paths {
         public PathChain Launch0;
         public PathChain Pickup1;
         public PathChain Launch1;
@@ -91,142 +95,165 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
         public PathChain Launch2;
         public PathChain Pickup3;
         public PathChain Launch3;
+        public PathChain Park;
 
         public Paths(Follower follower) {
-            Launch1 = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(new Pose(56.000, 8.000), new Pose(56.000, 13.000))
-                    )
-                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(115))
+            Launch0 = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    new Pose(56.000, 8.000),
+
+                                    new Pose(56.000, 13.000)
+                            )
+                    ).setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(290))
+
                     .build();
 
-            Pickup1 = follower
-                    .pathBuilder()
-                    .addPath(
+            Pickup1 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.000, 13.000),
                                     new Pose(54.089, 40.000),
                                     new Pose(60.020, 35.110),
-                                    new Pose(20.000, 35.585)
+                                    new Pose(7.664, 35.111)
                             )
-                    )
-                    .setConstantHeadingInterpolation(Math.toRadians(180))
+                    ).setConstantHeadingInterpolation(Math.toRadians(180))
+
                     .build();
 
-            Launch1 = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(new Pose(20.000, 35.585), new Pose(56.000, 13.000))
-                    )
-                    .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(115))
+            Launch1 = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    new Pose(7.664, 35.111),
+
+                                    new Pose(56.000, 13.000)
+                            )
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(290))
+
                     .build();
 
-            Pickup2 = follower
-                    .pathBuilder()
-                    .addPath(
+            Pickup2 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.000, 13.000),
                                     new Pose(53.377, 57.885),
                                     new Pose(67.374, 61.680),
-                                    new Pose(20.000, 60.000)
+                                    new Pose(7.664, 58.577)
                             )
-                    )
-                    .setConstantHeadingInterpolation(Math.toRadians(180))
+                    ).setConstantHeadingInterpolation(Math.toRadians(180))
+
                     .build();
 
-            Launch2 = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(new Pose(20.000, 60.000), new Pose(56.000, 13.000))
-                    )
-                    .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(115))
+            Launch2 = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    new Pose(7.664, 58.577),
+
+                                    new Pose(56.000, 13.000)
+                            )
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(290))
+
                     .build();
 
-            Pickup3 = follower
-                    .pathBuilder()
-                    .addPath(
+            Pickup3 = follower.pathBuilder().addPath(
                             new BezierCurve(
                                     new Pose(56.000, 13.000),
                                     new Pose(55.987, 83.269),
                                     new Pose(64.290, 85.641),
-                                    new Pose(20.000, 84.000)
+                                    new Pose(14.306, 83.763)
                             )
-                    )
-                    .setConstantHeadingInterpolation(Math.toRadians(180))
+                    ).setConstantHeadingInterpolation(Math.toRadians(180))
+
                     .build();
 
-            Launch3 = follower
-                    .pathBuilder()
-                    .addPath(
-                            new BezierLine(new Pose(20.000, 84.000), new Pose(56.000, 13.000))
-                    )
-                    .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(115))
+            Launch3 = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    new Pose(14.306, 83.763),
+
+                                    new Pose(56.000, 13.000)
+                            )
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(290))
+
+                    .build();
+
+            Park = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    new Pose(56.000, 13.000),
+
+                                    new Pose(38.906, 13.522)
+                            )
+                    ).setConstantHeadingInterpolation(Math.toRadians(90))
+
                     .build();
         }
     }
 
 
 
+
+
     public int autonomousPathUpdate() {
     switch(pathState) {
         case 0:
-            timer.schedule(new LaunchAuto(1), 0);
+            timer.schedule(new LaunchAuto(), 0);
+            timer.schedule(new IntakeAuto(), 2000);
+            timer.schedule(new GateOpen(), 1000);
+            timer.schedule(new HighGateOpen(), 1200);
             follower.followPath(paths.Launch0, true);
             setPathState(1);
             break;
         case 1:
-            timer.schedule(new IntakeAuto(.8), 0);
-
-            follower.followPath(paths.Pickup1, true);
-            setPathState(2);
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
+                timer.schedule(new GateClose(), 0);
+                pathTimer.resetTimer();
+                follower.followPath(paths.Pickup1, true);
+                setPathState(2);
+            }
             break;
         case 2:
-
-
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3){
-                timer.schedule(new IntakeAutoOff(1.0), 0);
-                timer.schedule(new LaunchAuto(0), 0);
-                timer.schedule(new GateOpen(0), 4000);
+            if(!follower.isBusy()){
+                timer.schedule(new IntakeAutoOff(), 500);
+                timer.schedule(new GateOpen(), 2500);
+                timer.schedule(new IntakeAuto(), 3000);
                 pathTimer.resetTimer();
                 follower.followPath(paths.Launch1,true);
-                setPathState(3);
+                setPathState(31);
             }
             break;
         case 3:
-            if(!follower.isBusy()) {
-                timer.schedule(new IntakeAuto(1.0), 0);
-                timer.schedule(new GateClose(1.0), 0);
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
+                timer.schedule(new IntakeAuto(), 0);
+                timer.schedule(new GateClose(), 0);
+                //timer.schedule(new GateClose(), 0);
                 follower.followPath(paths.Pickup2,true);
-                setPathState(4);
+                setPathState(4010);
             }
             break;
         case 4:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
-                timer.schedule(new IntakeAutoOff(1.0), 0);
-                timer.schedule(new LaunchAuto(0), 0);
-                timer.schedule(new GateOpen(0), 4000);
+            if(!follower.isBusy()) {
+                timer.schedule(new IntakeAutoOff(), 500);
+                timer.schedule(new GateOpen(), 3000);
                 follower.followPath(paths.Launch2,true);
                 setPathState(5);
             }
             break;
         case 5:
-            if(!follower.isBusy()) {
-            timer.schedule(new IntakeAuto(1.0), 0);
-            timer.schedule(new GateClose(1.0), 0);
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4) {
+            timer.schedule(new IntakeAuto(), 0);
+            timer.schedule(new GateClose(), 0);
             follower.followPath(paths.Pickup3,true);
             setPathState(6);
         }
             break;
         case 6:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
-                timer.schedule(new IntakeAutoOff(1.0), 0);
-                timer.schedule(new LaunchAuto(0), 0);
-                timer.schedule(new GateOpen(0), 4000);
+            if(!follower.isBusy()) {
+                timer.schedule(new IntakeAutoOff(), 500);
+                timer.schedule(new GateOpen(), 3000);
                 follower.followPath(paths.Launch3,true);
                 setPathState(7);
             }
             break;
+        case 7:
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4){
+                timer.schedule(new LaunchAuto(), 0);
+                follower.followPath(paths.Park, true);
+                setPathState(8);
+            }
     }
 
     // Add your state machine Here
@@ -238,11 +265,6 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
 
 //classes for timer tasks
 public class IntakeAuto extends TimerTask {
-    double power;
-
-    public IntakeAuto(double p) {
-        this.power = p;
-    }
 
     @Override
     public void run() {
@@ -251,11 +273,6 @@ public class IntakeAuto extends TimerTask {
 }
 
     public class IntakeAutoOff extends TimerTask {
-        double power;
-
-        public IntakeAutoOff(double p) {
-            this.power = p;
-        }
 
         @Override
         public void run() {
@@ -264,11 +281,6 @@ public class IntakeAuto extends TimerTask {
     }
 
     public class LaunchAuto extends TimerTask {
-        double power;
-
-        public LaunchAuto(double p) {
-            this.power = p;
-        }
 
         @Override
         public void run() {
@@ -277,11 +289,6 @@ public class IntakeAuto extends TimerTask {
     }
 
     public class GateOpen extends TimerTask {
-        double power;
-
-        public GateOpen(double p) {
-            this.power = p;
-        }
 
         @Override
         public void run() {
@@ -290,15 +297,27 @@ public class IntakeAuto extends TimerTask {
     }
 
     public class GateClose extends TimerTask {
-        double power;
-
-        public GateClose(double p) {
-            this.power = p;
-        }
 
         @Override
         public void run() {
-            launcher.highGateClosed();
+            launcher.gateClose();
+        }
+    }
+
+        public class HighGateOpen extends TimerTask {
+
+        @Override
+        public void run() {
+            launcher.highGateOpen();
+        }
+    }
+
+
+    public class HighGateClose extends TimerTask {
+
+        @Override
+        public void run() {
+            launcher.highGateClose();
         }
     }
 

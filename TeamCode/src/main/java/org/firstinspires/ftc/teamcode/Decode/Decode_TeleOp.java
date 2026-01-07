@@ -193,7 +193,7 @@ public class Decode_TeleOp extends OpMode {
                 launcher.highGateOpen();
             } else {
                 hgOpen = false;
-                launcher.highGateClosed();
+                launcher.highGateClose();
             }
         }
 

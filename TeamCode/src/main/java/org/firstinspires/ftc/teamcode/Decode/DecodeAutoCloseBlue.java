@@ -49,8 +49,8 @@ public class DecodeAutoCloseBlue extends LinearOpMode {
 
         while(opModeIsActive() && runtime.milliseconds() < 7000){
             launcher.gateOpen();
-            timer.schedule(new DecodeAutoCloseBlue.highGateOpen(), 0);
-            timer.schedule(new DecodeAutoCloseBlue.highGateClosed(), 5000);
+            //timer.schedule(new DecodeAutoCloseBlue.highGateOpen(), 0);
+            //timer.schedule(new DecodeAutoCloseBlue.highGateClosed(), 5000);
         }
 
         runtime.reset();
@@ -66,7 +66,7 @@ public class DecodeAutoCloseBlue extends LinearOpMode {
 
         sleep(300);
     }
-    class highGateOpen extends TimerTask {
+    /*class highGateOpen extends TimerTask {
 
         @Override
         public void run() {
@@ -80,5 +80,5 @@ public class DecodeAutoCloseBlue extends LinearOpMode {
         public void run() {
             launcher.highGateClosed();
         }
-    }
+    }*/
 }

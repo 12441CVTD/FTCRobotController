@@ -42,8 +42,8 @@ public class DecodeAutoFar extends LinearOpMode {
 
         while(opModeIsActive() && runtime.milliseconds() < 8000){
             launcher.gateOpen();
-            timer.schedule(new highGateOpen(), 0);
-            timer.schedule(new highGateClosed(), 5000);
+            //timer.schedule(new highGateOpen(), 0);
+            //timer.schedule(new highGateClosed(), 5000);
         }
 
         runtime.reset();
@@ -58,7 +58,7 @@ public class DecodeAutoFar extends LinearOpMode {
 
     }
 
-    class highGateOpen extends TimerTask{
+    /*class highGateOpen extends TimerTask{
 
         @Override
         public void run() {
@@ -72,6 +72,6 @@ public class DecodeAutoFar extends LinearOpMode {
         public void run() {
             launcher.highGateClosed();
         }
-    }
+    }*/
 }
 

@@ -95,7 +95,7 @@ public class DecodeArms {
         highGate.setPower(-0.2);
     }
 
-    public void highGateClosed() {
+    public void highGateClose() {
         highGate.setPower(0);
     }
 
