@@ -93,7 +93,7 @@ public class Decode_TeleOp extends OpMode {
         launcher = new DecodeArms(hardwareMap);
         intake = new DecodeIntake(hardwareMap);
         chassis = new DecodeMecanumDrive(hardwareMap);
-        launcher.gateClose();
+        launcher.gateClose(1.03);
 
     }
 
@@ -166,10 +166,12 @@ public class Decode_TeleOp extends OpMode {
         if (currentGP2.b && !(previousGP2.b)) {
             if(!intakeReverse) {
                 intake.reverse();
+                launcher.highGateReverse();
                 intakeReverse = true;
                 intakeIsOn = false;
             } else {
                 intake.off();
+                launcher.highGateClose();
                 intakeIsOn = false;
                 intakeReverse = false;
             }
@@ -183,12 +185,16 @@ public class Decode_TeleOp extends OpMode {
                 launcher.gateOpen();
             } else {
                 gOpen = false;
-                launcher.gateClose();
+                launcher.gateClose(1.03);
             }
         }
 
+        if(!gOpen){
+            launcher.gateClose(1.03);
+        }
+
         if (currentGP2.y && !(previousGP2.y)) {
-            if(!hgOpen) {
+            if(!hgOpen && !intakeReverse) {
                 hgOpen = true;
                 launcher.highGateOpen();
             } else {
@@ -218,6 +224,10 @@ public class Decode_TeleOp extends OpMode {
                 amplificationMAX = false;
             }
         }
+
+
+
+
 
         /*
         if (currentGP2.right_bumper && !(previousGP2.right_bumper)) {

@@ -51,7 +51,7 @@ public class DecodeAutoFar extends LinearOpMode {
             chassis.drive(0,-0.5,0);
         }
         launcher.powReversal();
-        launcher.gateClose();
+        launcher.gateClose(0.99);
 
 
         sleep(300);

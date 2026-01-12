@@ -289,7 +289,7 @@ public class PedroPathingDecodeAuto4nmousMaroonDecreasedDistance extends OpMode 
 
         @Override
         public void run() {
-            launcher.gateClose();
+            launcher.gateClose(0.99);
         }
     }
 

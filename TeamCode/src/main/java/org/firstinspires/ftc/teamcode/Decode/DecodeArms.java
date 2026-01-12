@@ -41,8 +41,8 @@ public class DecodeArms {
     }
 
     public void powAmpMed(){
-        leftLauncher.setPower(-0.63);
-        rightLauncher.setPower(0.63);
+        leftLauncher.setPower(-0.65);
+        rightLauncher.setPower(0.65);
     }
 
     public void powAmpMAX(){
@@ -87,8 +87,15 @@ public class DecodeArms {
     public void gateOpen() {
         gate.setPosition(0.75);
     }
-    public void gateClose() {
+
+    /*public void gateClose() {
         gate.setPosition(0.99);
+    }*/
+
+    public void gateClose(double position){
+        if(gate.getPosition() != position){
+            gate.setPosition(position);
+        }
     }
 
     public void highGateOpen () {
@@ -99,6 +106,9 @@ public class DecodeArms {
         highGate.setPower(0);
     }
 
+    public void highGateReverse () {
+        highGate.setPower(0.2);
+    }
 
     /*public void off() {
         leftLauncher.setPower(0);

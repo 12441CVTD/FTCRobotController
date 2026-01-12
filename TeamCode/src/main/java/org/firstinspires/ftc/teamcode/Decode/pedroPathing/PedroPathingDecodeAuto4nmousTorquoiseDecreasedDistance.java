@@ -290,7 +290,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseDecreasedDistance extends OpMo
 
         @Override
         public void run() {
-            launcher.gateClose();
+            launcher.gateClose(0.99);
         }
     }
 

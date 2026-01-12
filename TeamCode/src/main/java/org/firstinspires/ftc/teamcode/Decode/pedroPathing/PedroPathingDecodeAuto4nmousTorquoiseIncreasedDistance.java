@@ -44,7 +44,6 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(56, 8, Math.toRadians(270)));
 
-        follower.setMaxPowerScaling(.5);
 
         paths = new Paths(follower); // Build paths
 
@@ -104,7 +103,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
 
                                     new Pose(56.000, 13.000)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(290))
+                    ).setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(287))
 
                     .build();
 
@@ -125,7 +124,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
 
                                     new Pose(56.000, 13.000)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(290))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(287))
 
                     .build();
 
@@ -146,7 +145,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
 
                                     new Pose(56.000, 13.000)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(290))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(287))
 
                     .build();
 
@@ -167,7 +166,7 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
 
                                     new Pose(56.000, 13.000)
                             )
-                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(290))
+                    ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(287))
 
                     .build();
 
@@ -193,13 +192,14 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
             timer.schedule(new LaunchAuto(), 0);
             timer.schedule(new IntakeAuto(), 2000);
             timer.schedule(new GateOpen(), 1000);
-            timer.schedule(new HighGateOpen(), 1200);
+            timer.schedule(new HighGateOpen(), 1500);
             follower.followPath(paths.Launch0, true);
             setPathState(1);
             break;
         case 1:
             if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
                 timer.schedule(new GateClose(), 0);
+                timer.schedule(new HighGateClose(), 3500);
                 pathTimer.resetTimer();
                 follower.followPath(paths.Pickup1, true);
                 setPathState(2);
@@ -208,32 +208,35 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
         case 2:
             if(!follower.isBusy()){
                 timer.schedule(new IntakeAutoOff(), 500);
-                timer.schedule(new GateOpen(), 2500);
-                timer.schedule(new IntakeAuto(), 3000);
+                timer.schedule(new GateOpen(), 5500);
+                timer.schedule(new HighGateOpen(), 4400);
+                timer.schedule(new IntakeAuto(), 6000);
                 pathTimer.resetTimer();
                 follower.followPath(paths.Launch1,true);
-                setPathState(31);
+                setPathState(7);
             }
             break;
         case 3:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 7) {
                 timer.schedule(new IntakeAuto(), 0);
                 timer.schedule(new GateClose(), 0);
-                //timer.schedule(new GateClose(), 0);
+                pathTimer.resetTimer();
                 follower.followPath(paths.Pickup2,true);
-                setPathState(4010);
+                setPathState(4);
             }
             break;
         case 4:
             if(!follower.isBusy()) {
                 timer.schedule(new IntakeAutoOff(), 500);
-                timer.schedule(new GateOpen(), 3000);
+                timer.schedule(new GateOpen(), 6000);
+                timer.schedule(new IntakeAuto(), 6500);
+                pathTimer.resetTimer();
                 follower.followPath(paths.Launch2,true);
-                setPathState(5);
+                setPathState(7);
             }
             break;
         case 5:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4) {
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 8) {
             timer.schedule(new IntakeAuto(), 0);
             timer.schedule(new GateClose(), 0);
             follower.followPath(paths.Pickup3,true);
@@ -249,8 +252,10 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
             }
             break;
         case 7:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4){
+            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 8){
                 timer.schedule(new LaunchAuto(), 0);
+                timer.schedule(new IntakeAutoOff(), 5000);
+                timer.schedule(new HighGateClose(), 5000);
                 follower.followPath(paths.Park, true);
                 setPathState(8);
             }
@@ -300,7 +305,7 @@ public class IntakeAuto extends TimerTask {
 
         @Override
         public void run() {
-            launcher.gateClose();
+            launcher.gateClose(0.99);
         }
     }
 

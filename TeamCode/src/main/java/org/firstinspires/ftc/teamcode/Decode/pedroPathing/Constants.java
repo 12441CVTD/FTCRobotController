@@ -20,8 +20,8 @@ public class Constants {
             .mass(8.708987)
             .forwardZeroPowerAcceleration(-34.682475)
             .lateralZeroPowerAcceleration(-64.2)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.2/*0.22*/, 0, 0.035, 0.01))
-            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.2, 0, 0.035, 0.01))
+            .translationalPIDFCoefficients(new PIDFCoefficients(0.22, 0, 0.035, 0.01))
+            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.22, 0, 0.035, 0.01))
             .headingPIDFCoefficients(new PIDFCoefficients(1.35, 0, 0.11, 0.01))
             .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(1.35, 0, 0.11, 0.01))
             .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.022, 0, 0.0012, 0.6, 0.01))
@@ -33,7 +33,7 @@ public class Constants {
 
 
     public static MecanumConstants driveConstants = new MecanumConstants()
-            .maxPower(0.5)
+            .maxPower(0.75)
             .rightFrontMotorName("fR")
             .rightRearMotorName("bR")
             .leftRearMotorName("bL")

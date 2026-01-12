@@ -60,7 +60,7 @@ public class DecodeAutoCloseRed extends LinearOpMode {
         }
 
         chassis.drive(0,0,0);
-        launcher.gateClose();
+        launcher.gateClose(0.99);
         launcher.powReversal();
         intake.off();
 

@@ -41,9 +41,7 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
 
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(88, 13, Math.toRadians(270)));
-
-        follower.setMaxPowerScaling(.5);
+        follower.setStartingPose(new Pose(88, 8, Math.toRadians(270)));
 
         paths = new Paths(follower); // Build paths
 
@@ -100,7 +98,7 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
                     .addPath(
                             new BezierLine(new Pose(88.000, 8.000), new Pose(88.000, 13.000))
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(245))
+                    .setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(250))
                     .build();
 
             Pickup1 = follower
@@ -110,7 +108,7 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
                                     new Pose(88.000, 14.000),
                                     new Pose(88.000, 39.381),
                                     new Pose(89.000, 35.110),
-                                    new Pose(125.000, 35.585)
+                                    new Pose(135.000, 35.585)
                             )
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -119,9 +117,9 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
             Launch1 = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(125.000, 35.585), new Pose(88.000, 14.000))
+                            new BezierLine(new Pose(135.000, 35.585), new Pose(88.000, 14.000))
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(245))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(250))
                     .build();
 
             Pickup2 = follower
@@ -131,7 +129,7 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
                                     new Pose(88.000, 14.000),
                                     new Pose(88.000, 57.885),
                                     new Pose(89.000, 61.680),
-                                    new Pose(125.000, 60.000)
+                                    new Pose(135.000, 60.000)
                             )
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -140,9 +138,9 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
             Launch2 = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(125.000, 60.000), new Pose(88.000, 14.000))
+                            new BezierLine(new Pose(135.000, 60.000), new Pose(88.000, 14.000))
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(245))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(250))
                     .build();
 
             Pickup3 = follower
@@ -152,7 +150,7 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
                                     new Pose(88.000, 14.000),
                                     new Pose(88.000, 83.269),
                                     new Pose(89.000, 85.641),
-                                    new Pose(125.000, 84.000)
+                                    new Pose(128.000, 84.000)
                             )
                     )
                     .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -161,9 +159,9 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
             Launch3 = follower
                     .pathBuilder()
                     .addPath(
-                            new BezierLine(new Pose(125.000, 84.000), new Pose(88.000, 14.000))
+                            new BezierLine(new Pose(128.000, 84.000), new Pose(88.000, 14.000))
                     )
-                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(245))
+                    .setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(250))
                     .build();
 
             Park = follower
@@ -184,14 +182,17 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
         switch(pathState) {
             case 0:
                 timer.schedule(new LaunchAuto(), 0);
+                timer.schedule(new IntakeAuto(), 2000);
                 timer.schedule(new GateOpen(), 1000);
+                timer.schedule(new HighGateOpen(), 1500);
                 follower.followPath(paths.Launch0, true);
                 setPathState(1);
                 break;
             case 1:
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 2) {
-                    timer.schedule(new IntakeAuto(), 0);
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
                     timer.schedule(new GateClose(), 0);
+                    timer.schedule(new HighGateClose(), 3500);
+                    pathTimer.resetTimer();
                     follower.followPath(paths.Pickup1, true);
                     setPathState(2);
                 }
@@ -199,16 +200,19 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
             case 2:
                 if(!follower.isBusy()){
                     timer.schedule(new IntakeAutoOff(), 500);
-                    timer.schedule(new GateOpen(), 2000);
+                    timer.schedule(new GateOpen(), 5500);
+                    timer.schedule(new HighGateOpen(), 4400);
+                    timer.schedule(new IntakeAuto(), 6000);
                     pathTimer.resetTimer();
                     follower.followPath(paths.Launch1,true);
-                    setPathState(3);
+                    setPathState(7 /*7 is early park, 3 continues*/);
                 }
                 break;
             case 3:
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 3) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 7) {
                     timer.schedule(new IntakeAuto(), 0);
                     timer.schedule(new GateClose(), 0);
+                    pathTimer.resetTimer();
                     follower.followPath(paths.Pickup2,true);
                     setPathState(4);
                 }
@@ -216,9 +220,11 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
             case 4:
                 if(!follower.isBusy()) {
                     timer.schedule(new IntakeAutoOff(), 500);
-                    timer.schedule(new GateOpen(), 3000);
+                    timer.schedule(new GateOpen(), 6000);
+                    timer.schedule(new IntakeAuto(), 6500);
+                    pathTimer.resetTimer();
                     follower.followPath(paths.Launch2,true);
-                    setPathState(5);
+                    setPathState(7);
                 }
                 break;
             case 5:
@@ -238,8 +244,10 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
                 }
                 break;
             case 7:
-                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 4){
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 8){
                     timer.schedule(new LaunchAuto(), 0);
+                    timer.schedule(new IntakeAutoOff(), 5000);
+                    timer.schedule(new HighGateClose(), 5000);
                     follower.followPath(paths.Park, true);
                     setPathState(8);
                 }
@@ -289,7 +297,24 @@ public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode 
 
         @Override
         public void run() {
-            launcher.gateClose();
+            launcher.gateClose(0.99);
+        }
+    }
+
+    public class HighGateOpen extends TimerTask {
+
+        @Override
+        public void run() {
+            launcher.highGateOpen();
+        }
+    }
+
+
+    public class HighGateClose extends TimerTask {
+
+        @Override
+        public void run() {
+            launcher.highGateClose();
         }
     }
 
