@@ -12,6 +12,8 @@ public class DecodeMecanumDrive {
     private DcMotor bL = null;
     private DcMotor fR = null;
     private DcMotor bR = null;
+    double maxSpeed = 1.0;
+
 
 
 
@@ -54,7 +56,6 @@ public class DecodeMecanumDrive {
             //bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
 
         private void setPowers(double fl, double fr, double bl, double br) {
-            double maxSpeed = 1.0;
 
             maxSpeed = Math.max(maxSpeed, Math.abs(fl));
             maxSpeed = Math.max(maxSpeed, Math.abs(fr));
@@ -83,6 +84,14 @@ public class DecodeMecanumDrive {
 
             public void fourDrive(double fLPower, double fRPower, double bLPower, double bRPower){
                 setPowers(fLPower, fRPower, bLPower, bRPower);
+            }
+
+            public void setMaxSpeed(double mS) {
+                maxSpeed = mS;
+            }
+
+            public double getMaxSpeed() {
+                return maxSpeed;
             }
 
 

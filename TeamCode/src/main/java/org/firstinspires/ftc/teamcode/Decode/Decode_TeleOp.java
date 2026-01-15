@@ -225,6 +225,14 @@ public class Decode_TeleOp extends OpMode {
             }
         }
 
+        if(gamepad1.left_bumper) {
+            chassis.setMaxSpeed(chassis.getMaxSpeed() - 0.1);
+        }
+
+        if(gamepad1.right_bumper) {
+            chassis.setMaxSpeed(chassis.getMaxSpeed() + 0.1);
+        }
+
 
 
 

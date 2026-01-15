@@ -35,19 +35,19 @@ public class DecodeArms {
     }*/
 
     public void powAmp(){
-        leftLauncher.setVelocity(-3480);
-        rightLauncher.setPower(3480/*0.58 %pow*/);
+        leftLauncher.setVelocity(-2980);
+        rightLauncher.setPower(2980/*0.58 %pow*/);
 
     }
 
     public void powAmpMed(){
-        leftLauncher.setPower(-3900);
-        rightLauncher.setPower(3900/*0.65 %pow*/);
+        leftLauncher.setPower(-3400);
+        rightLauncher.setPower(3400/*0.65 %pow*/);
     }
 
     public void powAmpMAX(){
-        leftLauncher.setPower(-3780);
-        rightLauncher.setPower(3780);
+        leftLauncher.setPower(-3280);
+        rightLauncher.setPower(3280);
     }
 
     public void powReversal() {
