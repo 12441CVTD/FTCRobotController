@@ -60,8 +60,8 @@ public class Decode_TeleOp2 extends OpMode {
     private ElapsedTime delay = new ElapsedTime();
 
     DecodeArms2 launcher = null;
-    DecodeIntake intake = null;
-    DecodeMecanumDrive chassis = null;
+    //DecodeIntake intake = null;
+    DecodeMecanumDrive2 chassis = null;
 
     private Timer timer = new Timer();
 
@@ -70,6 +70,8 @@ public class Decode_TeleOp2 extends OpMode {
     boolean intakeReverse = false;
     boolean amplification = false;
     boolean amplificationMAX = false;
+    boolean gOpen = false;
+    boolean wOpen = false;
     boolean transfersOn = false;
     boolean transfersReverse = false;
 
@@ -79,8 +81,9 @@ public class Decode_TeleOp2 extends OpMode {
     @Override
     public void init() {
         launcher = new DecodeArms2(hardwareMap);
-        intake = new DecodeIntake(hardwareMap);
-        chassis = new DecodeMecanumDrive(hardwareMap);
+        //intake = new DecodeIntake(hardwareMap);
+        chassis = new DecodeMecanumDrive2(hardwareMap);
+
 
     }
 
@@ -90,9 +93,9 @@ public class Decode_TeleOp2 extends OpMode {
     public void loop() {
 
         telemetry.addData("Status", "Initialized");
-        telemetry.update();
 
-        chassis.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+
+        chassis.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -137,54 +140,70 @@ public class Decode_TeleOp2 extends OpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
 
+        //transfers on
         if (currentGP2.a && !(previousGP2.a)) {
-            if(!intakeIsOn) {
-                intake.on();
-                intakeIsOn = true;
-                intakeReverse = false;
+            if(transfersOn) {
+                launcher.transferOff();
+                transfersOn = false;
+                transfersReverse = false;
             } else {
-                intake.off();
-                intakeIsOn = false;
+                launcher.transferOn();
+                transfersOn = true;
                 intakeReverse = false;
             }
         }
 
-        //Reverse intake
+        //Reverse transfers
         if (currentGP2.b && !(previousGP2.b)) {
-            if(!intakeReverse) {
-                intake.reverse();
-                intakeReverse = true;
+            if(transfersReverse) {
+                launcher.transferOff();
+                intakeReverse = false;
                 intakeIsOn = false;
             } else {
-                intake.off();
+                launcher.transferReverse();
                 intakeIsOn = false;
-                intakeReverse = false;
+                intakeReverse = true;
             }
         }
-
 
 
         if (currentGP2.x && !(previousGP2.x)) {
-
-
+            if (!wOpen) {
+                wOpen = true;
+                launcher.wGateOn(1.0);
+            } else {
+                wOpen = false;
+                launcher.wGateOn(0.0);
+            }
         }
+
+
         if (currentGP2.y && !(previousGP2.y)) {
-
+            if(!gOpen) {
+                gOpen = true;
+                launcher.gateOpen();
+            } else {
+                gOpen = false;
+                launcher.gateClose();
+            }
         }
 
-        if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
+        if(!gOpen){
+            launcher.gateClose();
+        }
+
+        if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
             if(amplificationMAX){
                 launcher.powReversal();
                 amplificationMAX = false;
             } else {
-                launcher.powAmpMAX();
+                launcher.powAmpMed();
                 amplificationMAX = true;
                 amplification = false;
-                delay.reset();
             }
         }
 
-        if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
+        if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
             if(amplification){
                 launcher.powReversal();
                 amplification = false;
@@ -196,32 +215,51 @@ public class Decode_TeleOp2 extends OpMode {
         }
 
         if (currentGP2.x && !(previousGP2.x)) {
-            if(!transfersOn) {
-                launcher.transferFOff();
-                launcher.transferSOff();
+            if(transfersOn) {
+                //launcher.transferFOff();
+                //launcher.transferSOff();
                 transfersOn = false;
                 transfersReverse = false;
             } else {
-                launcher.transferFOn();
-                launcher.transferSOn();
+                //launcher.transferFOn();
+                //launcher.transferSOn();
                 transfersOn = true;
                 transfersReverse = false;
             }
         }
 
         if (currentGP2.y && !(previousGP2.y)) {
-            if(!transfersReverse) {
-                launcher.transferFOff();
-                launcher.transferSOff();
+            if(transfersReverse) {
+                //launcher.transferFOff();
+                //launcher.transferSOff();
                 transfersOn = false;
                 transfersReverse = false;
             } else {
-                launcher.transferFR();
-                launcher.transferSR();
+                //launcher.transferFR();
+                //launcher.transferSR();
                 transfersOn = false;
                 transfersReverse = true;
             }
         }
+
+        if (currentGP2.dpad_left) {
+            launcher.turretLeft();
+        }
+
+        if (currentGP2.dpad_right) {
+            launcher.turretRight();
+        }
+
+        if (currentGP2.dpad_up){
+            launcher.turretCenter();
+        }
+
+        telemetry.addData("gate position", launcher.getGatePosition());
+        telemetry.addData("Left turret position", launcher.getLeftPosition());
+        telemetry.addData("Right turret position", launcher.getRightPosition());
+        telemetry.addData("amplification: ", amplification);
+        telemetry.addData("amplificationMAX: ", amplificationMAX);
+        telemetry.update();
 
         /*
         if (currentGP2.right_bumper && !(previousGP2.right_bumper)) {
@@ -258,17 +296,17 @@ public class Decode_TeleOp2 extends OpMode {
 
 
 
-            if(gamepad2.dpad_up){
+            /*if(gamepad2.dpad_up){
                 armPow = 0.8;
             }
             if(gamepad2.dpad_down){
                 armPow = -0.7;
-            }
+            }*/
 
 
             //Slow Mode
 
-            if(gamepad1.dpad_up){
+            /*if(gamepad1.dpad_up){
                 chassis.fourDrive(0.25,0.25,0.25,0.25);
             }
             if(gamepad1.dpad_down){
@@ -279,7 +317,7 @@ public class Decode_TeleOp2 extends OpMode {
             }
             if(gamepad1.dpad_right){
                 chassis.fourDrive(0.25,-0.25,-0.25,0.25);
-            }
+            }*/
 
 
             //Stuff has changed

@@ -84,7 +84,7 @@ public class Decode_TeleOp extends OpMode {
     boolean amplificationMAX = false;
     boolean gOpen = false;
     boolean hgOpen = false;
-
+    double maxS = 1;
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
 
@@ -105,7 +105,7 @@ public class Decode_TeleOp extends OpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        chassis.drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+        chassis.drive(-gamepad1.left_stick_x * maxS, gamepad1.left_stick_y * maxS, gamepad1.right_stick_x * maxS);
 
 
         // Initialize the hardware variables. Note that the strings used here as parameters
@@ -226,11 +226,19 @@ public class Decode_TeleOp extends OpMode {
         }
 
         if(gamepad1.left_bumper) {
-            chassis.setMaxSpeed(chassis.getMaxSpeed() - 0.1);
+            maxS = 0.4;
         }
 
         if(gamepad1.right_bumper) {
-            chassis.setMaxSpeed(chassis.getMaxSpeed() + 0.1);
+            maxS = 0.8;
+        }
+
+        if(gamepad1.left_trigger > 0) {
+            maxS = 0.2;
+        }
+
+        if(gamepad1.right_trigger > 0) {
+            maxS = 1.0;
         }
 
 
@@ -327,6 +335,8 @@ public class Decode_TeleOp extends OpMode {
 //            telemetry.addData("Positions", "IsOpened (%.2f), right (%.2f), arm(%.2f)", fLPower, fRPower, armPow);
 //            telemetry.update();
         telemetry.addData("Gate Open Status", gOpen);
+        telemetry.addData("Left launcher velocity", launcher.getLeftVelocity());
+        telemetry.addData("Right launcher velocity", launcher.getRightVelocity());
 
 
     }

@@ -19,8 +19,8 @@ public class DecodeArms {
         highGate = hwareMap.get(CRServo.class, "highgate");
         leftLauncher.setZeroPowerBehavior(BRAKE);
         rightLauncher.setZeroPowerBehavior(BRAKE);
-        leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
-        rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
+        leftLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(1, 0, 0, 12.5));
+        //rightLauncher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(300, 0, 0, 10));
     }
 
     private DcMotorEx leftLauncher;
@@ -35,24 +35,39 @@ public class DecodeArms {
     }*/
 
     public void powAmp(){
-        leftLauncher.setVelocity(-2980);
-        rightLauncher.setPower(2980/*0.58 %pow*/);
-
+        leftLauncher.setVelocity(-1542.8);
+        rightLauncher.setVelocity(1542.8/*0.58 %pow*/);
+        //leftLauncher.setPower(-0.58);
+        //rightLauncher.setPower(0.58/*0.58 %pow*/);
     }
 
     public void powAmpMed(){
-        leftLauncher.setPower(-3400);
-        rightLauncher.setPower(3400/*0.65 %pow*/);
+        leftLauncher.setVelocity(-1679); // Max velocity: ~2660 maychance
+        rightLauncher.setVelocity(1679);
+        //leftLauncher.setPower(-0.65);
+        //rightLauncher.setPower(0.65/*0.65 %pow*/);
     }
 
     public void powAmpMAX(){
-        leftLauncher.setPower(-3280);
-        rightLauncher.setPower(3280);
+        leftLauncher.setVelocity(-1755.6);
+        rightLauncher.setVelocity(1755.6);
+        //leftLauncher.setPower(-0.66);
+        //rightLauncher.setPower(0.66/*0.66 %pow*/);
     }
 
     public void powReversal() {
-        leftLauncher.setPower(0);
-        rightLauncher.setPower(0);
+        leftLauncher.setVelocity(0);
+        rightLauncher.setVelocity(0);
+        //leftLauncher.setPower(0);
+        //rightLauncher.setPower(0);
+    }
+
+    public double getLeftVelocity(){
+        return leftLauncher.getVelocity();
+    }
+
+    public double getRightVelocity(){
+        return rightLauncher.getVelocity();
     }
 
     /*

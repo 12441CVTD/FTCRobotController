@@ -3,19 +3,37 @@ package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class DecodeArms2 {
 
     public DecodeArms2(HardwareMap hwareMap) {
-        launcher = hwareMap.get(DcMotor.class, "leftLauncher");
-        transferF = hwareMap.get(CRServo.class, "setF");
-        TransferS = hwareMap.get(CRServo.class, "setS");
+        launcherUp = hwareMap.get(DcMotorEx.class, "launcherUp");
+        launcherDown = hwareMap.get(DcMotorEx.class, "launcherDown");
+        transfer = hwareMap.get(DcMotor.class, "transfer");
+        gate = hwareMap.get(Servo.class, "gate");
+        wGate = hwareMap.get(CRServo.class, "wGate");
+        turretLeft = hwareMap.get(Servo.class, "tL");
+        turretRight = hwareMap.get(Servo.class, "tR");
+        launcherDown.setVelocityPIDFCoefficients(1,0,0,0);
+        launcherUp.setVelocityPIDFCoefficients(1,0,0,0);
     }
 
-    private DcMotor launcher;
-    private CRServo transferF;
-    private CRServo TransferS;
+    private DcMotorEx launcherUp;
+    private DcMotorEx launcherDown;
+    private DcMotor transfer;
+    private Servo gate;
+    private Servo turretLeft;
+    private Servo turretRight;
+    private CRServo wGate;
+
+
+    public void wGateOn(double pow) {
+        wGate.setPower(pow);
+    }
+
 
     /*public void on() {
             leftLauncher.setPower(-0.55);
@@ -23,15 +41,29 @@ public class DecodeArms2 {
     }*/
 
     public void powAmp(){
-        launcher.setPower(-0.6);
+        //launcherUp.setVelocity(-1542.8/*0.58 %pow*/);
+        //launcherDown.setVelocity(1542.8/*0.58 %pow*/);
+        launcherUp.setPower(-0.85);
+        launcherDown.setPower(0.85);
+    }
+
+    public void powAmpMed() {
+        //launcherUp.setVelocity(-1729/*0.58 %pow*/);
+        //launcherDown.setVelocity(1729/*0.65 %pow*/);
+        launcherUp.setPower(-1);
+        launcherDown.setPower(1);
     }
 
     public void powAmpMAX(){
-        launcher.setPower(-0.66);
+        //launcherUp.setVelocity(-1755.6/*0.58 %pow*/);
+        //launcherDown.setVelocity(1755.6);
+        launcherUp.setPower(-1);
+        launcherDown.setPower(1);
     }
 
     public void powReversal() {
-        launcher.setPower(0);
+        launcherUp.setPower(0/*0.58 %pow*/);
+        launcherDown.setPower(0);
     }
 
     /*
@@ -63,12 +95,53 @@ public class DecodeArms2 {
 
      */
 
-    public void transferFOn() {transferF.setPower(1);}
-    public void transferFOff() {transferF.setPower(0);}
-    public void transferFR() {transferF.setPower(-1);}
-    public void transferSOn() {TransferS.setPower(1);}
-    public void transferSOff() {TransferS.setPower(0);}
-    public void transferSR() {transferF.setPower(-1);}
+    public void gateOpen() {
+        gate.setPosition(0.24);
+
+    }
+
+    public void gateClose() {
+        gate.setPosition(0.6);
+    }
+
+    public void gateClose(double position){
+        if(gate.getPosition() != position){
+            gate.setPosition(position);
+        }
+    }
+
+    public void turretLeft(){
+        turretLeft.setPosition(0);
+        turretRight.setPosition(0);
+    }
+
+    public void turretRight(){
+        turretLeft.setPosition(1);
+        turretRight.setPosition(1);
+    }
+
+    public void turretCenter(){
+        turretLeft.setPosition(.3);
+        turretRight.setPosition(.3);
+    }
+
+    public double getGatePosition(){
+        return gate.getPosition();
+    }
+
+    public double getLeftPosition(){
+        return turretLeft.getPosition();
+    }
+
+    public double getRightPosition(){
+        return turretRight.getPosition();
+    }
+
+
+    public void transferOn() {transfer.setPower(0.8);}
+    public void transferOff() {transfer.setPower(0);}
+    public void transferReverse() {transfer.setPower(-0.8);}
+
 
 
 

@@ -10,21 +10,21 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DecodeIntake {
 
     public DecodeIntake(HardwareMap hwaremap) {
-        leftIntake = hwaremap.get(DcMotor.class, "leftIntake");
+        intake = hwaremap.get(DcMotor.class, "leftIntake");
     }
 
-    private DcMotor leftIntake;
+    private DcMotor intake;
 
     public void on() {
-        leftIntake.setPower(1);
+        intake.setPower(1);
     }
 
     public void reverse() {
-        leftIntake.setPower(-1);
+        intake.setPower(-1);
     }
 
     public void off() {
-        leftIntake.setPower(0);
+        intake.setPower(0);
     }
     /*telemetry.addData("Initialized",);
     telemetry.update();*/
