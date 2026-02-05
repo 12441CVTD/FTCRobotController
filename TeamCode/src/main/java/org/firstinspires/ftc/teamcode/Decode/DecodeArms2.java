@@ -13,8 +13,8 @@ public class DecodeArms2 {
         launcherUp = hwareMap.get(DcMotorEx.class, "launcherUp");
         launcherDown = hwareMap.get(DcMotorEx.class, "launcherDown");
         transfer = hwareMap.get(DcMotor.class, "transfer");
-        gate = hwareMap.get(Servo.class, "gate");
         wGate = hwareMap.get(CRServo.class, "wGate");
+        wheel = hwareMap.get(CRServo.class, "wheel");
         turretLeft = hwareMap.get(Servo.class, "tL");
         turretRight = hwareMap.get(Servo.class, "tR");
         launcherDown.setVelocityPIDFCoefficients(1,0,0,0);
@@ -24,14 +24,15 @@ public class DecodeArms2 {
     private DcMotorEx launcherUp;
     private DcMotorEx launcherDown;
     private DcMotor transfer;
-    private Servo gate;
     private Servo turretLeft;
     private Servo turretRight;
     private CRServo wGate;
+    private CRServo wheel;
 
 
     public void wGateOn(double pow) {
         wGate.setPower(pow);
+        wheel.setPower(-pow);
     }
 
 
@@ -95,20 +96,6 @@ public class DecodeArms2 {
 
      */
 
-    public void gateOpen() {
-        gate.setPosition(0.24);
-
-    }
-
-    public void gateClose() {
-        gate.setPosition(0.6);
-    }
-
-    public void gateClose(double position){
-        if(gate.getPosition() != position){
-            gate.setPosition(position);
-        }
-    }
 
     public void turretLeft(){
         turretLeft.setPosition(0);
@@ -125,9 +112,6 @@ public class DecodeArms2 {
         turretRight.setPosition(.3);
     }
 
-    public double getGatePosition(){
-        return gate.getPosition();
-    }
 
     public double getLeftPosition(){
         return turretLeft.getPosition();

@@ -177,21 +177,6 @@ public class Decode_TeleOp2 extends OpMode {
             }
         }
 
-
-        if (currentGP2.y && !(previousGP2.y)) {
-            if(!gOpen) {
-                gOpen = true;
-                launcher.gateOpen();
-            } else {
-                gOpen = false;
-                launcher.gateClose();
-            }
-        }
-
-        if(!gOpen){
-            launcher.gateClose();
-        }
-
         if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
             if(amplificationMAX){
                 launcher.powReversal();
@@ -254,7 +239,6 @@ public class Decode_TeleOp2 extends OpMode {
             launcher.turretCenter();
         }
 
-        telemetry.addData("gate position", launcher.getGatePosition());
         telemetry.addData("Left turret position", launcher.getLeftPosition());
         telemetry.addData("Right turret position", launcher.getRightPosition());
         telemetry.addData("amplification: ", amplification);
