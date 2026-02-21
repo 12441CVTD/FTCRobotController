@@ -29,17 +29,17 @@
 
 package org.firstinspires.ftc.teamcode.Decode;
 
-import org.firstinspires.ftc.teamcode.Decode.BlueLimelightAutoAim;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 @TeleOp
 
-public class Decode_TeleOp2 extends OpMode {
+public class OG_Decode_TeleOp2_BLUE extends OpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();

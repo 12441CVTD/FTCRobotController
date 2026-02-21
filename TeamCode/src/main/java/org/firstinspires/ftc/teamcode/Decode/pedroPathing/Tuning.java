@@ -78,10 +78,10 @@ public class Tuning extends SelectableOpMode {
     @Override
     public void onSelect() {
         if (follower == null) {
-            follower = Constants.createFollower(hardwareMap);
+            follower = ConstantsV2.createFollower(hardwareMap); // Put "ConstantsV2" instead of "Constants" if you want to tune V2
             PanelsConfigurables.INSTANCE.refreshClass(this);
         } else {
-            follower = Constants.createFollower(hardwareMap);
+            follower = ConstantsV2.createFollower(hardwareMap);
         }
 
         follower.setStartingPose(new Pose());
@@ -632,7 +632,7 @@ class ForwardZeroPowerAccelerationTuner extends OpMode {
  */
 class LateralZeroPowerAccelerationTuner extends OpMode {
     private final ArrayList<Double> accelerations = new ArrayList<>();
-    public static double VELOCITY = 50;
+    public static double VELOCITY = 37;
     private double previousVelocity;
     private long previousTimeNano;
     private boolean stopping;

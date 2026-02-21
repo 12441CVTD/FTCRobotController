@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.Decode.DecodeIntake;
 import java.util.TimerTask;
 
 
-@Autonomous(name = "Red Far Pedro", group = "Examples")
+@Autonomous(name = "DONT USE Red Far Pedro", group = "Examples")
 @Configurable
 public class PedroPathingDecodeAuto4nmousMaroonIncreasedDistance extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance

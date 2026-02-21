@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Decode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -56,6 +55,7 @@ public class DecodeMecanumDrive2 {
     //bRPower   = Range.clip(drive - turn, -0.8, 0.8) ;
 
     private void setPowers(double fl, double fr, double bl, double br) {
+        double maxSpeed = 1.0;
 
         maxSpeed = Math.max(maxSpeed, Math.abs(fl));
         maxSpeed = Math.max(maxSpeed, Math.abs(fr));
@@ -82,7 +82,7 @@ public class DecodeMecanumDrive2 {
         setPowers(fLPower, fRPower, bLPower, bRPower);
     }
 
-    public void fourDrive(double fLPower, double fRPower, double bLPower, double bRPower){
+    /*public void fourDrive(double fLPower, double fRPower, double bLPower, double bRPower){
         setPowers(fLPower, fRPower, bLPower, bRPower);
     }
 
@@ -92,7 +92,7 @@ public class DecodeMecanumDrive2 {
 
     public double getMaxSpeed() {
         return maxSpeed;
-    }
+    }*/
 
 
 

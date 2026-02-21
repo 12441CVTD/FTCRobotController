@@ -1,31 +1,33 @@
 package org.firstinspires.ftc.teamcode.Decode;
 
-
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 public class LLMech {
     private static final float Kp = -0.1f; // Proportional control constant
     private Limelight3A limelight;
     LLResult llResult;
-    /*limelight = new LLMech(hardwareMap);
-    limelight.getLlResult();*/
 
 
     public LLMech(HardwareMap hardwareMap) {
         limelight = hardwareMap.get(Limelight3A.class,"limabean");
-        // 0 = #20, 1 = #24, 2 = #21, #22, #23
+        // 1 = #20, N/A = #24, N/A = #21, #22, #23
         // 21-23 is the obelisk patterns
-        limelight.pipelineSwitch(0);
-        llResult = limelight.getLatestResult();
+        limelight.pipelineSwitch(1);
     }
 
+
+    public void startLL() { //we want limelight to engage when the button is pressed
+        limelight.start();
+
+    }
     public LLResult getLlResult() {
         return llResult;
     }
+
+
     public double getTx() {
         return llResult.getTx();
     }
@@ -38,12 +40,13 @@ public class LLMech {
 
 
     public void updateLLTelemetry(Telemetry telemetry){
-
         if (llResult != null && llResult.isValid()) {
-
-            telemetry.addData("Tx", getTx());
-            telemetry.addData("Ty", getTy());
-            telemetry.addData("Ta", getTa());
+            telemetry.addData("April Tag Tx", getTx());
+            //You guys dont really need these - mitch
+            //telemetry.addData("Ty", getTy());
+            //telemetry.addData("Ta", getTa());
+        } else{
+            telemetry.addLine("AprilTag not Found");
         }
     }
 

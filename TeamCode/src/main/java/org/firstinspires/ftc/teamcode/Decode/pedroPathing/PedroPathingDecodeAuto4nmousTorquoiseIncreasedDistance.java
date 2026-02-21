@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.Decode.DecodeIntake;
 
 
 
-@Autonomous(name = "Blue Far Pedro", group = "Examples")
+@Autonomous(name = "DONT USE Blue Far Pedro", group = "Examples")
 @Configurable
 public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
@@ -190,36 +190,39 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
     switch(pathState) {
         case 0:
             timer.schedule(new LaunchAuto(), 0);
-            timer.schedule(new IntakeAuto(), 2000);
-            timer.schedule(new GateOpen(), 1000);
-            timer.schedule(new HighGateOpen(), 1500);
             follower.followPath(paths.Launch0, true);
             setPathState(1);
             break;
         case 1:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
-                timer.schedule(new GateClose(), 0);
-                timer.schedule(new HighGateClose(), 3500);
+            if(!follower.isBusy()) {
+                timer.schedule(new IntakeAuto(), 0);
+                timer.schedule(new GateOpen(), 500);
+                timer.schedule(new HighGateOpen(), 700);
+
                 pathTimer.resetTimer();
-                follower.followPath(paths.Pickup1, true);
-                setPathState(2);
+                if(pathTimer.getElapsedTimeSeconds() > 3) {
+                    follower.followPath(paths.Pickup1, true);
+                    setPathState(2);
+                }
             }
             break;
         case 2:
             if(!follower.isBusy()){
-                timer.schedule(new IntakeAutoOff(), 500);
-                timer.schedule(new GateOpen(), 5500);
-                timer.schedule(new HighGateOpen(), 4400);
-                timer.schedule(new IntakeAuto(), 6000);
+                timer.schedule(new GateClose(), 0);
+                timer.schedule(new HighGateClose(), 0);
+
                 pathTimer.resetTimer();
                 follower.followPath(paths.Launch1,true);
                 setPathState(7);
             }
             break;
         case 3:
-            if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 7) {
+            if(!follower.isBusy()) {
+                timer.schedule(new IntakeAutoOff(), 0);
+                timer.schedule(new GateOpen(), 0);
+                timer.schedule(new HighGateOpen(), 0);
                 timer.schedule(new IntakeAuto(), 0);
-                timer.schedule(new GateClose(), 0);
+
                 pathTimer.resetTimer();
                 follower.followPath(paths.Pickup2,true);
                 setPathState(4);
@@ -227,9 +230,9 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
             break;
         case 4:
             if(!follower.isBusy()) {
-                timer.schedule(new IntakeAutoOff(), 500);
-                timer.schedule(new GateOpen(), 6000);
-                timer.schedule(new IntakeAuto(), 6500);
+                timer.schedule(new IntakeAuto(), 0);
+                timer.schedule(new GateClose(), 0);
+
                 pathTimer.resetTimer();
                 follower.followPath(paths.Launch2,true);
                 setPathState(7);
@@ -237,25 +240,31 @@ public class PedroPathingDecodeAuto4nmousTorquoiseIncreasedDistance extends OpMo
             break;
         case 5:
             if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 8) {
-            timer.schedule(new IntakeAuto(), 0);
-            timer.schedule(new GateClose(), 0);
+                timer.schedule(new IntakeAutoOff(), 0);
+                timer.schedule(new GateOpen(), 0);
+                timer.schedule(new IntakeAuto(), 0);
+
             follower.followPath(paths.Pickup3,true);
             setPathState(6);
         }
             break;
         case 6:
             if(!follower.isBusy()) {
-                timer.schedule(new IntakeAutoOff(), 500);
-                timer.schedule(new GateOpen(), 3000);
+                timer.schedule(new IntakeAuto(), 0);
+                timer.schedule(new GateClose(), 0);
+
                 follower.followPath(paths.Launch3,true);
                 setPathState(7);
             }
             break;
         case 7:
             if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 8){
+                timer.schedule(new IntakeAutoOff(), 0);
+                timer.schedule(new GateOpen(), 0);
+
                 timer.schedule(new LaunchAuto(), 0);
-                timer.schedule(new IntakeAutoOff(), 5000);
-                timer.schedule(new HighGateClose(), 5000);
+                timer.schedule(new IntakeAutoOff(), 0);
+                timer.schedule(new HighGateClose(), 0);
                 follower.followPath(paths.Park, true);
                 setPathState(8);
             }

@@ -29,17 +29,17 @@
 
 package org.firstinspires.ftc.teamcode.Decode;
 
-import org.firstinspires.ftc.teamcode.Decode.BlueLimelightAutoAim;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 @TeleOp
 
-public class Decode_TeleOp2 extends OpMode {
+public class RED_Decode_TeleOp2_RED extends OpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -63,6 +63,9 @@ public class Decode_TeleOp2 extends OpMode {
     boolean transfersOn = false;
     boolean transfersReverse = false;
     boolean targetLock = false;
+    boolean isLocked = false;
+
+    double latestTx = 0;
 
     private Gamepad previousGP2 = new Gamepad();
     private Gamepad currentGP2 = new Gamepad();
@@ -91,6 +94,10 @@ public class Decode_TeleOp2 extends OpMode {
     public void loop() {
         telemetry.addData("Status", "Initialized");
         vision.update();
+
+        if(currentGP2.left_stick_button && !previousGP2.left_stick_button){
+            isLocked = !isLocked;
+        }
 
         limelight.getLlResult();
         if (gamepad1.a){
@@ -147,11 +154,12 @@ public class Decode_TeleOp2 extends OpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
 
         //to adjust speed with distance
-        if (vision.hasTarget()) {
+        if (vision.hasTarget() && isLocked) {
 
             double distance = vision.getDistanceMeters();
 
             double speed;
+            latestTx = vision.getTx();
 
             if (distance < 1.5) {
                 launcher.limelightLaunch(1100);
@@ -162,6 +170,10 @@ public class Decode_TeleOp2 extends OpMode {
             } else {
                 launcher.limelightLaunch(1500);
                 speed = 0.75; // far
+            }
+        } else if(!vision.hasTarget() && isLocked){
+            if(vision.getTx() > 0){
+
             }
         }
 
@@ -213,6 +225,7 @@ public class Decode_TeleOp2 extends OpMode {
         }
 
         if(currentGP2.left_bumper && !(previousGP2.left_bumper)){
+            isLocked = false;
             if(amplificationMAX){
                 launcher.powReversal();
                 amplificationMAX = false;
@@ -222,7 +235,7 @@ public class Decode_TeleOp2 extends OpMode {
                 transfersOn = false;
                 transfersReverse = false;
                 timer.schedule((TimerTask) new transferOff(), 0);
-                timer.schedule((TimerTask) new flipperDown(), 0);
+                timer.schedule((TimerTask) new flipperUp(), 0);
             } else {
                 launcher.powAmpMAX();
                 amplificationMAX = true;
@@ -231,14 +244,15 @@ public class Decode_TeleOp2 extends OpMode {
                 gOpen = true;
                 wOpen = true;
                 transfersOn = true;
-
                 transfersReverse = false;
+                //timer.schedule((TimerTask) new transferReverse(), 1375);
                 timer.schedule((TimerTask) new transferOn(), 1500);
-                timer.schedule((TimerTask) new flipperUp(), 2500);
+                timer.schedule((TimerTask) new flipperDown(), 2500);
             }
         }
 
         if(currentGP2.right_bumper && !(previousGP2.right_bumper)){
+            isLocked = false;
             if(amplification){
                 launcher.powReversal();
                 amplification = false;
@@ -256,6 +270,7 @@ public class Decode_TeleOp2 extends OpMode {
                 wOpen = true;
                 transfersOn = true;
                 transfersReverse = false;
+                //timer.schedule((TimerTask) new transferReverse(), 1375);
                 timer.schedule((TimerTask) new transferOn(), 1500);
                 timer.schedule((TimerTask) new flipperDown(), 2500);
 
@@ -291,6 +306,12 @@ public class Decode_TeleOp2 extends OpMode {
                 transfersOn = false;
                 transfersReverse = true;
             }
+        }
+
+        if(currentGP2.right_trigger > 0 ){
+            launcher.transferReverseManual();
+        } else if(currentGP2.right_trigger == 0 && previousGP2.right_trigger > 0 ){
+            launcher.transferOff();
         }
 
         if (currentGP2.dpad_left) {
@@ -448,6 +469,14 @@ public class Decode_TeleOp2 extends OpMode {
         @Override
         public void run() {
             launcher.transferOff();
+        }
+    }
+
+    public class transferReverse extends TimerTask {
+
+        @Override
+        public void run() {
+            launcher.transferReverse();
         }
     }
 
